@@ -27,4 +27,8 @@ cargo run
 after cargo rebuilds the code, there should now be a service running on [your localhost](http://127.0.0.1:8080)
 
 ## How to test
-*this section needs to be written*
+After making your changes, you can run the test by using this command:
+
+```
+cargo test
+```
