@@ -1,7 +1,7 @@
 #[cfg(test)]
 
 mod tests {
-    use DED_backend::{index_with_name,index};
+    use DED_backend::handlers::index::{index_with_name,index};
     use actix_web::{test, App};
 
     #[actix_rt::test]
