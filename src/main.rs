@@ -1,4 +1,5 @@
-#[macro_use]
+#![allow(non_snake_case)]
+
 extern crate actix_web;
 
 use actix_web::{get, web, App, HttpServer, Responder};
