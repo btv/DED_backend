@@ -1,5 +1,5 @@
 # Daily Exercise Diary - Backend
-https://travis-ci.com/btv/DED_backend.svg?token=cBa9dzkvRhGroiTNpmQn&branch=master
+[![Build Status](https://travis-ci.com/btv/DED_backend.svg?token=cBa9dzkvRhGroiTNpmQn&branch=master)](https://travis-ci.com/btv/DED_backend)
 
 This repo is for the DED backend repository.
 
