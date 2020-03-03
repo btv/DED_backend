@@ -1,4 +1,12 @@
 # Daily Exercise Diary - Backend
+
+---
+
+### CSCI 5828 Spring 2020
+#### Morgan Allen, Alex Costinesuc, Bryce Verdier, Dwight Browne, Christopher Ash
+
+---
+
 [![Build Status](https://travis-ci.com/coloradocollective/DED_Backend.svg?branch=master)](https://travis-ci.com/coloradocollective/DED_Backend)
 
 This repo is for the DED backend repository.
