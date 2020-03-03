@@ -20,5 +20,5 @@ pub async fn index_with_name(info: web::Path<String>) -> impl Responder {
 
 /// Returns the information needed for the index page.
 pub async fn index() -> impl Responder {
-    "Hello World!".to_string()
+    "DED Backend.  Hello!".to_string()
 }
