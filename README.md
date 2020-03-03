@@ -5,6 +5,8 @@
 ### CSCI 5828 Spring 2020
 #### Morgan Allen, Alex Costinesuc, Bryce Verdier, Dwight Browne, Christopher Ash
 
+Frontend code repo can be found [HERE](https://github.com/coloradocollective/DED-Frontend)
+
 ---
 
 [![Build Status](https://travis-ci.com/coloradocollective/DED_Backend.svg?branch=master)](https://travis-ci.com/coloradocollective/DED_Backend)
