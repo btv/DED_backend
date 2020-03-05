@@ -1,4 +1,5 @@
 language: rust
+dist: bionic
 rust:
   - stable
 cache: cargo
@@ -10,3 +11,6 @@ jobs:
     - stage: "tests"
       name: "Running the tests"
       script: cargo test
+    - stage: "prod"
+      name: "Production build"
+      script: cargo build --release
