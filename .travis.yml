@@ -2,5 +2,11 @@ language: rust
 rust:
   - stable
 cache: cargo
-script:
-  - cargo test
+jobs:
+  include:
+    - stage: "syntax"
+      name: "Checking syntax"
+      script: cargo check
+    - stage: "tests"
+      name: "Running the tests"
+      script: cargo test
