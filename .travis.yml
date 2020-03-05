@@ -1,7 +1,7 @@
 language: rust
 dist: bionic
 rust:
-  - stable
+  - 1.41.1
 cache: cargo
 jobs:
   include:
