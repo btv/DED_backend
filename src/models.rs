@@ -1,23 +1,14 @@
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use std::time::SystemTime;
+use diesel::prelude::*;
 
-
-use crate::schema::set;
-
-#[derive(DbEnum)]
-pub enum Type {
-    Normal,
-    Warmup,
-    Cooldown,
-    Drop,
-    Fail
-}
+use crate::schema::sets;
 
 #[derive(Debug, Clone, Serialize, Queryable, Insertable)]
 pub struct Set {
     pub id: i32,
     pub exercise_id: i32,
-    pub type: Type,
+    pub style: String,
     pub unit: String,
     pub goal_reps: i16,
     pub goal_value: String,
