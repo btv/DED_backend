@@ -1,9 +1,9 @@
-Create TYPE style as ENUM ('normal', 'warmup', 'cooldown', 'drop', 'fail')
+Create TYPE type as ENUM ('normal', 'warmup', 'cooldown', 'drop', 'fail')
 
-CREATE TABLE sets {
+CREATE TABLE set {
     id integer PRIMARY KEY,
     exercise_id int null,
-    style style,
+    type type not null,
     unit varchar null,
     goal_reps smallint,
     goal_value varchar,

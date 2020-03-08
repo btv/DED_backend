@@ -1,1 +1,2 @@
-DROP TABLE sets
+DROP TABLE set
+DROP TYPE type

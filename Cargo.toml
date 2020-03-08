@@ -14,5 +14,4 @@ actix-web = "2"
 actix-rt = "1"
 
 diesel = { version = "1.4.3", features = ["postgres"] }
-
-quote = "=1.0.2"
+diesel-derive-enum = { version = "0.4", features = ["postgres"] }
