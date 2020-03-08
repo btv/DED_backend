@@ -4,4 +4,4 @@ use diesel;
 use diesel::prelude::*;
 use actix_web::{web, Responder};
 
-use crate::models;
+use crate::models::Set;
