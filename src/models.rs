@@ -1,6 +1,5 @@
 use serde::Serialize;
 use std::time::SystemTime;
-use diesel::prelude::*;
 
 use crate::schema::sets;
 
