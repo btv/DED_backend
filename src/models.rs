@@ -14,5 +14,39 @@ pub struct Set {
     pub description: String,
     pub created_or_completed: SystemTime,
     pub completed_reps: i16,
-    pub completed_value: String
+    pub completed_value: String,
+}
+
+pub struct Exercise {
+    pub id: i32,
+    pub origin_id: i32,
+    pub set_id: i32,
+    pub uname: String,
+    pub exercise_type: i32,
+    pub description: String,
+    pub notes: String,
+    pub create_time: SystemTime,
+    pub complete_time: SystemTime,
+    pub created_id: i32,
+    pub completed_id: i32,
+}
+
+pub struct User {
+    pub id: i32,
+    pub uesername: String,
+    pub fname: String,
+    pub email: String,
+    pub salt: Strng,
+}
+
+pub struct Workout {
+    pub id: i32,
+    pub origin_id: i32,
+    pub uname: String,
+    pub description: String,
+    pub notes: String,
+    pub created_time: SystemTime,
+    pub completed_time: SystemTime,
+    pub created_id: i32,
+    pub completed_id: i32
 }
