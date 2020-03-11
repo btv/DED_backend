@@ -1,7 +1,7 @@
 use serde::Serialize;
 use std::time::SystemTime;
 
-use crate::schema::sets;
+use crate::schema::*;
 
 #[derive(Debug, Clone, Serialize, Queryable, Insertable)]
 pub struct Set {
@@ -17,6 +17,7 @@ pub struct Set {
     pub completed_value: String,
 }
 
+#[derive(Debug, Clone, Serialize, Queryable, Insertable)]
 pub struct Exercise {
     pub id: i32,
     pub origin_id: i32,
@@ -31,14 +32,16 @@ pub struct Exercise {
     pub completed_id: i32,
 }
 
+#[derive(Debug, Clone, Serialize, Queryable, Insertable)]
 pub struct User {
     pub id: i32,
-    pub uesername: String,
+    pub username: String,
     pub fname: String,
     pub email: String,
-    pub salt: Strng,
+    pub salt: String,
 }
 
+#[derive(Debug, Clone, Serialize, Queryable, Insertable)]
 pub struct Workout {
     pub id: i32,
     pub origin_id: i32,

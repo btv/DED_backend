@@ -33,7 +33,6 @@ impl Set {
     }
 }
 
-//! function run by the new set endpoint to generate a new set within the database.
 pub async fn new_set(
         exercise_id: i32,
         style: String,

@@ -11,9 +11,12 @@ table! {
         completed_reps -> Nullable<SmallInt>,
         completed_value -> Nullable<VarChar>,
     }
-    exercise(id){
+}
+
+table! {
+    exercises(id) {
         id ->Integer,
-        origin_id ->int,
+        origin_id ->Integer,
         set_id -> Integer,
         uname -> VarChar,
         exercise_type -> Integer,
@@ -24,16 +27,20 @@ table! {
         created_id ->Integer,
         completed_id ->Integer,
     }
+}
 
-    user(id){
+table! {
+    users(id) {
         id ->Integer,
         username -> Nullable<VarChar>,
         fname -> Nullable<VarChar>,
         email -> Nullable<VarChar>,
         salt -> Nullable<Varchar>,
     }
+}
 
-    workout(id){}
+table! {
+    workouts(id) {
         id ->Integer,
         origin_id ->Integer,
         exercise -> Integer,
@@ -44,4 +51,5 @@ table! {
         completed_time -> Nullable<Timestamp>,
         created_id ->Integer,
         completed_id ->Integer,
+    }
 }
