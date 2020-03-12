@@ -40,16 +40,16 @@ table! {
 }
 
 table! {
-    workout (id) {
+    workouts (id) {
         id -> Int4,
-        origin_id -> Nullable<Int4>,
+        origin_id -> Int4,
         exercise -> Int4,
-        uname -> Varchar,
+        fname -> Varchar,
         description -> Varchar,
-        notes -> Nullable<Varchar>,
-        created_time -> Nullable<Timestamp>,
-        completed_time -> Nullable<Timestamp>,
-        created_id -> Int4,
+        notes -> Varchar,
+        created_time -> Timestamp,
+        completed_time -> Timestamp,
+        create_id -> Int4,
         completed_id -> Int4,
     }
 }
@@ -58,5 +58,5 @@ allow_tables_to_appear_in_same_query!(
     exercises,
     sets,
     users,
-    workout,
+    workouts,
 );

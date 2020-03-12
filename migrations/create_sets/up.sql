@@ -36,15 +36,15 @@ CREATE  TABLE  IF NOT EXISTS users(
     salt varchar not null
 );
 
-CREATE TABLE IF NOT EXISTS workout (
+CREATE TABLE IF NOT EXISTS workouts (
     id INTEGER PRIMARY KEY,
-    origin_id integer null,
+    origin_id integer not null,
     exercise INTEGER not null,
-    uname varchar not null,
+    fname varchar not null,
     description varchar not null,
-    notes varchar,
-    created_time timestamp ,
-    completed_time timestamp ,
-    created_id integer not null,
+    notes varchar not null ,
+    created_time timestamp not null,
+    completed_time timestamp not null  ,
+    create_id integer not null,
     completed_id integer not null
 );
