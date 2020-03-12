@@ -15,4 +15,9 @@ actix-rt = "1"
 
 diesel = { version = "1.4.3", features = ["postgres"] }
 
-quote = "=1.0.2"
+serde = "1.0"
+serde_json = "1.0"
+rand = "0.7"
+
+[dev-dependencies]
+num-traits = "0.2"

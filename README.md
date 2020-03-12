@@ -17,7 +17,7 @@ The main language of the backend is [Rust](https://www.rust-lang.org/). The choo
 
 ## Requirements
 * Rust - stable
-    * Current version of stable (at time of writing) is `1.41.01`
+    * Current version of stable (at time of writing) is `1.41.1`
     * the [cargo](https://doc.rust-lang.org/cargo/) executable. 
 * this repo!
 
