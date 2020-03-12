@@ -1,4 +1,4 @@
-CREATE TABLE sets {
+CREATE TABLE sets (
     id Integer PRIMARY KEY,
     exercise_id int null,
     style varchar not null,
@@ -9,9 +9,9 @@ CREATE TABLE sets {
     created_or_completed timestamp,
     completed_reps smallint null,
     completed_value varchar null
-}
+)
 
-CREATE TABLE exercises{
+CREATE TABLE exercises(
     id INTEGER PRIMARY KEY ,
     origin_id INTEGER  null,
     set_id INTEGER  not NULL,
@@ -23,18 +23,18 @@ CREATE TABLE exercises{
     complete_time timestamp ,
     create_id INTEGER not null,
     completed_id INTEGER not null
-}
+)
 
 
-CREATE  TABLE  user{
+CREATE  TABLE  user(
     id INTEGER PRIMARY KEY,
     username varchar not null,
     fname varchar not null,
     email varchar not null,
     salt varchar not null,
-}
+)
 
-CREATE TABLE  workout {
+CREATE TABLE  workout (
     id INTEGER PRIMARY KEY,
     origin_id integer null,
     exercise INTEGER not null,
@@ -45,4 +45,4 @@ CREATE TABLE  workout {
     completed_time timestamp ,
     created_id integer not null,
     completed_id integer not null,
-}
+)
