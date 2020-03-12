@@ -1,5 +1,5 @@
 DROP TABLE set;
 DROP TABLE exercise;
-DROP TABLE user;
+DROP TABLE users;
 DROP TABLE workout;
 DROP TYPE type;
