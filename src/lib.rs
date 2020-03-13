@@ -56,12 +56,9 @@ pub fn create_user<'a>(conn: &PgConnection, id: &'a i32, username: &'a str, fnam
 pub struct UserList(pub Vec<User>);
 
 impl UserList{
-    pub fn get_users()->UserList{
+    pub fn get_users(conn: &PgConnection)->UserList{
         use crate::schema::users::dsl::*;
-        let connection = establish_connection();
-
-
-        let results = users.load::<User>(&connection).expect("Error retreiving users");
+        let results = users.load::<User>(&conn).expect("Error retreiving users");
         return UserList(results);
     }
 }
