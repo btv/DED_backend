@@ -5,7 +5,7 @@ extern crate diesel;
 extern crate dotenv;
 use serde::{Serialize, Deserialize};
 use diesel::prelude::*;
-use diesel::pg::PgConnection;
+use diesel::pg::{PgConnection, Pg};
 use dotenv::dotenv;
 use std::env;
 use self::models::{User, NewUser};
@@ -58,7 +58,11 @@ pub struct UserList(pub Vec<User>);
 impl UserList{
     pub fn get_users(conn: &PgConnection)->UserList{
         use crate::schema::users::dsl::*;
-        let results = users.load::<User>(&conn).expect("Error retreiving users");
+
+
+        let results = users
+            .load::<User>(conn)
+            .expect("Error retreiving users");
         return UserList(results);
     }
 }
