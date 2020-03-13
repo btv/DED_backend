@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use std::time::SystemTime;
 
 use crate::schema::*;
@@ -63,7 +63,7 @@ pub struct NewExercise<'a>{
 }
 
 
-#[derive(Debug, Clone, Serialize, Queryable, Insertable)]
+#[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
 pub struct User {
     pub id: i32,
     pub username: String,

@@ -3,7 +3,7 @@
 #[macro_use]
 extern crate diesel;
 extern crate dotenv;
-
+use serde::{Serialize, Deserialize};
 use diesel::prelude::*;
 use diesel::pg::PgConnection;
 use dotenv::dotenv;
@@ -14,6 +14,9 @@ use self::models::{Exercise, NewExercise};
 use self::models::{Set, NewSet};
 use std::sync::mpsc::SyncSender;
 use std::time::SystemTime;
+use diesel::RunQueryDsl;
+
+
 
 
 #[cfg(test)]
@@ -47,6 +50,20 @@ pub fn create_user<'a>(conn: &PgConnection, id: &'a i32, username: &'a str, fnam
         .values(&new_user)
         .get_result(conn)
         .expect("Error adding new user")
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct UserList(pub Vec<User>);
+
+impl UserList{
+    pub fn get_users()->UserList{
+        use crate::schema::users::dsl::*;
+        let connection = establish_connection();
+
+
+        let results = users.load::<User>(&connection).expect("Error retreiving users");
+        return UserList(results);
+    }
 }
 
 pub fn create_workout<'a>(conn: &PgConnection, id: &'a i32, origin_id: &'a i32, exercise: &'a i32,
