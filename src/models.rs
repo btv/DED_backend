@@ -17,6 +17,21 @@ pub struct Set {
     pub completed_value: String,
 }
 
+#[derive(Insertable)]
+#[table_name="sets"]
+pub struct NewSet<'a>{
+    pub id: &'a i32,
+    pub exercise_id: &'a i32,
+    pub style: &'a String,
+    pub unit: &'a String,
+    pub goal_reps: &'a i16,
+    pub goal_value: &'a String,
+    pub description: &'a String,
+    pub created_or_completed: &'a SystemTime,
+    pub completed_reps: &'a i16,
+    pub completed_value: &'a String,
+}
+
 #[derive(Debug, Clone, Serialize, Queryable, Insertable)]
 pub struct Exercise {
     pub id: i32,
@@ -31,6 +46,22 @@ pub struct Exercise {
     pub create_id: i32,
     pub completed_id: i32,
 }
+
+#[derive(Insertable)]
+#[table_name="exercises"]
+pub struct NewExercise<'a>{
+    pub id: &'a i32,
+    pub origin_id: &'a i32,
+    pub fname: &'a str,
+    pub exercise_type: &'a i32,
+    pub description: &'a str,
+    pub notes: &'a str,
+    pub create_time: &'a SystemTime,
+    pub complete_time: &'a SystemTime,
+    pub create_id: &'a i32,
+    pub completed_id: &'a i32,
+}
+
 
 #[derive(Debug, Clone, Serialize, Queryable, Insertable)]
 pub struct User {

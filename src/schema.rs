@@ -1,14 +1,14 @@
 table! {
     exercises (id) {
         id -> Int4,
-        origin_id -> Nullable<Int4>,
+        origin_id -> Int4,
         set_id -> Int4,
         fname -> Varchar,
         exercise_type -> Int4,
         description -> Varchar,
-        notes -> Nullable<Varchar>,
-        create_time -> Nullable<Timestamp>,
-        complete_time -> Nullable<Timestamp>,
+        notes -> Varchar,
+        create_time -> Timestamp,
+        complete_time -> Timestamp,
         create_id -> Int4,
         completed_id -> Int4,
     }
@@ -17,15 +17,15 @@ table! {
 table! {
     sets (id) {
         id -> Int4,
-        exercise_id -> Nullable<Int4>,
+        exercise_id -> Int4,
         style -> Varchar,
-        unit -> Nullable<Varchar>,
-        goal_reps -> Nullable<Int2>,
-        goal_value -> Nullable<Varchar>,
-        description -> Nullable<Varchar>,
-        created_or_completed -> Nullable<Timestamp>,
-        completed_reps -> Nullable<Int2>,
-        completed_value -> Nullable<Varchar>,
+        unit -> Varchar,
+        goal_reps -> Int2,
+        goal_value -> Varchar,
+        description -> Varchar,
+        created_or_completed -> Timestamp,
+        completed_reps -> Int2,
+        completed_value -> Varchar,
     }
 }
 

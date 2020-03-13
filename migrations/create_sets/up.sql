@@ -1,28 +1,28 @@
 CREATE TABLE IF NOT EXISTS sets (
     id Integer PRIMARY KEY,
-    exercise_id int null,
+    exercise_id int not null,
     style varchar not null,
-    unit varchar null,
-    goal_reps smallint,
-    goal_value varchar,
-    description varchar null,
-    created_or_completed timestamp,
-    completed_reps smallint null,
-    completed_value varchar null
+    unit varchar not null,
+    goal_reps smallint not null ,
+    goal_value varchar not null ,
+    description varchar not null,
+    created_or_completed timestamp not null ,
+    completed_reps smallint not null,
+    completed_value varchar not null
 );
 
 
 
 CREATE TABLE IF NOT EXISTS exercises(
     id INTEGER PRIMARY KEY ,
-    origin_id INTEGER  null,
+    origin_id INTEGER not null,
     set_id INTEGER  not NULL,
     fname varchar not null,
     exercise_type INTEGER not null,
     description varchar not null,
-    notes varchar null,
-    create_time timestamp ,
-    complete_time timestamp ,
+    notes varchar  not null,
+    create_time timestamp not null,
+    complete_time timestamp not null,
     create_id INTEGER not null,
     completed_id INTEGER not null
 );
