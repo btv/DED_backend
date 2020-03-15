@@ -5,11 +5,7 @@ use actix_web::{web, Responder};
 
 use crate::models::sets::{Set,NewSet};
 
-pub fn create(new_set: web::Json<NewSet>) -> impl Responder {
+pub async fn new(new_set: web::Json<NewSet>) -> impl Responder {
 
     format!("{:?}", &new_set)
-}
-
-#[cfg(test)]
-mod tests {
 }
