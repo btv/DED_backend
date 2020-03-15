@@ -6,14 +6,14 @@ extern crate dotenv;
 
 use serde::{Serialize, Deserialize};
 use diesel::prelude::*;
-use diesel::pg::{PgConnection, Pg};
+use diesel::pg::{PgConnection};
 use dotenv::dotenv;
 use std::env;
 use self::models::{User, NewUser};
 use self::models::{Workout, NewWorkout};
 use self::models::{Exercise, NewExercise};
 use self::models::{Set, NewSet};
-use std::sync::mpsc::SyncSender;
+
 use std::time::SystemTime;
 use diesel::RunQueryDsl;
 

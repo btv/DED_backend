@@ -3,27 +3,27 @@
 extern crate diesel;
 extern crate dotenv;
 
-use diesel::prelude::*;
-use diesel::pg::{PgConnection, Pg};
-use dotenv::dotenv;
-use std::env;
-use diesel::NotFound;
+
+
+
+
+
 
 
 mod tests {
     use DED_backend::{establish_connection, create_user};
-    use DED_backend::models::{User, NewUser};
-    use diesel::result::Error;
+    use DED_backend::models::{User};
+    
     use diesel::RunQueryDsl;
-    use actix_web::http::header::q;
+    
 
     #[test]
     fn test_db_insert_and_find() {
-        use DED_backend::schema::users;
+        
 
         let conn = establish_connection("DATABASE_TEST_URL");
 
-        let xxx = diesel::delete(DED_backend::schema::users::dsl::users)
+        let _xxx = diesel::delete(DED_backend::schema::users::dsl::users)
             .execute(&conn);
 
         // assert_eq!(xxx,Ok(0));
@@ -52,7 +52,7 @@ mod tests {
                 assert_eq!(t_email, q_user.email);
                 assert_eq!(t_salt, q_user.salt);
             }
-            Err(e) => {
+            Err(_e) => {
                 assert_eq!(5,2);
             }
         }
@@ -60,7 +60,7 @@ mod tests {
     }
     #[test]
     fn test_db_not_found() {
-        use DED_backend::schema::users;
+        
 
         let conn = establish_connection("DATABASE_TEST_URL");
         let t_id = -123456;
