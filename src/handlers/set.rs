@@ -2,10 +2,13 @@
 
 use diesel::prelude::*;
 use actix_web::{web, Responder};
-use std::time::SystemTime;
 
 use crate::models::sets::{Set,NewSet};
 
+pub fn create(new_set: web::Json<NewSet>) -> impl Responder {
+
+    format!("{:?}", &new_set)
+}
 
 #[cfg(test)]
 mod tests {
