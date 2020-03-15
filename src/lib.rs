@@ -19,6 +19,7 @@ pub mod handlers;
 pub mod models;
 pub mod schema;
 
+
 //pub fn establish_connection(db_env_var: &str) -> PgConnection {
 pub fn establish_connection() -> PgConnection {
     dotenv().ok();

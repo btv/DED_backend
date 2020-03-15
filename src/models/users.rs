@@ -28,6 +28,7 @@ pub struct NewUser {
 #[derive(Serialize, Deserialize)]
 pub struct UserList(pub Vec<User>);
 
+
 impl User {
     pub fn get_user (id: i32) -> Result<User, diesel::result::Error> {
         use diesel::QueryDsl;
@@ -42,7 +43,7 @@ impl User {
         use diesel::RunQueryDsl;
         use crate::establish_connection;
 
-       let connection = establish_connection();
+        let connection = establish_connection();
         diesel::insert_into(users::table)
             .values(self)
             .get_result(&connection)
@@ -50,19 +51,25 @@ impl User {
 }
 
 
-//impl UserList {
-//    pub fn get_users(conn: &PgConnection) -> UserList {
-//
-//        let results = users
-//            .load::<User>(conn)
-//            .expect("Error retreiving users");
-//
-//        UserList(results)
-//    }
-//}
-//
-//
-//
+impl UserList {
+    pub fn get_users() -> Self {
+        use diesel::QueryDsl;
+        use diesel::RunQueryDsl;
+        use crate::establish_connection;
+        use crate::schema::users::dsl::*;
+
+        let conn = establish_connection();
+
+        let results = users
+            .load::<User>(&conn)
+            .expect("Error retreiving users");
+
+        UserList(results)
+    }
+}
+
+
+
 
 #[cfg(test)]
 mod tests {
@@ -70,7 +77,6 @@ mod tests {
 
     #[test]
     fn test_user_structure() {
-
 
         let t_id = 1999;
         let t_uname = "TestUser";
