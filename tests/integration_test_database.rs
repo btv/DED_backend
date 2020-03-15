@@ -11,17 +11,17 @@ extern crate dotenv;
 
 
 mod tests {
-    use DED_backend::{establish_connection, create_user};
-    use DED_backend::models::{User};
-    
+    use DED_backend::establish_connection;
+    use DED_backend::models::users::User;
+
     use diesel::RunQueryDsl;
-    
+
 
     #[test]
     fn test_db_insert_and_find() {
-        
 
-        let conn = establish_connection("DATABASE_TEST_URL");
+
+        let conn = establish_connection();
 
         let _xxx = diesel::delete(DED_backend::schema::users::dsl::users)
             .execute(&conn);
@@ -34,7 +34,7 @@ mod tests {
         let t_email = "testuser@testdomain.com";
         let t_salt = "some_like_MSG";
 
-        let t_user = create_user(&conn, &t_id, &t_uname, &t_fname, &t_email, &t_salt);
+        let t_user = create_user(&t_id, &t_uname, &t_fname, &t_email, &t_salt);
 
         assert_eq!(t_id, t_user.id);
         assert_eq!(t_uname, t_user.username);
@@ -60,12 +60,11 @@ mod tests {
     }
     #[test]
     fn test_db_not_found() {
-        
 
-        let conn = establish_connection("DATABASE_TEST_URL");
+        let conn = establish_connection();
         let t_id = -123456;
 
-        let user_result = User::get_user(&conn, &t_id);
+        let user_result = User::get_user(&t_id);
 
         match user_result{
             Ok(q_user) => {
