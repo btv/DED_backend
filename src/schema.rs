@@ -1,55 +1,62 @@
 table! {
-    sets(id) {
-        id -> Integer,
-        exercise_id -> Nullable<Integer>,
-        style -> VarChar,
-        unit -> Nullable<VarChar>,
-        goal_reps -> SmallInt,
-        goal_value -> VarChar,
-        description -> Nullable<VarChar>,
-        created_or_completed -> Nullable<Timestamp>,
-        completed_reps -> Nullable<SmallInt>,
-        completed_value -> Nullable<VarChar>,
+    exercises (id) {
+        id -> Int4,
+        origin_id -> Int4,
+        set_id -> Int4,
+        fname -> Varchar,
+        exercise_type -> Int4,
+        description -> Varchar,
+        notes -> Varchar,
+        create_time -> Timestamp,
+        complete_time -> Timestamp,
+        create_id -> Int4,
+        completed_id -> Int4,
     }
 }
 
 table! {
-    exercises(id) {
-        id ->Integer,
-        origin_id ->Integer,
-        set_id -> Integer,
-        uname -> VarChar,
-        exercise_type -> Integer,
-        description -> VarChar,
-        notes ->VarChar,
-        create_time -> Nullable <Timestamp>,
-        complete_time -> Nullable <Timestamp>,
-        created_id ->Integer,
-        completed_id ->Integer,
+    sets (id) {
+        id -> Int4,
+        exercise_id -> Int4,
+        style -> Varchar,
+        unit -> Varchar,
+        goal_reps -> Int2,
+        goal_value -> Varchar,
+        description -> Varchar,
+        created_or_completed -> Timestamp,
+        completed_reps -> Int2,
+        completed_value -> Varchar,
     }
 }
 
 table! {
-    users(id) {
-        id ->Integer,
-        username -> Nullable<VarChar>,
-        fname -> Nullable<VarChar>,
-        email -> Nullable<VarChar>,
-        salt -> Nullable<Varchar>,
+    users (id) {
+        id -> Int4,
+        username -> Varchar,
+        fname -> Varchar,
+        email -> Varchar,
+        salt -> Varchar,
     }
 }
 
 table! {
-    workouts(id) {
-        id ->Integer,
-        origin_id ->Integer,
-        exercise -> Integer,
-        uname ->Nullable<VarChar>,
-        description ->Nullable<VarChar>,
-        notes -> Nullable<VarChar>,
-        created_time -> Nullable<Timestamp>,
-        completed_time -> Nullable<Timestamp>,
-        created_id ->Integer,
-        completed_id ->Integer,
+    workouts (id) {
+        id -> Int4,
+        origin_id -> Int4,
+        exercise -> Int4,
+        fname -> Varchar,
+        description -> Varchar,
+        notes -> Varchar,
+        created_time -> Timestamp,
+        completed_time -> Timestamp,
+        create_id -> Int4,
+        completed_id -> Int4,
     }
 }
+
+allow_tables_to_appear_in_same_query!(
+    exercises,
+    sets,
+    users,
+    workouts,
+);
