@@ -3,6 +3,7 @@
 #[macro_use]
 extern crate diesel;
 extern crate dotenv;
+
 use serde::{Serialize, Deserialize};
 use diesel::prelude::*;
 use diesel::pg::{PgConnection, Pg};
@@ -17,11 +18,6 @@ use std::time::SystemTime;
 use diesel::RunQueryDsl;
 
 
-
-
-
-
-
 pub mod appconfig;
 pub mod handlers;
 pub mod models;
@@ -30,8 +26,15 @@ pub mod schema;
 pub fn establish_connection(db_env_var: &str) -> PgConnection {
     dotenv().ok();
 
-    let db_url = env::var(db_env_var).expect(&format!("Environment variable {} must be set",db_env_var));
+    let db_url = env::var(db_env_var).expect(&format!("Environment variable {} must be set", db_env_var));
     PgConnection::establish(&db_url).expect(&format!("Error connecting to {}", db_url))
+}
+
+impl User {
+    pub fn get_user<'a>(conn: &PgConnection, id: &'a i32) -> Result<User, diesel::result::Error> {
+        use schema::users;
+        users::table.find(id).get_result::<User>(conn)
+    }
 }
 
 pub fn create_user<'a>(conn: &PgConnection, id: &'a i32, username: &'a str, fname: &'a str,
@@ -55,8 +58,8 @@ pub fn create_user<'a>(conn: &PgConnection, id: &'a i32, username: &'a str, fnam
 #[derive(Serialize, Deserialize)]
 pub struct UserList(pub Vec<User>);
 
-impl UserList{
-    pub fn get_users(conn: &PgConnection)->UserList{
+impl UserList {
+    pub fn get_users(conn: &PgConnection) -> UserList {
         use crate::schema::users::dsl::*;
 
 
@@ -117,29 +120,27 @@ pub fn create_exercise<'a>(conn: &PgConnection, id: &'a i32, origin_id: &'a i32,
         .values(&new_exercise)
         .get_result(conn)
         .expect("Error adding new Exercise")
-
 }
 
-pub fn create_set<'a>(conn: &PgConnection,     id: &'a i32,
-                       exercise_id: &'a i32,
-                       style: &'a String,
-                       unit: &'a String,
-                       goal_reps: &'a i16,
-                       goal_value: &'a String,
-                       description: &'a String,
-                       created_or_completed: &'a SystemTime,
-                       completed_reps: &'a i16,
-                       completed_value: &'a String,
-                      )->Set{
-
+pub fn create_set<'a>(conn: &PgConnection, id: &'a i32,
+                      exercise_id: &'a i32,
+                      style: &'a String,
+                      unit: &'a String,
+                      goal_reps: &'a i16,
+                      goal_value: &'a String,
+                      description: &'a String,
+                      created_or_completed: &'a SystemTime,
+                      completed_reps: &'a i16,
+                      completed_value: &'a String,
+) -> Set {
     use schema::sets;
-    let new_set = NewSet{
+    let new_set = NewSet {
         id: id,
         exercise_id: exercise_id,
-        style:style,
+        style: style,
         unit: unit,
-        goal_reps:goal_reps,
-        goal_value:goal_value,
+        goal_reps: goal_reps,
+        goal_value: goal_value,
         description: description,
         created_or_completed: created_or_completed,
         completed_reps: completed_reps,
@@ -150,5 +151,4 @@ pub fn create_set<'a>(conn: &PgConnection,     id: &'a i32,
         .values(new_set)
         .get_result(conn)
         .expect("Error adding new set")
-
 }
