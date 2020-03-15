@@ -4,6 +4,10 @@
 extern crate diesel;
 extern crate dotenv;
 
+
+#[cfg(test)]
+extern crate mockall;
+
 use diesel::prelude::*;
 use diesel::pg::{PgConnection};
 use dotenv::dotenv;
