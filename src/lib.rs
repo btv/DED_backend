@@ -19,18 +19,18 @@ use diesel::RunQueryDsl;
 
 
 
-#[cfg(test)]
-extern crate num_traits;
+
+
 
 pub mod appconfig;
 pub mod handlers;
 pub mod models;
 pub mod schema;
 
-pub fn establish_connection() -> PgConnection {
+pub fn establish_connection(db_env_var: &str) -> PgConnection {
     dotenv().ok();
 
-    let db_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
+    let db_url = env::var(db_env_var).expect(&format!("Environment variable {} must be set",db_env_var));
     PgConnection::establish(&db_url).expect(&format!("Error connecting to {}", db_url))
 }
 
@@ -63,7 +63,8 @@ impl UserList{
         let results = users
             .load::<User>(conn)
             .expect("Error retreiving users");
-        return UserList(results);
+
+        UserList(results)
     }
 }
 
