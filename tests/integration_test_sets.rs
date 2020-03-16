@@ -29,13 +29,16 @@ mod tests {
         let t_completed_value = "Should this be a string";
 
         let ns = NewSet {
+            id: t_id,
+            exercise_id: t_exercise_id,
             style: t_style.to_string(),
             unit: t_unit.to_string(),
             goal_reps: t_goal_reps,
             goal_value: t_goal_value.to_string(),
             description: t_description.to_string(),
-            completed_reps: 0,
-            completed_value: "".to_string()
+            completed_reps: t_completed_reps,
+            created_or_completed: t_created_or_completed,
+            completed_value: t_completed_value.to_string()
         };
 
         let result = ns.create();
@@ -48,6 +51,42 @@ mod tests {
                 assert_eq!(1, 5);
                 print!("got error {}", E);
                 // assert_eq!(E, diesel::ConnectionError::CouldntSetupConfiguration);     Need a proper error for this
+            }
+        }
+
+        let result = Set::get_set_by_id(t_id);
+
+        match result{
+            Ok(r_set) =>{
+                assert_eq!(r_set.id, t_id);
+                assert_eq!(r_set.created_or_completed, t_created_or_completed);
+                assert_eq!(r_set.description, t_description);
+                assert_eq!(r_set.exercise_id, Option::from(t_exercise_id));
+                assert_eq!(r_set.completed_value,t_completed_value);
+                assert_eq!(r_set.goal_reps,t_goal_reps);
+                assert_eq!(r_set.unit, t_unit);
+                assert_eq!(r_set.completed_reps, t_completed_reps);
+                assert_eq!(r_set.style, t_style);
+                assert_eq!(r_set.goal_value, t_goal_value);
+            }
+            Err(E) =>{
+                assert_eq!(E,diesel::NotFound);
+            }
+        }
+
+
+    }
+
+    #[test]
+    fn test_db_set_not_found(){
+        let result = Set::get_set_by_id(-999);
+        match result{
+            Ok(T) =>{
+                print!("Negative value in sets ");
+                assert_eq!(6,-1);
+            }
+            Err(E) =>{
+                assert_eq!(E,diesel::NotFound);
             }
         }
     }

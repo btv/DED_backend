@@ -17,7 +17,7 @@ table! {
 table! {
     sets (id) {
         id -> Int4,
-        exercise_id -> Int4,
+        exercise_id -> Nullable<Int4>,
         style -> Varchar,
         unit -> Varchar,
         goal_reps -> Int2,
