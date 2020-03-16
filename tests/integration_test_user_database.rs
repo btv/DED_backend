@@ -133,12 +133,6 @@ mod tests {
 
         let u_list = UserList::get_users();
 
-        // assert_eq!(u_list.ul.len(),4);
-
-
-
-
-
     }
 
 

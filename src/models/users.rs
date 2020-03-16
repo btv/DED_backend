@@ -26,7 +26,7 @@ pub struct NewUser {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct UserList(pub Vec<User>);
+    pub struct UserList( pub Vec<User > );
 
 
 impl User {
