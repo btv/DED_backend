@@ -20,7 +20,7 @@ pub struct Set {
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
 #[table_name = "sets"]
 pub struct NewSet {
-    pub exercise_id: i32,
+
     pub style: String,
     pub unit: String,
     pub goal_reps: i16,
