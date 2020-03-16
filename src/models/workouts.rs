@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 use std::time::SystemTime;
-use std::time::Duration;
+
 use crate::schema::workouts;
 use diesel::RunQueryDsl;
 
@@ -51,7 +51,7 @@ mod tests {
     use crate::models::workouts::Workout;
 
     #[test]
-    fn test_new_workout_strucutre(){
+    fn test_new_workout_structure(){
 
         let t_id = -1;
         let t_origin_id = 100;

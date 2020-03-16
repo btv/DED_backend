@@ -3,8 +3,8 @@
 
 
 mod tests {
-    use DED_backend::handlers::user::*;
-    use actix_web::{web, test, App};
+    
+    
 
 
     #[actix_rt::test]
