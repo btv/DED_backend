@@ -20,14 +20,12 @@ pub struct Set {
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
 #[table_name = "sets"]
 pub struct NewSet {
-    pub id: i32,
     pub exercise_id: i32,
     pub style: String,
     pub unit: String,
     pub goal_reps: i16,
     pub goal_value: String,
     pub description: String,
-    pub created_or_completed: SystemTime,
     pub completed_reps: i16,
     pub completed_value: String,
 }
@@ -83,7 +81,7 @@ mod tests {
         assert_eq!(t_description, t_set.description);
         assert_eq!(t_created_or_completed, t_set.created_or_completed);
         assert_eq!(t_completed_reps, t_set.completed_reps);
-        assert_eq!(t_completed_value, t_set.completed_value);
+        assert_eq!(t_completed_value, t_set.completed_value)
 
 
 
