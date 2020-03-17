@@ -49,7 +49,7 @@ mod tests {
                 assert_eq!(t_email, r_user.email);
                 assert_eq!(t_salt, r_user.salt);
             }
-            Err(E) => {
+            Err(E) => {//todo: need to fix this
                 assert_eq!(1,5);
                 print!("got error {}",E);
                 // assert_eq!(E, diesel::ConnectionError::CouldntSetupConfiguration);
@@ -101,7 +101,7 @@ mod tests {
     }
 
     #[test]
-    fn test_db_user_list(){
+    fn test_db_user_list(){  //todo:  need to complete this !!!
         let user_1 = User{
             id: 100,
             username: "user 100".to_string(),
