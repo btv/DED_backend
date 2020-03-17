@@ -10,7 +10,6 @@ mod tests {
     use diesel::RunQueryDsl;
     use std::time::SystemTime;
     use std::time::Duration;
-    use term::terminfo::parm::Param::Words;
 
     // to run all tests sequentially    cargo test -- --test-threads=1
     #[test]
@@ -48,11 +47,56 @@ mod tests {
 
         let res = t_workout.create();
         match res {
-            Ok(r) => {}
-            Err(E) => {}
+            Ok(r) => {
+                assert_eq!(r.id, t_id);
+                assert_eq!(r.origin_id, t_origin_id);
+                assert_eq!(r.exercise, t_exercise);
+                assert_eq!(r.description, t_description);
+                assert_eq!(r.notes, t_notes);
+                assert_eq!(r.created_time, t_created_time);
+                assert_eq!(r.completed_time, t_completed_time);
+                assert_eq!(r.create_id, t_create_id);
+                assert_eq!(r.completed_id, t_completed_id);
+            }
+            Err(E) => {
+                assert_eq!(E, diesel::NotFound);
+            }
+        }
 
+        let res = Workout::get_workout_by_id(t_id);
+
+        match res {
+            Ok(r) => {
+                assert_eq!(r.id, t_id);
+                assert_eq!(r.origin_id, t_origin_id);
+                assert_eq!(r.exercise, t_exercise);
+                assert_eq!(r.description, t_description);
+                assert_eq!(r.notes, t_notes);
+                assert_eq!(r.created_time, t_created_time);
+                assert_eq!(r.completed_time, t_completed_time);
+                assert_eq!(r.create_id, t_create_id);
+                assert_eq!(r.completed_id, t_completed_id);
+            }
+            Err(E) => {
+                assert_eq!(E, diesel::NotFound);
+            }
         }
     }
+
+    #[test]
+    fn test_db_workout_not_found(){
+        let res = Workout::get_workout_by_id(-99999);
+        match res{//todo: need to fix this
+            Err(E) =>{
+                assert_eq!(E, diesel::NotFound);
+            }
+            Ok(_T) =>{
+                print!("Negative user Id in user table");
+                assert_eq!(6,-1);
+            }
+        }
+    }
+
 }
 
 

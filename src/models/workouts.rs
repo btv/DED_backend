@@ -3,6 +3,8 @@ use std::time::SystemTime;
 
 use crate::schema::workouts;
 use diesel::RunQueryDsl;
+use crate::establish_connection;
+use diesel::query_dsl::filter_dsl::FindDsl;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable)]
 pub struct Workout {
@@ -42,6 +44,15 @@ impl NewWorkout{
             .values(self)
             .get_result(&conn)
     }
+}
+
+
+impl Workout{
+    pub fn get_workout_by_id(id:i32) ->Result<Workout, diesel::result::Error>{
+        let conn = establish_connection();
+       workouts::table.find(id).get_result(&conn)
+    }
+
 }
 
 #[cfg(test)]
