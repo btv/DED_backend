@@ -85,7 +85,39 @@ mod tests {
             }
         }
 
+        let result = Exercise::get_exercise_by_id(t_id);
+        match result {
+            Err(E) =>{
+                assert_eq!(E,diesel::NotFound );
+            }
+            Ok(ret)=> {
+                assert_eq!(ret.id,t_exercise.id);
+                assert_eq!(ret.origin_id,     t_exercise.origin_id);
+                assert_eq!(ret.set_id, t_set_id);
+                assert_eq!(ret.fname, t_fname);
+                assert_eq!(ret.exercise_type,t_exercise_type);
+                assert_eq!(ret.description, t_description);
+                assert_eq!(ret.notes, t_notes);
+                assert_eq!(ret.create_time,t_create_time);
+                assert_eq!(ret.complete_time,t_complete_time);
+                assert_eq!(ret.create_id,t_create_id);
+                assert_eq!(ret.completed_id,t_completed_id);
+            }
+        }
 
 
+    }
+    #[test]
+    fn test_db_exercises_not_found(){
+        let result = Exercise::get_exercise_by_id(-123923);
+        match result{ //todo: need to fix this.
+            Err(E) =>{
+                assert_eq!(E, diesel::NotFound);
+            }
+            Ok(_T) =>{
+                print!("Negative user Id in user table");
+                assert_eq!(6,-1);
+            }
+        }
     }
 }

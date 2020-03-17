@@ -80,7 +80,7 @@ mod tests {
     fn test_db_user_not_found(){
         let result = User::get_user(-99);
 
-        match result{
+        match result{//todo: need to fix this
             Err(E) =>{
                 assert_eq!(E, diesel::NotFound);
             }
