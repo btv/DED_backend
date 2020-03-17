@@ -36,7 +36,6 @@ pub struct NewWorkout {
 impl NewWorkout{
     pub fn create(&self)->Result<Workout, diesel::result::Error>
     {
-        use diesel::RunQueryDsl;;
         use crate::establish_connection;
         let conn = establish_connection();
         diesel::insert_into(workouts::table)

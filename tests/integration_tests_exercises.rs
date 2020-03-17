@@ -8,7 +8,7 @@ mod tests {
     use DED_backend::{establish_connection};
     use DED_backend::models::exercises::{Exercise, NewExercise};
     use diesel::RunQueryDsl;
-    use serde_json::to_string;
+    
     use std::time::SystemTime;
     use std::time::Duration;
     

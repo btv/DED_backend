@@ -7,7 +7,7 @@ mod tests {
     use DED_backend::models::users::{User,UserList};
 
     use diesel::RunQueryDsl;
-    use serde_json::to_string;
+    
 
     // to run all tests sequentially    cargo test -- --test-threads=1
     #[test]
@@ -84,7 +84,7 @@ mod tests {
             Err(E) =>{
                 assert_eq!(E, diesel::NotFound);
             }
-            Ok(T) =>{
+            Ok(_T) =>{
                 print!("Negative user Id in user table");
                 assert_eq!(6,-1);
             }
@@ -130,7 +130,7 @@ mod tests {
         user_2.create();
         user_3.create();
 
-        let u_list = UserList::get_users();
+        let _u_list = UserList::get_users();
 
     }
 

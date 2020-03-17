@@ -2,7 +2,7 @@
 
 mod tests {
     use DED_backend::handlers::set;
-    use actix_web::{web, test, App, http::StatusCode};
+    use actix_web::{web, test, App};
 
     #[actix_rt::test]
     async fn test_set_new() {
@@ -31,7 +31,7 @@ mod tests {
                   .set_payload(payload)
                   .to_request();
 
-        let resp = test::call_service(&mut app, req).await;
+        let _resp = test::call_service(&mut app, req).await;
         // Need some changes here        // assert_eq!(resp.status(), StatusCode::OK);
     }
 

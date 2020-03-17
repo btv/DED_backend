@@ -81,7 +81,7 @@ mod tests {
     fn test_db_set_not_found(){
         let result = Set::get_set_by_id(-999);
         match result{
-            Ok(T) =>{
+            Ok(_T) =>{
                 print!("Negative value in sets ");
                 assert_eq!(6,-1);
             }
