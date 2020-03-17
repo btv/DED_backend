@@ -1,7 +1,7 @@
-use diesel::prelude::*;
+
 use actix_web::{web, Responder};
 
-use crate::models::exercises::{Exercise,NewExercise};
+use crate::models::exercises::{NewExercise};
 
 pub async fn create_exercise (
         in_exercise: web::Path<NewExercise>

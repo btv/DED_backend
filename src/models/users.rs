@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 #[cfg(test)]
-use mockall::*;
+
 #[cfg(test)]
 use mockall::predicate::*;
 
@@ -26,7 +26,7 @@ pub struct NewUser {
 }
 
 #[derive(Serialize, Deserialize)]
-pub struct UserList(pub Vec<User>);
+    pub struct UserList( pub Vec<User > );
 
 
 impl User {
@@ -53,7 +53,7 @@ impl User {
 
 impl UserList {
     pub fn get_users() -> Self {
-        use diesel::QueryDsl;
+
         use diesel::RunQueryDsl;
         use crate::establish_connection;
         use crate::schema::users::dsl::*;
@@ -67,8 +67,6 @@ impl UserList {
         UserList(results)
     }
 }
-
-
 
 
 #[cfg(test)]

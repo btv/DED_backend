@@ -23,9 +23,6 @@ pub mod schema;
 //pub fn establish_connection(db_env_var: &str) -> PgConnection {
 pub fn establish_connection() -> PgConnection {
     dotenv().ok();
-
-    //let db_url = env::var(db_env_var)
-    //             .expect(&format!("Environment variable {} must be set", db_env_var));
     let db_url = env::var("DATABASE_URL")
                       .expect("DATABASE_URL must be set");
 
