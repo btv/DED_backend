@@ -3,14 +3,17 @@ dist: bionic
 rust:
   - 1.41.1
 cache: cargo
+addons:
+    postgresql: "12"
+    apt:
+        packages:
+            - postgresql-12
 jobs:
   include:
-    - stage: "syntax"
-      name: "Checking syntax"
-      script: cargo check
     - stage: "tests"
       name: "Running the tests"
-      script: cargo test
+      script:
+          - cargo test
     - stage: "prod"
       name: "Production build"
       script: cargo build --release
