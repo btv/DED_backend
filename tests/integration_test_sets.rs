@@ -8,7 +8,7 @@ mod tests {
     use DED_backend::{establish_connection};
     use DED_backend::models::sets::{Set, NewSet};
     use diesel::RunQueryDsl;
-    use std::time::SystemTime;
+    use std::time::{SystemTime, UNIX_EPOCH};
 
     #[test]
     fn test_db_set_insert_and_find() {
@@ -59,7 +59,10 @@ mod tests {
         match result{
             Ok(r_set) =>{
                 assert_eq!(r_set.id, t_id);
-                assert_eq!(r_set.created_or_completed, t_created_or_completed);
+                // Possibly address the nanosecond difference
+                let sec_original = t_created_or_completed.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                let sec_saves = r_set.created_or_completed.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                assert_eq!(sec_original, sec_saves);
                 assert_eq!(r_set.description, t_description);
                 assert_eq!(r_set.exercise_id, Option::from(t_exercise_id));
                 assert_eq!(r_set.completed_value,t_completed_value);
