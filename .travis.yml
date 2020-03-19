@@ -1,20 +1,21 @@
 language: rust
-dist: bionic
+os: linux
 rust:
   - 1.41.1
 cache: cargo
-addons:
-    postgresql: "12"
-    apt:
-        packages:
-            - postgresql-12
-jobs:
-  include:
-    - stage: "tests"
-      name: "Running the tests"
-      script:
-          - cargo test
-    - stage: "prod"
-      name: "Production build"
-      script: cargo build --release
-      if: branch = master
+
+env:
+    - RUST_BACKTRACE=1
+
+services:
+    - postgresql
+
+before_script:
+  - psql -c 'create database build_db;' -U postgres
+  - echo "DATABASE_URL=postgres://postgres@localhost/build_db" > .env
+  - if which diesel; then echo "diesel already installed"; else cargo install diesel_cli --no-default-features --features=postgres; fi
+  - diesel migration run
+
+
+script:
+    - cargo test
