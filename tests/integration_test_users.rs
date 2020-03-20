@@ -3,17 +3,16 @@
 extern crate diesel;
 extern crate dotenv;
 mod tests {
-    use DED_backend::{establish_connection};
+    use DED_backend::establish_connection;
     use DED_backend::models::users::{User,UserList};
 
     use diesel::RunQueryDsl;
-    
 
     // to run all tests sequentially    cargo test -- --test-threads=1
     #[test]
     fn test_db_user_insert_and_find() {
     // NOTE: these two tests are run sequentially since multi thread test might create a race cond.
-        let conn = establish_connection();
+        let conn = establish_connection().get().unwrap();
 
         // delete all entries in the database
         let _xxx = diesel::delete(DED_backend::schema::users::dsl::users)
@@ -39,7 +38,7 @@ mod tests {
 
 
 
-        let result = t_user.create();
+        let result = t_user.create(&conn);
 
         match result {
             Ok(r_user) => {
@@ -58,7 +57,7 @@ mod tests {
 
 
 
-        let result = User::get_user(t_id);
+        let result = User::get_user(t_id, &conn);
 
         match result{
             Ok(r_user) =>{
@@ -78,7 +77,8 @@ mod tests {
 
     #[test]
     fn test_db_user_not_found(){
-        let result = User::get_user(-99);
+        let conn = establish_connection().get().unwrap();
+        let result = User::get_user(-99, &conn);
 
         match result{//todo: need to fix this
             Err(E) =>{
@@ -102,6 +102,7 @@ mod tests {
 
     #[test]
     fn test_db_user_list(){  //todo:  need to complete this !!!
+        let conn = establish_connection().get().unwrap();
         let user_1 = User{
             id: 100,
             username: "user 100".to_string(),
@@ -126,14 +127,11 @@ mod tests {
             salt: "MSG30201".to_string()
         };
 
-        user_1.create();
-        user_2.create();
-        user_3.create();
+        user_1.create(&conn);
+        user_2.create(&conn);
+        user_3.create(&conn);
 
-        let _u_list = UserList::get_users();
+        let _u_list = UserList::get_users(&conn);
 
     }
-
-
-
 }

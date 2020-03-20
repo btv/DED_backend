@@ -4,15 +4,17 @@
 
 extern crate diesel;
 extern crate dotenv;
+
+
 mod tests {
-    use DED_backend::{establish_connection};
+    use DED_backend::establish_connection;
     use DED_backend::models::sets::{Set, NewSet};
     use diesel::RunQueryDsl;
     use std::time::{SystemTime, UNIX_EPOCH};
 
     #[test]
     fn test_db_set_insert_and_find() {
-        let conn = establish_connection();
+        let conn = establish_connection().get().unwrap();
         let _xxx = diesel::delete(DED_backend::schema::sets::dsl::sets)
             .execute(&conn);
 
@@ -29,32 +31,27 @@ mod tests {
         let t_completed_value = "Should this be a string";
 
         let ns = NewSet {
-            id: t_id,
             exercise_id: t_exercise_id,
             style: t_style.to_string(),
             unit: t_unit.to_string(),
             goal_reps: t_goal_reps,
             goal_value: t_goal_value.to_string(),
             description: t_description.to_string(),
-            completed_reps: t_completed_reps,
             created_or_completed: t_created_or_completed,
-            completed_value: t_completed_value.to_string()
         };
 
-        let result = ns.create();
-
-        match result {
+        match ns.create(&conn) {
             Ok(u) => {
                 assert_eq!(u.unit, t_unit);
             }
             Err(E) => {
-                assert_eq!(1, 5);
                 print!("got error {}", E);
+                assert_eq!(1, 5);
                 // assert_eq!(E, diesel::ConnectionError::CouldntSetupConfiguration);     Need a proper error for this
             }
         }
 
-        let result = Set::get_set_by_id(t_id);
+        let result = Set::get_set_by_id(t_id, &conn);
 
         match result{
             Ok(r_set) =>{
@@ -82,8 +79,8 @@ mod tests {
 
     #[test]
     fn test_db_set_not_found(){
-        let result = Set::get_set_by_id(-999);
-        match result{
+        let conn = establish_connection().get().unwrap();
+        match Set::get_set_by_id(-999, &conn) {
             Ok(_T) =>{
                 print!("Negative value in sets ");
                 assert_eq!(6,-1);

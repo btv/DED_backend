@@ -14,7 +14,7 @@ mod tests {
     // to run all tests sequentially    cargo test -- --test-threads=1
     #[test]
     fn test_db_workout_insert_and_find() {
-        let conn = establish_connection();
+        let conn = establish_connection().get().unwrap();
 
         let _xxx = diesel::delete(DED_backend::schema::workouts::dsl::workouts)
             .execute(&conn);
@@ -32,7 +32,6 @@ mod tests {
         let t_completed_id = 666;
 
         let t_workout = NewWorkout {
-            id: t_id,
             origin_id: t_origin_id,
             exercise: t_exercise,
             fname: t_fname.to_string(),
@@ -45,10 +44,8 @@ mod tests {
         };
 
 
-        let res = t_workout.create();
-        match res {
+        match t_workout.create(&conn) {
             Ok(r) => {
-                assert_eq!(r.id, t_id);
                 assert_eq!(r.origin_id, t_origin_id);
                 assert_eq!(r.exercise, t_exercise);
                 assert_eq!(r.description, t_description);
@@ -71,9 +68,7 @@ mod tests {
             }
         }
 
-        let res = Workout::get_workout_by_id(t_id);
-
-        match res {
+        match Workout::get_workout_by_id(t_id,&conn) {
             Ok(r) => {
                 assert_eq!(r.id, t_id);
                 assert_eq!(r.origin_id, t_origin_id);
@@ -100,7 +95,8 @@ mod tests {
 
     #[test]
     fn test_db_workout_not_found(){
-        let res = Workout::get_workout_by_id(-99999);
+        let conn = establish_connection().get().unwrap();
+        let res = Workout::get_workout_by_id(-99999, &conn);
         match res{//todo: need to fix this
             Err(E) =>{
                 assert_eq!(E, diesel::NotFound);
