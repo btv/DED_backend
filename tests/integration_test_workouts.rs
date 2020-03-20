@@ -8,7 +8,7 @@ mod tests {
     use DED_backend::models::workouts::{Workout, NewWorkout};
 
     use diesel::RunQueryDsl;
-    use std::time::SystemTime;
+    use std::time::{SystemTime, UNIX_EPOCH};
     use std::time::Duration;
 
     // to run all tests sequentially    cargo test -- --test-threads=1
@@ -53,8 +53,16 @@ mod tests {
                 assert_eq!(r.exercise, t_exercise);
                 assert_eq!(r.description, t_description);
                 assert_eq!(r.notes, t_notes);
-                assert_eq!(r.created_time, t_created_time);
-                assert_eq!(r.completed_time, t_completed_time);
+
+                let mut sec_original = t_created_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                let mut sec_saves = r.created_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                assert_eq!(sec_original, sec_saves);
+
+                sec_original = t_completed_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                sec_saves = r.completed_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                assert_eq!(sec_original, sec_saves);
+
+
                 assert_eq!(r.create_id, t_create_id);
                 assert_eq!(r.completed_id, t_completed_id);
             }
