@@ -8,10 +8,10 @@ extern crate dotenv;
 #[cfg(test)]
 extern crate mockall;
 
-use diesel::prelude::*;
-use diesel::pg::{PgConnection};
+use diesel::pg::PgConnection;
 use dotenv::dotenv;
 use std::env;
+use diesel::r2d2::{ Pool, PooledConnection, ConnectionManager, PoolError };
 
 
 pub mod appconfig;
@@ -19,13 +19,18 @@ pub mod handlers;
 pub mod models;
 pub mod schema;
 
+pub type PgPool = Pool<ConnectionManager<PgConnection>>;
+pub type PgPooledConnection = PooledConnection<ConnectionManager<PgConnection>>;
 
-//pub fn establish_connection(db_env_var: &str) -> PgConnection {
-pub fn establish_connection() -> PgConnection {
+fn init_pool(database_url: &str) -> Result<PgPool, PoolError> {
+    let manager = ConnectionManager::<PgConnection>::new(database_url);
+    Pool::builder().build(manager)
+}
+
+pub fn establish_connection() -> PgPool {
     dotenv().ok();
     let db_url = env::var("DATABASE_URL")
                       .expect("DATABASE_URL must be set");
 
-    PgConnection::establish(&db_url)
-                  .expect(&format!("Error connecting to {}", db_url))
+    init_pool(&db_url).expect("Failed to create pool")
 }
