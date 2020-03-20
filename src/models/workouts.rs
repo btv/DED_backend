@@ -2,8 +2,7 @@ use serde::{Serialize, Deserialize};
 use std::time::SystemTime;
 
 use crate::schema::workouts;
-use diesel::RunQueryDsl;
-use crate::establish_connection;
+use diesel::{PgConnection,RunQueryDsl};
 use diesel::query_dsl::filter_dsl::FindDsl;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable)]
@@ -23,7 +22,6 @@ pub struct Workout {
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
 #[table_name="workouts"]
 pub struct NewWorkout {
-    pub id: i32,
     pub origin_id: i32,
     pub exercise: i32,
     pub fname: String,
@@ -36,21 +34,18 @@ pub struct NewWorkout {
 }
 
 impl NewWorkout{
-    pub fn create(&self)->Result<Workout, diesel::result::Error>
+    pub fn create(&self, conn: &PgConnection)->Result<Workout, diesel::result::Error>
     {
-        use crate::establish_connection;
-        let conn = establish_connection();
         diesel::insert_into(workouts::table)
             .values(self)
-            .get_result(&conn)
+            .get_result(conn)
     }
 }
 
 
 impl Workout{
-    pub fn get_workout_by_id(id:i32) ->Result<Workout, diesel::result::Error>{
-        let conn = establish_connection();
-       workouts::table.find(id).get_result(&conn)
+    pub fn get_workout_by_id(id:i32, conn: &PgConnection) ->Result<Workout, diesel::result::Error>{
+       workouts::table.find(id).get_result(conn)
     }
 
 }
