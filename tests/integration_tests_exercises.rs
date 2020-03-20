@@ -9,7 +9,7 @@ mod tests {
     use DED_backend::models::exercises::{Exercise, NewExercise};
     use diesel::RunQueryDsl;
     
-    use std::time::SystemTime;
+    use std::time::{SystemTime,UNIX_EPOCH};
     use std::time::Duration;
     
     #[test]
@@ -73,8 +73,17 @@ mod tests {
                 assert_eq!(r_ex.exercise_type, t_exercise.exercise_type);
                 assert_eq!(r_ex.description, t_exercise.description);
                 assert_eq!(r_ex.notes, t_exercise.notes);
-                assert_eq!(r_ex.create_time, t_exercise.create_time);
-                assert_eq!(r_ex.complete_time, t_exercise.complete_time);
+
+
+                let mut sec_original = t_create_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                let mut sec_saves = r_ex.create_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                assert_eq!(sec_original, sec_saves);
+
+
+                sec_original = t_complete_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                sec_saves = r_ex.complete_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                assert_eq!(sec_original, sec_saves);
+
                 assert_eq!(r_ex.create_id,t_exercise.create_id);
                 assert_eq!(r_ex.completed_id, t_exercise.completed_id);
             }
@@ -98,8 +107,17 @@ mod tests {
                 assert_eq!(ret.exercise_type,t_exercise_type);
                 assert_eq!(ret.description, t_description);
                 assert_eq!(ret.notes, t_notes);
-                assert_eq!(ret.create_time,t_create_time);
-                assert_eq!(ret.complete_time,t_complete_time);
+
+                let mut sec_original = t_create_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                let mut sec_saves = ret.create_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                assert_eq!(sec_original, sec_saves);
+
+
+                sec_original = t_complete_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                sec_saves = ret.complete_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
+                assert_eq!(sec_original, sec_saves);
+
+
                 assert_eq!(ret.create_id,t_create_id);
                 assert_eq!(ret.completed_id,t_completed_id);
             }
