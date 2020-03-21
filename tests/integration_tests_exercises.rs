@@ -5,22 +5,22 @@ extern crate dotenv;
 
 
 mod tests {
-    use DED_backend::{establish_connection};
+    use DED_backend::establish_connection;
     use DED_backend::models::exercises::{Exercise, NewExercise};
     use diesel::RunQueryDsl;
-    
+
     use std::time::{SystemTime,UNIX_EPOCH};
     use std::time::Duration;
-    
+
     #[test]
     fn test_db_exercise_insert_and_find(){
-        let conn = establish_connection();
+        let conn = establish_connection().get().unwrap();
 
         // delete all entries in the database
         let _xxx = diesel::delete(DED_backend::schema::exercises::dsl::exercises)
             .execute(&conn);
 
-        let t_id= 100;
+        let t_id= 1;
         let t_origin_id= 200;
         let t_set_id= 300;
         let t_fname= "SuperJock";
@@ -31,7 +31,7 @@ mod tests {
         let t_complete_time= t_create_time + Duration::new(1200,0);
         let t_create_id=100;
         let t_completed_id= 240;
-        
+
         let t_exercise = Exercise{
             id: t_id,
             origin_id: t_origin_id,
@@ -48,7 +48,6 @@ mod tests {
 
 
         let new_ex = NewExercise{
-            id: t_id,
             origin_id: t_origin_id,
             set_id: t_set_id,
             fname: t_fname.to_string(),
@@ -62,9 +61,7 @@ mod tests {
         };
 
 
-        let result = new_ex.create();
-
-        match result{
+        match new_ex.create(&conn) {
             Ok(r_ex) =>{
                 assert_eq!(r_ex.id, t_exercise.id);
                 assert_eq!(r_ex.origin_id, t_exercise.origin_id);
@@ -94,8 +91,7 @@ mod tests {
             }
         }
 
-        let result = Exercise::get_exercise_by_id(t_id);
-        match result {
+        match Exercise::get_exercise_by_id(t_id, &conn) {
             Err(E) =>{
                 assert_eq!(E,diesel::NotFound );
             }
@@ -127,8 +123,8 @@ mod tests {
     }
     #[test]
     fn test_db_exercises_not_found(){
-        let result = Exercise::get_exercise_by_id(-123923);
-        match result{ //todo: need to fix this.
+        let conn = establish_connection().get().unwrap();
+        match Exercise::get_exercise_by_id(-123923, &conn) {
             Err(E) =>{
                 assert_eq!(E, diesel::NotFound);
             }

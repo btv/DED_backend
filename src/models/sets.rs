@@ -3,8 +3,9 @@ use std::time::SystemTime;
 
 use crate::schema::sets;
 use diesel::query_dsl::filter_dsl::FindDsl;
+use diesel::PgConnection;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
+#[derive(Debug, Clone, Serialize, Deserialize, Queryable)]
 pub struct Set {
     pub id: i32,
     pub exercise_id: Option<i32>,
@@ -18,39 +19,32 @@ pub struct Set {
     pub completed_value: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
+#[derive(Debug, Clone, Serialize, Deserialize, Insertable)]
 #[table_name = "sets"]
 pub struct NewSet {
-    pub id: i32,
     pub exercise_id:i32,
     pub style: String,
     pub unit: String,
     pub goal_reps: i16,
     pub goal_value: String,
     pub description: String,
-    pub created_or_completed: SystemTime,
-    pub completed_reps: i16,
-    pub completed_value: String,
 }
 
 impl NewSet {
-    pub fn create(&self) -> Result<Set, diesel::result::Error> {
+    pub fn create(&self, connection: &PgConnection) -> Result<Set, diesel::result::Error> {
         use diesel::RunQueryDsl;
-        use crate::establish_connection;
 
-        let connection = establish_connection();
         diesel::insert_into(sets::table)
             .values(self)
-            .get_result(&connection)
+            .get_result(connection)
     }
 }
 
 impl Set {
-    pub fn get_set_by_id(id: i32) ->Result<Set, diesel::result::Error>{
+    pub fn get_set_by_id(id: i32, conn: &PgConnection) ->Result<Set, diesel::result::Error>{
         use diesel::RunQueryDsl;
-        use crate::establish_connection;
-        let conn = establish_connection();
-        sets::table.find(id).get_result(&conn)
+
+        sets::table.find(id).get_result(conn)
     }
 }
 
@@ -60,7 +54,7 @@ mod tests {
     use crate::models::sets::Set;
 
     #[test]
-    fn test_new_set(){
+    fn test_set(){
         let t_id = 10;
         let t_exercise_id = 100;
         let t_style = "Fancy";

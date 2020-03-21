@@ -2,9 +2,8 @@
 
 use serde::{Serialize, Deserialize};
 use std::time::SystemTime;
-use diesel::RunQueryDsl;
+use diesel::{PgConnection,RunQueryDsl};
 use crate::schema::exercises;
-use crate::establish_connection;
 use diesel::query_dsl::filter_dsl::FindDsl;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable)]
@@ -25,7 +24,6 @@ pub struct Exercise {
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
 #[table_name = "exercises"]
 pub struct NewExercise {
-    pub id: i32,
     pub origin_id: i32,
     pub set_id: i32,
     pub fname: String,
@@ -40,19 +38,16 @@ pub struct NewExercise {
 
 
 impl NewExercise {
-    //todo: agree on method names
-    pub fn create(&self) -> Result<Exercise, diesel::result::Error> {
-        let connection = establish_connection();
+    pub fn create(&self, connection: &PgConnection) -> Result<Exercise, diesel::result::Error> {
         diesel::insert_into(exercises::table)
             .values(self)
-            .get_result(&connection)
+            .get_result(connection)
     }
 }
 
 impl Exercise {
-    pub fn get_exercise_by_id(id: i32) -> Result<Exercise, diesel::result::Error> {
-        let conn = establish_connection();
-        exercises::table.find(id).get_result(&conn)
+    pub fn get_exercise_by_id(id: i32, conn: &PgConnection) -> Result<Exercise, diesel::result::Error> {
+        exercises::table.find(id).get_result(conn)
     }
 }
 
@@ -79,7 +74,6 @@ mod tests {
 
         let t_exercise = Exercise {
             id: t_id,
-
             origin_id: t_origin_id,
             set_id: t_set_id,
             fname: t_fname.to_string(),
