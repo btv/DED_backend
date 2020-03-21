@@ -28,7 +28,6 @@ pub struct NewSet {
     pub goal_reps: i16,
     pub goal_value: String,
     pub description: String,
-    pub created_or_completed: SystemTime,
 }
 
 impl NewSet {
@@ -55,7 +54,7 @@ mod tests {
     use crate::models::sets::Set;
 
     #[test]
-    fn test_new_set(){
+    fn test_set(){
         let t_id = 10;
         let t_exercise_id = 100;
         let t_style = "Fancy";

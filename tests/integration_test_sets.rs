@@ -37,7 +37,6 @@ mod tests {
             goal_reps: t_goal_reps,
             goal_value: t_goal_value.to_string(),
             description: t_description.to_string(),
-            created_or_completed: t_created_or_completed,
         };
 
         match ns.create(&conn) {
