@@ -4,7 +4,7 @@ extern crate diesel;
 extern crate dotenv;
 mod tests {
     use DED_backend::establish_connection;
-    use DED_backend::models::users::{User,UserList};
+    use DED_backend::models::users::{User,UserList,NewUser};
 
     use diesel::RunQueryDsl;
 
@@ -18,57 +18,44 @@ mod tests {
         let _xxx = diesel::delete(DED_backend::schema::users::dsl::users)
             .execute(&conn);
 
-        // assert_eq!(xxx,Ok(0));
-
-        let t_id = 1999;
         let t_uname = "TestUser";
         let t_fname = "Usable User";
         let t_email = "testuser@testdomain.com";
         let t_salt = "some_like_MSG";
 
-        // let t_user = User(&conn, &t_id, &t_uname, &t_fname, &t_email, &t_salt);
-
-        let t_user = User {
-            id: t_id,
+        let t_user = NewUser {
             username: t_uname.to_string(),
             fname: t_fname.to_string(),
             email: t_email.to_string(),
             salt: t_salt.to_string()
         };
 
-
-
-        let result = t_user.create(&conn);
-
-        match result {
+        let new_user_id = match t_user.create(&conn) {
             Ok(r_user) => {
-                assert_eq!(t_id, r_user.id);
                 assert_eq!(t_uname, r_user.username);
                 assert_eq!(t_fname, r_user.fname);
                 assert_eq!(t_email, r_user.email);
                 assert_eq!(t_salt, r_user.salt);
+                r_user.id
             }
             Err(E) => {//todo: need to fix this
                 assert_eq!(1,5);
                 print!("got error {}",E);
                 // assert_eq!(E, diesel::ConnectionError::CouldntSetupConfiguration);
+                0
             }
         };
 
-
-
-        let result = User::get_user(t_id, &conn);
-
-        match result{
+        match User::get_user(new_user_id, &conn) {
             Ok(r_user) =>{
-                assert_eq!(t_id, r_user.id);
+                assert_eq!(new_user_id, r_user.id);
                 assert_eq!(t_uname,r_user.username);
                 assert_eq!(t_fname, r_user.fname);
                 assert_eq!(t_email, r_user.email);
                 assert_eq!(t_salt, r_user.salt);
             }
             Err(E) =>{
-                assert_eq!(E,diesel::NotFound);
+                assert_eq!(E, diesel::NotFound);
             }
         }
 
@@ -103,24 +90,21 @@ mod tests {
     #[test]
     fn test_db_user_list(){  //todo:  need to complete this !!!
         let conn = establish_connection().get().unwrap();
-        let user_1 = User{
-            id: 100,
+        let user_1 = NewUser{
             username: "user 100".to_string(),
             fname: "Weak".to_string(),
             email: "dfsff@2123.com".to_string(),
             salt: "MSG001".to_string()
         };
 
-        let user_2 = User{
-            id: 200,
+        let user_2 = NewUser{
             username: "user 200".to_string(),
             fname: "Weak2".to_string(),
             email: "dfsff@21232.com".to_string(),
             salt: "MSG0201".to_string()
         };
 
-        let user_3 = User{
-            id: 300,
+        let user_3 = NewUser{
             username: "user 300".to_string(),
             fname: "Weak3".to_string(),
             email: "d3fsff@212532.com".to_string(),

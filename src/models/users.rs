@@ -19,7 +19,6 @@ pub struct User {
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
 #[table_name="users"]
 pub struct NewUser {
-    pub id: i32,
     pub username: String,
     pub fname: String,
     pub email: String,
@@ -37,7 +36,9 @@ impl User {
 
         users::table.find(id).get_result(conn)
     }
+}
 
+impl NewUser {
     pub fn create(&self, connection: &PgConnection) -> Result<User, diesel::result::Error> {
         use diesel::RunQueryDsl;
 
