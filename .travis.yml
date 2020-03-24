@@ -9,23 +9,15 @@ env:
         - RUST_BACKTRACE=1
         - PGPORT: 5433
 
-services:
-    - postgresql
-addons:
-    postgresql: "12"
-    apt:
-        packages:
-            - postgresql-12
-            - postgresql-client-12
-
 before_install:
     - sudo apt-get update
     - sudo apt-get --yes remove postgresql\*
-    - sudo sed -i -e '/local.*peer/s/postgres/all/' -e 's/peer\|md5/trust/g' /etc/postgresql/*/main/pg_hba.conf
+    - sudo apt-get install -y postgresql-12 postgresql-client-12
+    - sudo cp /etc/postgresql/{9.6,12}/main/pg_hba.conf
     - sudo service postgresql restart 12
-    - sleep 1
 
 before_script:
+    - psql --version
     - psql -c 'create database build_db;' -U postgres
     - psql -c 'CREATE ROLE travis SUPERUSER LOGIN CREATEDB;' -U postgres
     - echo "DATABASE_URL=postgres://postgres@localhost/build_db" > .env
@@ -34,3 +26,9 @@ before_script:
 
 script:
     - cargo test
+
+services:
+    - postgresql
+
+addons:
+    postgresql: "12"
