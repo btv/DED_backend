@@ -15,6 +15,11 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                         .route(web::post().to(set::new)
                     )
                 )
+                .service(
+                    web::resource("/delete/{id}/")
+                        .route(web::post().to(set::delete))
+                        .route(web::delete().to(set::delete))
+                )
         )
         .route("/", web::get().to(index))
         .route("/{name}/index.html", web::get().to(index_with_name));
