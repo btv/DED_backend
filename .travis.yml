@@ -5,17 +5,30 @@ rust:
 cache: cargo
 
 env:
-    - RUST_BACKTRACE=1
+    global:
+        - RUST_BACKTRACE=1
+        - PGPORT: 5433
+
+before_install:
+    - sudo apt-get update
+    - sudo apt-get --yes remove postgresql\*
+    - sudo apt-get install -y postgresql-12 postgresql-client-12
+    - sudo cp /etc/postgresql/{9.6,12}/main/pg_hba.conf
+    - sudo service postgresql restart 12
+
+before_script:
+    - psql --version
+    - psql -c 'create database build_db;' -U postgres
+    - psql -c 'CREATE ROLE travis SUPERUSER LOGIN CREATEDB;' -U postgres
+    - echo "DATABASE_URL=postgres://postgres@localhost/build_db" > .env
+    - if which diesel; then echo "diesel already installed"; else cargo install diesel_cli --no-default-features --features=postgres; fi
+    - diesel migration run
+
+script:
+    - cargo test
 
 services:
     - postgresql
 
-before_script:
-  - psql -c 'create database build_db;' -U postgres
-  - echo "DATABASE_URL=postgres://postgres@localhost/build_db" > .env
-  - if which diesel; then echo "diesel already installed"; else cargo install diesel_cli --no-default-features --features=postgres; fi
-  - diesel migration run
-
-
-script:
-    - cargo test
+addons:
+    postgresql: "12"

@@ -5,10 +5,14 @@ use crate::schema::sets;
 use diesel::query_dsl::filter_dsl::FindDsl;
 use diesel::PgConnection;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Queryable)]
+#[derive(
+    PartialEq, Eq, Debug, Clone, Queryable, Identifiable, Insertable,
+    AsChangeset, QueryableByName, Serialize, Deserialize
+)]
+#[table_name = "sets"]
 pub struct Set {
     pub id: i32,
-    pub exercise_id: Option<i32>,
+    pub exercise_id: i32,
     pub style: String,
     pub unit: String,
     pub goal_reps: i16,
@@ -41,10 +45,16 @@ impl NewSet {
 }
 
 impl Set {
-    pub fn get_set_by_id(id: i32, conn: &PgConnection) ->Result<Set, diesel::result::Error>{
+    pub fn get_set_by_id(id: i32, conn: &PgConnection) -> Result<Set, diesel::result::Error> {
         use diesel::RunQueryDsl;
 
         sets::table.find(id).get_result(conn)
+    }
+
+    pub fn delete(in_id: &i32, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
+        use diesel::RunQueryDsl;
+
+        diesel::delete(sets::table.find(*in_id)).execute(connection)
     }
 }
 
@@ -68,7 +78,7 @@ mod tests {
 
         let t_set = Set{
             id: t_id,
-            exercise_id: Option::from(t_exercise_id),
+            exercise_id: t_exercise_id,
             style: t_style.to_string(),
             unit: t_unit.to_string(),
             goal_reps: t_goal_reps,
@@ -80,7 +90,7 @@ mod tests {
         };
 
         assert_eq!(t_id, t_set.id);
-        assert_eq!(Option::from(t_exercise_id), t_set.exercise_id);
+        assert_eq!(t_exercise_id, t_set.exercise_id);
         assert_eq!(t_style, t_set.style);
         assert_eq!(t_unit, t_set.unit);
         assert_eq!(t_goal_reps, t_set.goal_reps);

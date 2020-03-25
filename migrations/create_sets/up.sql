@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS sets (
     id SERIAL PRIMARY KEY,
-    exercise_id int,
+    exercise_id int not null,
     style varchar not null,
     unit varchar not null,
     goal_reps smallint not null ,

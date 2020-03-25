@@ -60,7 +60,7 @@ mod tests {
                 let sec_saves = r_set.created_or_completed.duration_since(UNIX_EPOCH).unwrap().as_secs();
                 assert_eq!(sec_original, sec_saves);
                 assert_eq!(r_set.description, t_description);
-                assert_eq!(r_set.exercise_id, Option::from(t_exercise_id));
+                assert_eq!(r_set.exercise_id, t_exercise_id);
                 assert_eq!(r_set.completed_value,t_completed_value);
                 assert_eq!(r_set.goal_reps,t_goal_reps);
                 assert_eq!(r_set.unit, t_unit);
