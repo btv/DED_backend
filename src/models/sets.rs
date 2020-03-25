@@ -34,6 +34,9 @@ pub struct NewSet {
     pub description: String,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SetList( pub Vec<Set> );
+
 impl NewSet {
     pub fn create(&self, connection: &PgConnection) -> Result<Set, diesel::result::Error> {
         use diesel::RunQueryDsl;
@@ -57,6 +60,20 @@ impl Set {
         diesel::delete(sets::table.find(*in_id)).execute(connection)
     }
 }
+
+impl SetList {
+    pub fn get_sets_by_exercise_id(ex_id: &i32, conn: &PgConnection) -> Self {
+        use diesel::prelude::*;
+        use crate::schema::sets::dsl::exercise_id;
+
+        let results = sets::table.filter(exercise_id.eq(*ex_id))
+            .load::<Set>(conn)
+            .expect("Error loading sets");
+
+        SetList(results)
+    }
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -98,9 +115,5 @@ mod tests {
         assert_eq!(t_created_or_completed, t_set.created_or_completed);
         assert_eq!(t_completed_reps, t_set.completed_reps);
         assert_eq!(t_completed_value, t_set.completed_value)
-
-
-
-
     }
 }
