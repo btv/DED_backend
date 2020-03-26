@@ -62,15 +62,15 @@ impl Set {
 }
 
 impl SetList {
-    pub fn get_sets_by_exercise_id(ex_id: &i32, conn: &PgConnection) -> Self {
+    pub fn get_sets_by_exercise_id(
+        ex_id: &i32,
+        conn: &PgConnection
+    ) -> Result<Vec<Set>, diesel::result::Error> {
         use diesel::prelude::*;
         use crate::schema::sets::dsl::exercise_id;
 
-        let results = sets::table.filter(exercise_id.eq(*ex_id))
-            .load::<Set>(conn)
-            .expect("Error loading sets");
-
-        SetList(results)
+        sets::table.filter(exercise_id.eq(*ex_id))
+            .get_results::<Set>(conn)
     }
 }
 
