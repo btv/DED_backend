@@ -98,7 +98,6 @@ mod tests {
 
         test_find.create(&conn);
 
-
         let req = test::TestRequest::get()
             .header(header::CONTENT_TYPE, "application/json")
             .uri("/sets/find_by_exercise_id/-1/")
@@ -106,6 +105,41 @@ mod tests {
 
         let resp = test::call_service(&mut app, req).await;
         assert_eq!(resp.status(), StatusCode::OK);
+    }
+
+    #[actix_rt::test]
+    async fn test_find_by_set_id() {
+        use DED_backend::establish_connection;
+        use diesel::RunQueryDsl;
+
+        let conn = establish_connection().get().unwrap();
+        let _xxx = diesel::delete(DED_backend::schema::sets::dsl::sets)
+            .execute(&conn);
+
+        let mut app = test::init_service(
+            App::new()
+                .route("/sets/find_by_set_id/{id}/", web::get().to(set::find_by_set_id))
+        )
+        .await;
+
+        let test_find = NewSet {
+            exercise_id: -1,
+            style: "gangam".to_string(),
+            unit: "none".to_string(),
+            goal_reps: 10,
+            goal_value: "none".to_string(),
+            description: "something".to_string(),
+        };
+
+        let test_find_results = test_find.create(&conn).unwrap();
+
+        let req = test::TestRequest::get()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri(format!("/sets/find_by_set_id/{}/", test_find_results.id).as_str())
+            .to_request();
+
+        let resp: Set = test::read_response_json(&mut app, req).await;
+        assert!(resp == test_find);
     }
 }
 
