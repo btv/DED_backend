@@ -47,3 +47,16 @@ pub async fn find_by_exercise_id(ex_id: web::Path<i32>) -> impl Responder {
             HttpResponse::InternalServerError().json(e.to_string())
         })
 }
+
+/// Get a json object of a Set from its ID.
+///
+/// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/endpoint-sets-find)
+pub async fn find_by_set_id(id: web::Path<i32>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    Set::get_set_by_id(*id, &conn)
+        .map(|set| HttpResponse::Ok().json(set))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
