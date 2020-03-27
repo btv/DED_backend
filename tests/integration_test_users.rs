@@ -5,7 +5,7 @@ extern crate dotenv;
 mod tests {
     use DED_backend::establish_connection;
     use DED_backend::models::users::{User,UserList,NewUser};
-
+    use std::io::Write;
     use diesel::RunQueryDsl;
 
     // to run all tests sequentially    cargo test -- --test-threads=1
@@ -19,7 +19,7 @@ mod tests {
             .execute(&conn);
 
         let t_uname = "TestUser";
-        let t_fname = "Usable User";
+        let t_fname = "Usable_User";
         let t_email = "testuser@testdomain.com";
         let t_salt = "some_like_MSG";
 
@@ -88,34 +88,28 @@ mod tests {
     }
 
     #[test]
-    fn test_db_user_list(){  //todo:  need to complete this !!!
+    fn test_db_user_list(){
         let conn = establish_connection().get().unwrap();
-        let user_1 = NewUser{
-            username: "user 100".to_string(),
-            fname: "Weak".to_string(),
-            email: "dfsff@2123.com".to_string(),
-            salt: "MSG001".to_string()
-        };
 
-        let user_2 = NewUser{
-            username: "user 200".to_string(),
-            fname: "Weak2".to_string(),
-            email: "dfsff@21232.com".to_string(),
-            salt: "MSG0201".to_string()
-        };
+        for x in 1..101 {
+            let mut newUser = NewUser{
+                username: format!("username{}", x).to_string(),
+                fname: format!("fname_number{}",x).to_string(),
+                email: format!("user{}@colorado.edu",x).to_string(),
+                salt: format!("slatyas#{}",x).to_string()
+            };
+            newUser.create(&conn);
+        }
 
-        let user_3 = NewUser{
-            username: "user 300".to_string(),
-            fname: "Weak3".to_string(),
-            email: "d3fsff@212532.com".to_string(),
-            salt: "MSG30201".to_string()
-        };
 
-        user_1.create(&conn);
-        user_2.create(&conn);
-        user_3.create(&conn);
+         let u_list = UserList::get_users(&conn);
 
-        let _u_list = UserList::get_users(&conn);
+        let len = u_list.0.len();
+
+        assert!(len > 90);
+
+
+
 
     }
 }
