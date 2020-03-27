@@ -61,6 +61,17 @@ impl Set {
     }
 }
 
+impl PartialEq<NewSet> for Set {
+    fn eq(&self, other:& NewSet) -> bool {
+        self.exercise_id == other.exercise_id &&
+        self.style == other.style &&
+        self.unit == other.unit &&
+        self.goal_reps == other.goal_reps &&
+        self.goal_value == other.goal_value &&
+        self.description == other.description
+    }
+}
+
 impl SetList {
     pub fn get_sets_by_exercise_id(
         ex_id: &i32,

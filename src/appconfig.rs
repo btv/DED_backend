@@ -24,6 +24,10 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                     web::resource("/find_by_exercise_id/{ex_id}/")
                         .route(web::get().to(set::find_by_exercise_id))
                 )
+                .service(
+                    web::resource("/find_by_set_id/{id}/")
+                        .route(web::get().to(set::find_by_set_id))
+                )
         )
         .route("/", web::get().to(index))
         .route("/{name}/index.html", web::get().to(index_with_name));
