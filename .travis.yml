@@ -1,7 +1,7 @@
 language: rust
 os: linux
 rust:
-  - 1.41.1
+  - stable
 cache: cargo
 
 env:

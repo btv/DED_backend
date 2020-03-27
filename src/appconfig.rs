@@ -20,6 +20,10 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                         .route(web::post().to(set::delete))
                         .route(web::delete().to(set::delete))
                 )
+                .service(
+                    web::resource("/find_by_exercise_id/{ex_id}/")
+                        .route(web::get().to(set::find_by_exercise_id))
+                )
         )
         .route("/", web::get().to(index))
         .route("/{name}/index.html", web::get().to(index_with_name));
