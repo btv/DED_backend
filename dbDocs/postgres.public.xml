@@ -26,7 +26,7 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="sets" numRows="3" remarks="" schema="public" type="TABLE">
+      <table name="sets" numRows="2" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('sets_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="exercise_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="2" name="style" nullable="false" remarks="" size="2147483647" type="varchar"/>
@@ -55,8 +55,8 @@
          <index name="users_email_key" unique="true">
             <column ascending="true" name="email"/>
          </index>
-         <index name="users_fname_key" unique="true">
-            <column ascending="true" name="fname"/>
+         <index name="users_username_key" unique="true">
+            <column ascending="true" name="username"/>
          </index>
       </table>
       <table name="workouts" numRows="1" remarks="" schema="public" type="TABLE">

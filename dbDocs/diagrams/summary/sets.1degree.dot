@@ -31,7 +31,7 @@ digraph "sets" {
       <TR><TD PORT="created_or_completed" COLSPAN="3" ALIGN="LEFT">created_or_completed</TD></TR>
       <TR><TD PORT="completed_reps" COLSPAN="3" ALIGN="LEFT">completed_reps</TD></TR>
       <TR><TD PORT="completed_value" COLSPAN="3" ALIGN="LEFT">completed_value</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">3 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">2 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
     </TABLE>>
     URL="tables/sets.html"
     tooltip="sets"
