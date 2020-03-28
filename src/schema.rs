@@ -35,7 +35,7 @@ table! {
         username -> Varchar,
         fname -> Varchar,
         email -> Varchar,
-        salt -> Varchar,
+        passwd -> Varchar,
     }
 }
 
