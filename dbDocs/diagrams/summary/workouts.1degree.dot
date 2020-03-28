@@ -1,0 +1,39 @@
+// dot 2.42.3 on Mac OS X 10.15.4
+// SchemaSpy rev 590
+digraph "workouts" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "workouts" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">workouts</TD></TR>
+      <TR><TD PORT="id" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">id</TD></TR>
+      <TR><TD PORT="origin_id" COLSPAN="3" ALIGN="LEFT">origin_id</TD></TR>
+      <TR><TD PORT="exercise" COLSPAN="3" ALIGN="LEFT">exercise</TD></TR>
+      <TR><TD PORT="fname" COLSPAN="3" ALIGN="LEFT">fname</TD></TR>
+      <TR><TD PORT="description" COLSPAN="3" ALIGN="LEFT">description</TD></TR>
+      <TR><TD PORT="notes" COLSPAN="3" ALIGN="LEFT">notes</TD></TR>
+      <TR><TD PORT="created_time" COLSPAN="3" ALIGN="LEFT">created_time</TD></TR>
+      <TR><TD PORT="completed_time" COLSPAN="3" ALIGN="LEFT">completed_time</TD></TR>
+      <TR><TD PORT="create_id" COLSPAN="3" ALIGN="LEFT">create_id</TD></TR>
+      <TR><TD PORT="completed_id" COLSPAN="3" ALIGN="LEFT">completed_id</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">1 row</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/workouts.html"
+    tooltip="workouts"
+  ];
+}
