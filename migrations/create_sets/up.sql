@@ -34,7 +34,7 @@ CREATE  TABLE  IF NOT EXISTS users(
     fname varchar not null,
     email varchar not null,
     salt varchar not null,
-    unique(fname),
+    unique(username),
     unique(email)
 );
 

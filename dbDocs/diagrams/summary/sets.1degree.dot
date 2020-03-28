@@ -1,0 +1,39 @@
+// dot 2.42.3 on Mac OS X 10.15.4
+// SchemaSpy rev 590
+digraph "sets" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "sets" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">sets</TD></TR>
+      <TR><TD PORT="id" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">id</TD></TR>
+      <TR><TD PORT="exercise_id" COLSPAN="3" ALIGN="LEFT">exercise_id</TD></TR>
+      <TR><TD PORT="style" COLSPAN="3" ALIGN="LEFT">style</TD></TR>
+      <TR><TD PORT="unit" COLSPAN="3" ALIGN="LEFT">unit</TD></TR>
+      <TR><TD PORT="goal_reps" COLSPAN="3" ALIGN="LEFT">goal_reps</TD></TR>
+      <TR><TD PORT="goal_value" COLSPAN="3" ALIGN="LEFT">goal_value</TD></TR>
+      <TR><TD PORT="description" COLSPAN="3" ALIGN="LEFT">description</TD></TR>
+      <TR><TD PORT="created_or_completed" COLSPAN="3" ALIGN="LEFT">created_or_completed</TD></TR>
+      <TR><TD PORT="completed_reps" COLSPAN="3" ALIGN="LEFT">completed_reps</TD></TR>
+      <TR><TD PORT="completed_value" COLSPAN="3" ALIGN="LEFT">completed_value</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">3 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/sets.html"
+    tooltip="sets"
+  ];
+}
