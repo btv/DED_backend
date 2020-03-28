@@ -78,15 +78,6 @@ mod tests {
         }
     }
 
-
-    fn compare_users(u1:User, u2:User){
-        assert_eq!(u1.id, u2.id);
-        assert_eq!(u1.username, u2.username);
-        assert_eq!(u1.fname, u2.fname);
-        assert_eq!(u1.email, u2.email);
-        assert_eq!(u1.passwd, u2.passwd);
-    }
-
     #[test]
     fn test_db_user_list(){
         let conn = establish_connection().get().unwrap();

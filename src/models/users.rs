@@ -7,7 +7,11 @@ use mockall::predicate::*;
 use crate::schema::users;
 use diesel::PgConnection;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
+#[derive(
+    PartialEq, Eq, Debug, Clone, Queryable, Identifiable, Insertable,
+    AsChangeset, QueryableByName, Serialize, Deserialize
+)]
+#[table_name="users"]
 pub struct User {
     pub id: i32,
     pub username: String,
