@@ -75,21 +75,21 @@ mod tests {
         let t_uname = "TestUser";
         let t_fname = "Usable User";
         let t_email = "testuser@testdomain.com";
-        let t_salt = "some_like_MSG";
+        let t_passwd = "some_like_MSG";
 
         let t_user = User {
             id: t_id,
             username: t_uname.to_string(),
             fname: t_fname.to_string(),
             email: t_email.to_string(),
-            salt: t_salt.to_string()
+            passwd: t_passwd.to_string()
         };
 
         assert_eq!(t_id, t_user.id);
         assert_eq!(t_uname, t_user.username);
         assert_eq!(t_fname, t_user.fname);
         assert_eq!(t_email, t_user.email);
-        assert_eq!(t_salt, t_user.salt);
+        assert_eq!(t_passwd, t_user.passwd);
 
     }
 }

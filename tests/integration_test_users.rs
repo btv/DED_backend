@@ -21,13 +21,13 @@ mod tests {
         let t_uname = "TestUser";
         let t_fname = "Usable_User";
         let t_email = "testuser@testdomain.com";
-        let t_salt = "some_like_MSG";
+        let t_passwd = "some_like_MSG";
 
         let t_user = NewUser {
             username: t_uname.to_string(),
             fname: t_fname.to_string(),
             email: t_email.to_string(),
-            salt: t_salt.to_string()
+            passwd: t_passwd.to_string()
         };
 
         let new_user_id = match t_user.create(&conn) {
@@ -35,7 +35,7 @@ mod tests {
                 assert_eq!(t_uname, r_user.username);
                 assert_eq!(t_fname, r_user.fname);
                 assert_eq!(t_email, r_user.email);
-                assert_eq!(t_salt, r_user.salt);
+                assert_eq!(t_passwd, r_user.passwd);
                 r_user.id
             }
             Err(E) => {//todo: need to fix this
@@ -52,7 +52,7 @@ mod tests {
                 assert_eq!(t_uname,r_user.username);
                 assert_eq!(t_fname, r_user.fname);
                 assert_eq!(t_email, r_user.email);
-                assert_eq!(t_salt, r_user.salt);
+                assert_eq!(t_passwd, r_user.passwd);
             }
             Err(E) =>{
                 assert_eq!(E, diesel::NotFound);
@@ -84,7 +84,7 @@ mod tests {
         assert_eq!(u1.username, u2.username);
         assert_eq!(u1.fname, u2.fname);
         assert_eq!(u1.email, u2.email);
-        assert_eq!(u1.salt, u2.salt);
+        assert_eq!(u1.passwd, u2.passwd);
     }
 
     #[test]
@@ -107,9 +107,5 @@ mod tests {
         let len = u_list.0.len();
 
         assert!(len > 90);
-
-
-
-
     }
 }
