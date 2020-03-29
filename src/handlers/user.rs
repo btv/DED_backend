@@ -1,12 +1,6 @@
 
 
-use actix_web::{web, Responder};
+use actix_web::{web, Responder, HttpResponse};
+use crate::{establish_connection,hash_secret_key};
+use crate::models::users::{NewUser,User};
 
-use crate::models::users::{NewUser};
-
-pub async fn create_user (
-        in_user: web::Path<NewUser>
-    ) -> impl Responder {
-
-    format!("{:?}", &in_user)
-}

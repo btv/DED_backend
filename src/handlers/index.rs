@@ -1,24 +1,40 @@
 //! Handler for all the of the index based urls.
 //!
-//! This library is mostly provided as an example of both layout of
-//! how the future modules should be done and how url's within those modules
-//! should look.
+//! For more infomation on these endpoints, please go [here](https://github.com/coloradocollective/DED_Backend/wiki/index-landingpage)
 
-use actix_web::{web, Responder};
-
-/// Expiremental page, pulling the name parameter from the URL and using
-/// it for the output string.
-///
-/// **Arguments**:
-/// * name: <pretty self descriptive
-///
-/// **Returns**:
-/// A implementation of a `Responder` with the text `Hello [name]` to the person called on.
-pub async fn index_with_name(info: web::Path<String>) -> impl Responder {
-    format!("Hello {}!", info)
-}
+use actix_web::{web, Responder, HttpResponse};
+use crate::{establish_connection,hash_secret_key};
+use crate::models::users::{NewUser,SlimUser};
 
 /// Returns the information needed for the index page.
 pub async fn index() -> impl Responder {
     "DED Backend.  Hello!".to_string()
+}
+
+
+/// Endpoint for registering a new user to the system.
+///
+/// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/endpoint-users-create)
+pub async fn register (
+        in_user: web::Json<NewUser>
+    ) -> impl Responder {
+    use argonautica::Hasher;
+    let conn = establish_connection().get().unwrap();
+
+    let mut new_in_user = in_user.clone();
+
+    let mut hasher = Hasher::default();
+    new_in_user.passwd = hasher
+        .with_password(&in_user.passwd)
+        .with_secret_key(hash_secret_key().as_str())
+        .hash()
+        .unwrap();
+
+
+    new_in_user
+        .create(&conn)
+        .map(|user| HttpResponse::Ok().json(SlimUser::from(user)))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
 }
