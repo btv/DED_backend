@@ -1,7 +1,6 @@
 use actix_web::web;
 
-use crate::handlers::index::{index, index_with_name};
-use crate::handlers::set;
+use crate::handlers::{set,index};
 
 
 /// This function is modified as needed to make sure that all of the
@@ -29,6 +28,6 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                         .route(web::get().to(set::find_by_set_id))
                 )
         )
-        .route("/", web::get().to(index))
-        .route("/{name}/index.html", web::get().to(index_with_name));
+        .route("/", web::get().to(index::index))
+        .route("/register/", web::post().to(index::register));
 }
