@@ -5,7 +5,6 @@ extern crate dotenv;
 mod tests {
     use DED_backend::establish_connection;
     use DED_backend::models::users::{User,UserList,NewUser};
-    use std::io::Write;
     use diesel::RunQueryDsl;
 
     // to run all tests sequentially    cargo test -- --test-threads=1
@@ -83,11 +82,11 @@ mod tests {
         let conn = establish_connection().get().unwrap();
 
         for x in 1..101 {
-            let mut newUser = NewUser{
+            let newUser = NewUser{
                 username: format!("username{}", x).to_string(),
                 fname: format!("fname_number{}",x).to_string(),
                 email: format!("user{}@colorado.edu",x).to_string(),
-                salt: format!("slatyas#{}",x).to_string()
+                passwd: format!("slatyas#{}",x).to_string()
             };
             newUser.create(&conn);
         }
