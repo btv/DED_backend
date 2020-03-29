@@ -20,7 +20,7 @@ pub struct User {
     pub passwd: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
+#[derive(Debug, Clone, Deserialize, Insertable)]
 #[table_name="users"]
 pub struct NewUser {
     pub username: String,
@@ -32,6 +32,24 @@ pub struct NewUser {
 #[derive(Serialize, Deserialize)]
 pub struct UserList( pub Vec<User> );
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SlimUser {
+    pub id: i32,
+    pub email: String,
+    pub fname: String,
+    pub username: String
+}
+
+impl From<User> for SlimUser {
+    fn from(user: User) -> Self {
+        SlimUser {
+            id: user.id,
+            email: user.email,
+            fname: user.fname,
+            username: user.username
+        }
+    }
+}
 
 impl User {
     pub fn get_user (id: i32, conn: &PgConnection) -> Result<User, diesel::result::Error> {
@@ -64,6 +82,40 @@ impl UserList {
             .expect("Error retreiving users");
 
         UserList(results)
+    }
+}
+
+impl PartialEq<NewUser> for User {
+    fn eq(&self, other:& NewUser) -> bool {
+        self.username == other.username &&
+        self.fname == other.fname &&
+        self.email == other.email
+    }
+}
+
+impl PartialEq<User> for NewUser {
+    fn eq(&self, other:& User) -> bool {
+        self.username == other.username &&
+        self.fname == other.fname &&
+        self.email == other.email
+    }
+}
+
+impl PartialEq<User> for SlimUser {
+    fn eq(&self, other: &User) -> bool {
+        self.id == other.id &&
+        self.username == other.username &&
+        self.fname == other.fname &&
+        self.email == other.email
+    }
+}
+
+impl PartialEq<SlimUser> for User {
+    fn eq(&self, other: &SlimUser) -> bool {
+        self.id == other.id &&
+        self.username == other.username &&
+        self.fname == other.fname &&
+        self.email == other.email
     }
 }
 
