@@ -13,7 +13,7 @@ pub struct User {
     pub username: String,
     pub fname: String,
     pub email: String,
-    pub salt: String,
+    pub passwd: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
@@ -22,11 +22,11 @@ pub struct NewUser {
     pub username: String,
     pub fname: String,
     pub email: String,
-    pub salt: String,
+    pub passwd: String,
 }
 
 #[derive(Serialize, Deserialize)]
-    pub struct UserList( pub Vec<User > );
+pub struct UserList( pub Vec<User> );
 
 
 impl User {
