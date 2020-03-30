@@ -41,6 +41,9 @@ pub async fn register (
         })
 }
 
+/// Endpoint for authenticating a user to the system.
+///
+/// More information [here]()
 pub async fn authenticate (in_data: web::Json<AuthData>) -> impl Responder {
     format!("{:?}", in_data)
 }
