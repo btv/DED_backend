@@ -40,6 +40,12 @@ pub struct SlimUser {
     pub username: String
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AuthData {
+    pub email: String,
+    pub password: String,
+}
+
 impl From<User> for SlimUser {
     fn from(user: User) -> Self {
         SlimUser {

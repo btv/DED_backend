@@ -4,7 +4,9 @@
 
 use actix_web::{web, Responder, HttpResponse};
 use crate::{establish_connection,hash_secret_key};
-use crate::models::users::{NewUser,SlimUser};
+use crate::models::users::{NewUser,SlimUser,AuthData};
+
+
 
 /// Returns the information needed for the index page.
 pub async fn index() -> impl Responder {
@@ -37,4 +39,8 @@ pub async fn register (
         .map_err(|e| {
             HttpResponse::InternalServerError().json(e.to_string())
         })
+}
+
+pub async fn authenticate (in_data: web::Json<AuthData>) -> impl Responder {
+    format!("{:?}", in_data)
 }
