@@ -9,7 +9,7 @@
             <column ascending="true" name="version"/>
          </index>
       </table>
-      <table name="exercises" numRows="1" remarks="" schema="public" type="TABLE">
+      <table name="exercises" numRows="2" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('exercises_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="origin_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="2" name="set_id" nullable="false" remarks="" size="10" type="int4"/>
@@ -19,8 +19,8 @@
          <column autoUpdated="false" digits="0" id="6" name="notes" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="create_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="complete_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
-         <column autoUpdated="false" digits="0" id="9" name="create_id" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="10" name="completed_id" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="create_id" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="completed_id" nullable="false" remarks="" size="10" type="int4"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="exercises_pkey" unique="true">
             <column ascending="true" name="id"/>
@@ -42,12 +42,12 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="users" numRows="101" remarks="" schema="public" type="TABLE">
+      <table name="users" numRows="102" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="username" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="2" name="fname" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="3" name="email" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="4" name="salt" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="passwd" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="users_pkey" unique="true">
             <column ascending="true" name="id"/>
