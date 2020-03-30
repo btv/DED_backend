@@ -47,6 +47,27 @@ impl Exercise {
     }
 }
 
+impl PartialEq<NewExercise> for Exercise {
+    fn eq(&self, other:& NewExercise) -> bool {
+        self.origin_id == other.origin_id &&
+        self.set_id == other.set_id &&
+        self.fname == other.fname &&
+        self.exercise_type == other.exercise_type &&
+        self.description == other.description &&
+        self.notes == other.notes
+    }
+}
+
+impl PartialEq<Exercise> for NewExercise {
+    fn eq(&self, other:& Exercise) -> bool {
+        self.origin_id == other.origin_id &&
+        self.set_id == other.set_id &&
+        self.fname == other.fname &&
+        self.exercise_type == other.exercise_type &&
+        self.description == other.description &&
+        self.notes == other.notes
+    }
+}
 
 #[cfg(test)]
 mod tests {
