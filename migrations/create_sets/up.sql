@@ -33,7 +33,7 @@ CREATE  TABLE  IF NOT EXISTS users(
     username varchar not null,
     fname varchar not null,
     email varchar not null,
-    salt varchar not null,
+    passwd varchar not null,
     unique(username),
     unique(email)
 );

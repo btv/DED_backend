@@ -75,11 +75,8 @@ mod tests {
     #[actix_rt::test]
     async fn test_find_by_exercise_id() {
         use DED_backend::establish_connection;
-        use diesel::RunQueryDsl;
 
         let conn = establish_connection().get().unwrap();
-        let _xxx = diesel::delete(DED_backend::schema::sets::dsl::sets)
-            .execute(&conn);
 
         let mut app = test::init_service(
             App::new()
@@ -110,11 +107,8 @@ mod tests {
     #[actix_rt::test]
     async fn test_find_by_set_id() {
         use DED_backend::establish_connection;
-        use diesel::RunQueryDsl;
 
         let conn = establish_connection().get().unwrap();
-        let _xxx = diesel::delete(DED_backend::schema::sets::dsl::sets)
-            .execute(&conn);
 
         let mut app = test::init_service(
             App::new()
@@ -138,8 +132,18 @@ mod tests {
             .uri(format!("/sets/find_by_set_id/{}/", test_find_results.id).as_str())
             .to_request();
 
-        let resp: Set = test::read_response_json(&mut app, req).await;
-        assert!(resp == test_find);
+        let resp = test::call_service(&mut app, req).await;
+        match resp.status().is_success() {
+            false => (),
+            true => {
+                let n_req = test::TestRequest::get()
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .uri(format!("/sets/find_by_set_id/{}/", test_find_results.id).as_str())
+                    .to_request();
+                let new_resp: Set = test::read_response_json(&mut app, n_req).await;
+                assert!(new_resp == test_find);
+            }
+        }
     }
 }
 

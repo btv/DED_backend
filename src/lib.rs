@@ -3,6 +3,7 @@
 #[macro_use]
 extern crate diesel;
 extern crate dotenv;
+extern crate argonautica;
 
 
 #[cfg(test)]
@@ -33,4 +34,8 @@ pub fn establish_connection() -> PgPool {
                       .expect("DATABASE_URL must be set");
 
     init_pool(&db_url).expect("Failed to create pool")
+}
+
+pub fn hash_secret_key() -> String {
+    std::env::var("SECRET_KEY").unwrap_or_else(|_| "0123".repeat(8))
 }
