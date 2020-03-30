@@ -47,11 +47,7 @@ mod tests {
 
         match User::get_user(new_user_id, &conn) {
             Ok(r_user) =>{
-                assert_eq!(new_user_id, r_user.id);
-                assert_eq!(t_uname,r_user.username);
-                assert_eq!(t_fname, r_user.fname);
-                assert_eq!(t_email, r_user.email);
-                assert_eq!(t_passwd, r_user.passwd);
+                assert_eq!(r_user, t_user)
             }
             Err(E) =>{
                 assert_eq!(E, diesel::NotFound);
@@ -94,8 +90,6 @@ mod tests {
 
          let u_list = UserList::get_users(&conn);
 
-        let len = u_list.0.len();
-
-        assert!(len > 90);
+        assert!(u_list.0.len() > 90);
     }
 }
