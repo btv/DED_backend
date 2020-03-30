@@ -20,7 +20,7 @@ pub struct User {
     pub passwd: String,
 }
 
-#[derive(Debug, Clone, Deserialize, Insertable)]
+#[derive(Debug, Clone, Serialize, Deserialize, Insertable)]
 #[table_name="users"]
 pub struct NewUser {
     pub username: String,
@@ -93,6 +93,14 @@ impl PartialEq<NewUser> for User {
     }
 }
 
+impl PartialEq<NewUser> for SlimUser {
+    fn eq(&self, other:& NewUser) -> bool {
+        self.username == other.username &&
+        self.fname == other.fname &&
+        self.email == other.email
+    }
+}
+
 impl PartialEq<User> for NewUser {
     fn eq(&self, other:& User) -> bool {
         self.username == other.username &&
@@ -119,6 +127,13 @@ impl PartialEq<SlimUser> for User {
     }
 }
 
+impl PartialEq<SlimUser> for NewUser {
+    fn eq(&self, other:& SlimUser) -> bool {
+        self.username == other.username &&
+        self.fname == other.fname &&
+        self.email == other.email
+    }
+}
 
 #[cfg(test)]
 mod tests {
