@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS exercises(
     notes varchar  not null,
     create_time timestamp not null DEFAULT NOW(),
     complete_time timestamp not null DEFAULT NOW(),
-    create_id INTEGER not null,
-    completed_id INTEGER not null
+    create_id INTEGER not null DEFAULT 0,
+    completed_id INTEGER not null DEFAULT 0
 );
 
 

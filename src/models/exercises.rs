@@ -30,10 +30,6 @@ pub struct NewExercise {
     pub exercise_type: i32,
     pub description: String,
     pub notes: String,
-    pub create_time: SystemTime,
-    pub complete_time: SystemTime,
-    pub create_id: i32,
-    pub completed_id: i32,
 }
 
 
