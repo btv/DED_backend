@@ -4,6 +4,8 @@
 extern crate diesel;
 extern crate dotenv;
 extern crate argonautica;
+extern crate actix_web;
+
 
 
 #[cfg(test)]
