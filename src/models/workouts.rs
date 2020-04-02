@@ -66,6 +66,17 @@ mod tests {
         let t_notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
         let t_created_time = SystemTime::now();
         let t_completed_time = t_created_time + Duration::new(300,0);
+
+
+
+
+
+
+
+
+
+
+
         let t_create_id = 100;
         let t_completed_id = 10;
 
@@ -94,3 +105,10 @@ mod tests {
         assert_eq!(t_completed_id, t_workout.completed_id);
     }
 }
+
+
+
+
+
+
+

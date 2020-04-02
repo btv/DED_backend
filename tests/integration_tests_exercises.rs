@@ -22,7 +22,7 @@ mod tests {
         let t_fname= "SuperJock";
         let t_exercise_type= 22;
         let t_description= "Pecs! Pecs! and more Pecs!";
-        let t_notes= "never enouhg reps";
+        let t_notes= "never enough reps";
 
         let new_ex = NewExercise{
             origin_id: t_origin_id,
@@ -75,4 +75,8 @@ mod tests {
             }
         }
     }
+
+
+
+
 }
