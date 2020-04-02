@@ -5,6 +5,7 @@ extern crate diesel;
 extern crate dotenv;
 extern crate argonautica;
 extern crate actix_web;
+extern crate actix_identity;
 
 
 
