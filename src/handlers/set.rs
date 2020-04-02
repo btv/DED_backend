@@ -27,7 +27,7 @@ pub async fn new(new_set: web::Json<NewSet>) -> impl Responder {
 pub async fn delete(id: web::Path<i32>) -> impl Responder {
     let conn = establish_connection().get().unwrap();
 
-    Set::delete(&id, &conn)
+    Set::delete(*id, &conn)
         .map(|_| HttpResponse::Ok())
         .map_err(|e| {
             HttpResponse::InternalServerError().json(e.to_string())
@@ -41,7 +41,7 @@ pub async fn delete(id: web::Path<i32>) -> impl Responder {
 pub async fn find_by_exercise_id(ex_id: web::Path<i32>) -> impl Responder {
     let conn = establish_connection().get().unwrap();
 
-    SetList::get_sets_by_exercise_id(&ex_id, &conn)
+    SetList::get_sets_by_exercise_id(*ex_id, &conn)
         .map(|setlist| HttpResponse::Ok().json(setlist))
         .map_err(|e| {
             HttpResponse::InternalServerError().json(e.to_string())
