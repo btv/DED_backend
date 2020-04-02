@@ -5,6 +5,8 @@
 use actix_web::{web, Responder, HttpResponse};
 use crate::{establish_connection,hash_secret_key};
 use crate::models::users::{NewUser,SlimUser,AuthData};
+use actix_identity::Identity;
+use argonautica::{Hasher, Verifier};
 
 
 
@@ -20,7 +22,6 @@ pub async fn index() -> impl Responder {
 pub async fn register (
         in_user: web::Json<NewUser>
     ) -> impl Responder {
-    use argonautica::Hasher;
     let conn = establish_connection().get().unwrap();
 
     let mut new_in_user = in_user.clone();
@@ -32,18 +33,37 @@ pub async fn register (
         .hash()
         .unwrap();
 
-
     new_in_user
         .create(&conn)
         .map(|user| HttpResponse::Ok().json(SlimUser::from(user)))
-        .map_err(|e| {
-            HttpResponse::InternalServerError().json(e.to_string())
-        })
+        .map_err(|e| HttpResponse::InternalServerError().json(e.to_string()))
 }
 
-/// Endpoint for authenticating a user to the system.
+/// Endpoint for login a user to the system.
 ///
 /// More information [here]()
-pub async fn authenticate (in_data: web::Json<AuthData>) -> impl Responder {
-    format!("{:?}", in_data)
+pub async fn login (
+    auth_data: web::Json<AuthData>,
+    id: Identity
+) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+    let mut verifier = Verifier::default();
+    let is_valid = verifier
+        .with_hash(&auth_data.password)
+        .with_secret_key(hash_secret_key().as_str())
+        .verify()
+        .unwrap();
+
+    format!("{:?}", auth_data)
+}
+
+/// Endpoint for logout a user to the system.
+///
+/// More information [here]()
+pub async fn logout (id: Identity) -> impl Responder {
+    match id.identity() {
+        Some(_i) => id.forget(),
+        _ => ()
+    }
+    HttpResponse::Ok().finish()
 }
