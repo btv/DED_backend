@@ -37,5 +37,7 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                 )
         )
         .route("/", web::get().to(index::index))
+        .route("/login/", web::post().to(index::login))
+        .route("/logout/", web::post().to(index::logout))
         .route("/register/", web::post().to(index::register));
 }
