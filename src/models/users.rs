@@ -42,7 +42,7 @@ pub struct SlimUser {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct AuthData {
-    pub email: String,
+    pub username: String,
     pub password: String,
 }
 

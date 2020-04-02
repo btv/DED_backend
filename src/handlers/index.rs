@@ -3,8 +3,8 @@
 //! For more infomation on these endpoints, please go [here](https://github.com/coloradocollective/DED_Backend/wiki/index-landingpage)
 
 use actix_web::{web, Responder, HttpResponse};
-use crate::{establish_connection,hash_secret_key};
-use crate::models::users::{NewUser,SlimUser,AuthData};
+use crate::{establish_connection, hash_secret_key};
+use crate::models::users::{NewUser, User, SlimUser, AuthData};
 use actix_identity::Identity;
 use argonautica::{Hasher, Verifier};
 
@@ -46,24 +46,38 @@ pub async fn login (
     auth_data: web::Json<AuthData>,
     id: Identity
 ) -> impl Responder {
+    use diesel::prelude::*;
+    use crate::schema::users::dsl::{users,username};
     let conn = establish_connection().get().unwrap();
+
+    let user_to_auth = users
+        .filter(username.eq(&auth_data.username))
+        .first::<User>(&conn)
+        .unwrap();
+
     let mut verifier = Verifier::default();
     let is_valid = verifier
-        .with_hash(&auth_data.password)
+        .with_hash(&user_to_auth.passwd)
+        .with_password(&auth_data.password)
         .with_secret_key(hash_secret_key().as_str())
         .verify()
         .unwrap();
 
-    format!("{:?}", auth_data)
+    if is_valid {
+        let slim_user = SlimUser::from(user_to_auth);
+        id.remember(
+            serde_json::to_string(&slim_user).unwrap()
+        );
+        HttpResponse::Ok().json(slim_user)
+    } else {
+        HttpResponse::Unauthorized().json("Unauthorized")
+    }
 }
 
 /// Endpoint for logout a user to the system.
 ///
 /// More information [here]()
 pub async fn logout (id: Identity) -> impl Responder {
-    match id.identity() {
-        Some(_i) => id.forget(),
-        _ => ()
-    }
+    if let Some(_i) = id.identity() { id.forget() }
     HttpResponse::Ok().finish()
 }
