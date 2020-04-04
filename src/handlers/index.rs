@@ -39,7 +39,7 @@ pub async fn register(in_user: web::Json<NewUser>) -> impl Responder {
 
 /// Endpoint for login a user to the system.
 ///
-/// More information [here]()
+/// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/endpoint-users-login)
 pub async fn login(
     auth_data: web::Json<AuthData>,
     id: Identity
