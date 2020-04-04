@@ -107,6 +107,12 @@ impl PartialEq<NewUser> for SlimUser {
     }
 }
 
+impl PartialEq<AuthData> for SlimUser {
+    fn eq(&self, other:&AuthData) -> bool {
+        self.username == other.username
+    }
+}
+
 impl PartialEq<User> for NewUser {
     fn eq(&self, other:& User) -> bool {
         self.username == other.username &&
