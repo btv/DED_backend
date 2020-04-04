@@ -50,10 +50,14 @@ pub async fn login (
     use crate::schema::users::dsl::{users,username};
     let conn = establish_connection().get().unwrap();
 
-    let user_to_auth = users
+    let user_to_auth = match users
         .filter(username.eq(&auth_data.username))
-        .first::<User>(&conn)
-        .unwrap();
+        .first::<User>(&conn) {
+            Ok(u) => u,
+            Err(e) => {
+                return HttpResponse::Unauthorized().json(e.to_string());
+            }
+        };
 
     let mut verifier = Verifier::default();
     let is_valid = verifier
@@ -80,11 +84,4 @@ pub async fn login (
 pub async fn logout (id: Identity) -> impl Responder {
     if let Some(_i) = id.identity() { id.forget() }
     HttpResponse::Ok().finish()
-}
-
-/// Endpoint for authenticating a user to the system.
-///
-/// More information [here]()
-pub async fn authenticate (in_data: web::Json<AuthData>) -> impl Responder {
-    format!("{:?}", in_data)
 }
