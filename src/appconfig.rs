@@ -1,6 +1,6 @@
 use actix_web::web;
 
-use crate::handlers::{set,index};
+use crate::handlers::{set, exercise, index};
 
 
 /// This function is modified as needed to make sure that all of the
@@ -28,6 +28,16 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                         .route(web::get().to(set::find_by_set_id))
                 )
         )
+        .service(
+            web::scope("/exercises")
+                .service(
+                    web::resource("/create/")
+                        .route(web::post().to(exercise::create_exercise)
+                    )
+                )
+        )
         .route("/", web::get().to(index::index))
+        .route("/login/", web::post().to(index::login))
+        .route("/logout/", web::post().to(index::logout))
         .route("/register/", web::post().to(index::register));
 }
