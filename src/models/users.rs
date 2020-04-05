@@ -40,6 +40,12 @@ pub struct SlimUser {
     pub username: String
 }
 
+#[derive(Debug, Serialize, Deserialize)]
+pub struct AuthData {
+    pub username: String,
+    pub password: String,
+}
+
 impl From<User> for SlimUser {
     fn from(user: User) -> Self {
         SlimUser {
@@ -98,6 +104,12 @@ impl PartialEq<NewUser> for SlimUser {
         self.username == other.username &&
         self.fname == other.fname &&
         self.email == other.email
+    }
+}
+
+impl PartialEq<AuthData> for SlimUser {
+    fn eq(&self, other:&AuthData) -> bool {
+        self.username == other.username
     }
 }
 

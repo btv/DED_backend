@@ -3,8 +3,12 @@
 //! For more infomation on these endpoints, please go [here](https://github.com/coloradocollective/DED_Backend/wiki/index-landingpage)
 
 use actix_web::{web, Responder, HttpResponse};
-use crate::{establish_connection,hash_secret_key};
-use crate::models::users::{NewUser,SlimUser};
+use crate::{establish_connection, hash_secret_key};
+use crate::models::users::{NewUser, User, SlimUser, AuthData};
+use actix_identity::Identity;
+use argonautica::{Hasher, Verifier};
+
+
 
 /// Returns the information needed for the index page.
 pub async fn index() -> impl Responder {
@@ -15,10 +19,7 @@ pub async fn index() -> impl Responder {
 /// Endpoint for registering a new user to the system.
 ///
 /// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/endpoint-users-create)
-pub async fn register (
-        in_user: web::Json<NewUser>
-    ) -> impl Responder {
-    use argonautica::Hasher;
+pub async fn register(in_user: web::Json<NewUser>) -> impl Responder {
     let conn = establish_connection().get().unwrap();
 
     let mut new_in_user = in_user.clone();
@@ -30,11 +31,55 @@ pub async fn register (
         .hash()
         .unwrap();
 
-
     new_in_user
         .create(&conn)
         .map(|user| HttpResponse::Ok().json(SlimUser::from(user)))
-        .map_err(|e| {
-            HttpResponse::InternalServerError().json(e.to_string())
-        })
+        .map_err(|e| HttpResponse::InternalServerError().json(e.to_string()))
+}
+
+/// Endpoint for login a user to the system.
+///
+/// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/endpoint-users-login)
+pub async fn login(
+    auth_data: web::Json<AuthData>,
+    id: Identity
+) -> impl Responder {
+    use crate::schema::users::dsl::{users,username};
+    use diesel::prelude::*;
+    let conn = establish_connection().get().unwrap();
+
+    let user_to_auth = match users
+        .filter(username.eq(&auth_data.username))
+        .first::<User>(&conn)
+    {
+        Ok(u) => u,
+        Err(e) => {
+            return HttpResponse::Unauthorized().json(e.to_string());
+        }
+    };
+
+    let mut verifier = Verifier::default();
+    match verifier
+        .with_hash(&user_to_auth.passwd)
+        .with_password(&auth_data.password)
+        .with_secret_key(hash_secret_key().as_str())
+        .verify()
+    {
+        Ok(_) => {
+            let slim_user = SlimUser::from(user_to_auth);
+            id.remember(serde_json::to_string(&slim_user).unwrap());
+            HttpResponse::Ok().json(slim_user)
+        }
+        Err(_) => HttpResponse::Unauthorized().json("Unauthorized"),
+    }
+}
+
+/// Endpoint for logout a user to the system.
+///
+/// More information [here]()
+pub async fn logout(id: Identity) -> impl Responder {
+    if let Some(_i) = id.identity() {
+        id.forget()
+    }
+    HttpResponse::Ok().finish()
 }
