@@ -13,6 +13,7 @@ doctest = false
 actix-web = "2"
 actix-rt = "1"
 actix-identity = "0.2"
+actix-cors = "0.2"
 
 diesel = { version = "1.4.3", features = ["postgres","r2d2"] }
 
