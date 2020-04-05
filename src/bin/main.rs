@@ -1,6 +1,7 @@
 #![allow(non_snake_case)]
 
 use actix_web::{App, HttpServer};
+use actix_cors::Cors;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 
 use DED_backend::appconfig::config_app;
@@ -18,6 +19,9 @@ async fn main() -> std::io::Result<()> {
                     .name("ded_auth")
                     .secure(false)
                 )
+        )
+        .wrap(
+            Cors::new().supports_credentials().finish()
         )})
         .bind("127.0.0.1:8080")?
         .run()
