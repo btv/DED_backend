@@ -9,7 +9,7 @@ Frontend code repo can be found [HERE](https://github.com/coloradocollective/DED
 
 ---
 
-[![Build Status](https://travis-ci.com/coloradocollective/DED_Backend.svg?branch=master)](https://travis-ci.com/coloradocollective/DED_Backend)
+[![Build Status](https://travis-ci.com/coloradocollective/DED_Backend.svg?token=cBa9dzkvRhGroiTNpmQn&branch=master)](https://travis-ci.com/coloradocollective/DED_Backend)
 
 This repo is for the DED backend repository.
 
