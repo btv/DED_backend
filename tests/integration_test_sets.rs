@@ -15,9 +15,6 @@ mod tests {
     #[test]
     fn test_db_set_insert_and_find() {
         let conn = establish_connection().get().unwrap();
-        let _xxx = diesel::delete(DED_backend::schema::sets::dsl::sets)
-            .execute(&conn);
-
 
         let t_id = 101;
         let t_exercise_id = 1020;
