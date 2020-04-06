@@ -64,4 +64,26 @@ mod tests {
         let resp_user2: SlimUser = test::read_response_json(&mut app, req).await;
         assert!(resp_user2 == new_user2);
     }
+
+    #[actix_rt::test]
+    async fn test_logout_delete() {
+        let mut app = test::init_service(
+            App::new()
+                .route("/logout/", web::delete().to(index::logout))
+        )
+        .await;
+        let req = test::TestRequest::delete()
+                  .uri("/logout/")
+                  .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        assert!(resp.status().is_success());
+
+        let req2 = test::TestRequest::delete()
+                  .header("ded_auth", "arstqwfpzxcvsomerandomcookiearst97239y87pl;q28u3l")
+                  .uri("/logout/")
+                  .to_request();
+        let resp2 = test::call_service(&mut app, req2).await;
+        assert!(resp2.status().is_success());
+    }
 }
