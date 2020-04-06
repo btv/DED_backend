@@ -2,7 +2,6 @@ language: rust
 os: linux
 rust:
   - stable
-cache: cargo
 
 env:
     global:
