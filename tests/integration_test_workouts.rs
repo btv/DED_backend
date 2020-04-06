@@ -16,10 +16,6 @@ mod tests {
     fn test_db_workout_insert_and_find() {
         let conn = establish_connection().get().unwrap();
 
-        let _xxx = diesel::delete(DED_backend::schema::workouts::dsl::workouts)
-            .execute(&conn);
-
-
         let t_id = 1000;
         let t_origin_id = 9999;
         let t_exercise = 32;

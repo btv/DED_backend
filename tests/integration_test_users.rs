@@ -13,10 +13,6 @@ mod tests {
     // NOTE: these two tests are run sequentially since multi thread test might create a race cond.
         let conn = establish_connection().get().unwrap();
 
-        // delete all entries in the database
-        let _xxx = diesel::delete(DED_backend::schema::users::dsl::users)
-            .execute(&conn);
-
         let t_uname = "TestUser";
         let t_fname = "Usable_User";
         let t_email = "testuser@testdomain.com";

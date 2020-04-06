@@ -13,10 +13,6 @@ mod tests {
     fn test_db_exercise_insert_and_find(){
         let conn = establish_connection().get().unwrap();
 
-        // delete all entries in the database
-        let _xxx = diesel::delete(DED_backend::schema::exercises::dsl::exercises)
-            .execute(&conn);
-
         let t_origin_id= 200;
         let t_set_id= 300;
         let t_fname= "SuperJock";
