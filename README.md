@@ -54,6 +54,25 @@ Please search for and install the stable version of rust used by your package ma
 
 Please follow the OSX: Option 2 instructions above.
 
+## How to Create the Database
+
+Start by installing Postgres. On MacOS, this can be done using homebrew by running `brew install postgresql`. For other platforms, Postgres has detailed guides available [here](https://wiki.postgresql.org/wiki/Detailed_installation_guides).
+
+Once you have installed Postgres, you need to start the Postgres server. To have the server start on login for MacOS, you can use the command `brew services start postgresql`.
+
+Now, create a file in the root directory of the project called `.env`. This stores environment variables used by Rust. In this file, create the following line, replacing `<Username>` with your user account name: 
+
+```DATABASE_URL=postgres://<Username>:@localhost/build_db```
+
+Next, we need to install Diesel. This can be achieved by running: 
+
+```cargo install diesel_cli --no-default-features --features postgres```
+
+Finally, run `diesel migration run` to have diesel automatically generate the database and tables for you.
+
+If for any reason you would like to reset the database back to its original, empty state, this can be done using `diesel migration redo`.
+
+
 ## How to build
 After making sure that rust and cargo are installed, using the following command from the top of the repo:
 
