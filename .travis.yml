@@ -1,5 +1,6 @@
 language: rust
 os: linux
+cache: cargo
 rust:
   - stable
 
@@ -42,6 +43,6 @@ deploy:
   skip_cleanup: true
   provider: script
   script:
-    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml --tags ded_backend,backend_docs
+    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml --tags ded_backend,backend_docs --user build
   on:
     branch: continuous_delivery
