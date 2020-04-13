@@ -42,6 +42,6 @@ deploy:
   skip_cleanup: true
   provider: script
   script:
-    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml --tags ded_backend,backend_docs --user build
+    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml -t full_backend --user build
   on:
     branch: continuous_delivery
