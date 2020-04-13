@@ -41,3 +41,5 @@ deploy:
   provider: script
   script:
     - ssh build@35.239.185.148 uname
+  on:
+    branch: continuous_delivery
