@@ -35,14 +35,13 @@ addons:
 before_deploy:
   - sudo apt-get install -y ansible rsync
   - git submodule update --init --recursive
+  - cargo build --release
+  - cargo doc
 
 deploy:
   skip_cleanup: true
   provider: script
   script:
-    - cargo build --release
-    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml --tags ded_backend
-    - cargo doc
-    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml --tags backend_docs
+    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml --tags ded_backend,backend_docs
   on:
     branch: continuous_delivery
