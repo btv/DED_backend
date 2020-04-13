@@ -33,13 +33,16 @@ addons:
     ssh_known_hosts: 35.239.185.148
 
 before_deploy:
-  - sudo apt-get install -y ansible
+  - sudo apt-get install -y ansible rsync
   - git submodule update --init --recursive
 
 deploy:
   skip_cleanup: true
   provider: script
   script:
-    - ssh build@35.239.185.148 uname
+    - cargo build --release
+    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml --tags ded_backend
+    - cargo doc
+    - ansible-playbook -v -i back_end_ansible/inventory back_end_ansible/playbook.yml --tags backend_docs
   on:
     branch: continuous_delivery
