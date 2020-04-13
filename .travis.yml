@@ -35,4 +35,9 @@ addons:
 before_deploy:
   - sudo apt-get install -y ansible
   - git submodule update --init --recursive
-  - ssh build@35.239.185.148 uname
+
+deploy:
+  skip_cleanup: true
+  provider: script
+  script:
+    - ssh build@35.239.185.148 uname
