@@ -10,9 +10,6 @@ extern crate actix_cors;
 
 
 
-#[cfg(test)]
-extern crate mockall;
-
 use diesel::pg::PgConnection;
 use dotenv::dotenv;
 use std::env;

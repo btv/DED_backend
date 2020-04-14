@@ -23,7 +23,3 @@ rand = "0.7"
 dotenv = "0.15.0"
 
 argonautica = "0.2.0"
-
-[dev-dependencies]
-num-traits = "0.2"
-mockall = "0.6.0"

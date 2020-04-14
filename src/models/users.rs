@@ -1,9 +1,4 @@
 use serde::{Serialize, Deserialize};
-#[cfg(test)]
-
-#[cfg(test)]
-use mockall::predicate::*;
-
 use crate::schema::users;
 use diesel::PgConnection;
 
