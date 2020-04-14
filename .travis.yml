@@ -34,7 +34,9 @@ addons:
 
 before_deploy:
   - sudo apt-get install -y ansible rsync
-  - git submodule update --init --recursive
+  - git submodule status
+  - git submodule update --remote --merge
+  - git submodule status
   - cargo build --release
   - cargo doc
 
