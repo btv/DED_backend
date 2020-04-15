@@ -47,6 +47,6 @@ CREATE TABLE IF NOT EXISTS workouts (
     notes varchar not null ,
     created_time timestamp not null DEFAULT NOW(),
     completed_time timestamp not null DEFAULT NOW(),
-    create_id integer not null,
-    completed_id integer not null
+    create_id integer not null DEFAULT 0,
+    completed_id integer not null DEFAULT 0
 );
