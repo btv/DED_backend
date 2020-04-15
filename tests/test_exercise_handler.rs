@@ -29,12 +29,28 @@ mod tests {
         let req = test::TestRequest::post()
                   .header(header::CONTENT_TYPE, "application/json")
                   .uri("/exercises/create/")
-                  .set_payload(
-                      serde_json::to_string(&new_ex).unwrap()
-                  )
+                  .set_payload(serde_json::to_string(&new_ex).unwrap())
                   .to_request();
 
         let resp_ex: Exercise = test::read_response_json(&mut app, req).await;
         assert!(resp_ex == new_ex);
+    }
+
+    #[actix_rt::test]
+    async fn test_exercise_delete() {
+        let mut app = test::init_service(
+            App::new()
+                .route("/exercise/{id}/", web::delete().to(exercise::delete))
+        )
+        .await;
+
+        let req = test::TestRequest::delete()
+                  .header(header::CONTENT_TYPE, "application/json")
+                  .uri("/exercise/1/")
+                  .to_request();
+
+
+        let resp = test::call_service(&mut app, req).await;
+        assert_eq!(resp.status(), StatusCode::OK);
     }
 }
