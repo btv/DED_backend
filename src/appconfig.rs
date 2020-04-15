@@ -1,6 +1,6 @@
 use actix_web::web;
 
-use crate::handlers::{set, exercise, index};
+use crate::handlers::{set, exercise, index, workout};
 
 
 /// This function is modified as needed to make sure that all of the
@@ -33,6 +33,14 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                 .service(
                     web::resource("/create/")
                         .route(web::post().to(exercise::create_exercise)
+                    )
+                )
+        )
+        .service(
+            web::scope("/workouts")
+                .service(
+                    web::resource("/create/")
+                        .route(web::post().to(workout::create_workout)
                     )
                 )
         )
