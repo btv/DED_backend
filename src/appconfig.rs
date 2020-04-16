@@ -18,6 +18,7 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                     web::resource("/{id}/")
                         .route(web::delete().to(set::delete))
                         .route(web::get().to(set::find_by_set_id))
+                        .route(web::patch().to(set::update_by_set_id))
                 )
                 .service(
                     web::resource("/find_by_exercise_id/{ex_id}/")
