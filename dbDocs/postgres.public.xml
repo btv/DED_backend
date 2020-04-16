@@ -9,7 +9,7 @@
             <column ascending="true" name="version"/>
          </index>
       </table>
-      <table name="exercises" numRows="2" remarks="" schema="public" type="TABLE">
+      <table name="exercises" numRows="31" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('exercises_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="origin_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="2" name="set_id" nullable="false" remarks="" size="10" type="int4"/>
@@ -26,7 +26,7 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="sets" numRows="2" remarks="" schema="public" type="TABLE">
+      <table name="sets" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('sets_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="exercise_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="2" name="style" nullable="false" remarks="" size="2147483647" type="varchar"/>
@@ -42,7 +42,7 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="users" numRows="102" remarks="" schema="public" type="TABLE">
+      <table name="users" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="username" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="2" name="fname" nullable="false" remarks="" size="2147483647" type="varchar"/>
@@ -59,7 +59,7 @@
             <column ascending="true" name="username"/>
          </index>
       </table>
-      <table name="workouts" numRows="1" remarks="" schema="public" type="TABLE">
+      <table name="workouts" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('workouts_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="origin_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="2" name="exercise" nullable="false" remarks="" size="10" type="int4"/>
