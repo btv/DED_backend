@@ -15,6 +15,11 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                     )
                 )
                 .service(
+                    web::resource("/complete/{id}")
+                        .route(web::post().to(set::complete_by_set_id)
+                    )
+                )
+                .service(
                     web::resource("/{id}/")
                         .route(web::delete().to(set::delete))
                         .route(web::get().to(set::find_by_set_id))
