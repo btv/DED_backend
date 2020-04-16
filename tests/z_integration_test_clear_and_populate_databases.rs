@@ -912,7 +912,7 @@ mod tests {
      ;897,biceps,zottman curl,auto populated exercise\
      ;898,biceps,zottman preacher curl,auto populated exercise";
 
-#[test]
+    #[test]
     fn test_base_exercise_integration() {
         let conn = establish_connection().get().unwrap();
         let _x = diesel::delete(DED_backend::schema::sets::dsl::sets)
@@ -937,17 +937,14 @@ mod tests {
                 description: items[1].to_string(),
                 notes: items[2].to_string()
             };
-            match newExercise.create(&conn){
-                Err(E )=>{
+            match newExercise.create(&conn) {
+                Err(E) => {
                     assert_eq!(E, diesel::NotFound);
                 }
-                Ok(_T)=>{
+                Ok(_T) => {
                     assert_eq!(_T.description, items[1].to_string());
                 }
             }
         }
-
-
-
-
+    }
 }
