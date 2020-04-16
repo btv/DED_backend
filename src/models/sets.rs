@@ -37,6 +37,30 @@ pub struct NewSet {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SetList( pub Vec<Set> );
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CompleteSet {
+    pub completed_reps: i16,
+    pub completed_value: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
+#[table_name = "sets"]
+struct CompleteSetFull {
+    pub completed_reps: i16,
+    pub completed_value: String,
+    pub created_or_completed: SystemTime,
+}
+
+impl From<&CompleteSet> for CompleteSetFull {
+    fn from(cs: &CompleteSet) -> Self {
+        CompleteSetFull {
+            completed_reps: cs.completed_reps,
+            completed_value: cs.completed_value.clone(),
+            created_or_completed: SystemTime::now()
+        }
+    }
+
+}
 impl NewSet {
     pub fn create(&self, connection: &PgConnection) -> Result<Set, diesel::result::Error> {
         use diesel::RunQueryDsl;
@@ -69,6 +93,18 @@ impl Set {
 
         diesel::update(sets::table.find(in_id))
             .set(new_set)
+            .execute(connection)
+    }
+
+    pub fn complete(
+        in_id: i32,
+        comp_set: &CompleteSet,
+        connection: &PgConnection
+    ) -> Result<usize, diesel::result::Error> {
+        use diesel::RunQueryDsl;
+
+        diesel::update(sets::table.find(in_id))
+            .set(CompleteSetFull::from(comp_set))
             .execute(connection)
     }
 }
