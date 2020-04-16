@@ -4,7 +4,7 @@
 use actix_web::{web, Responder, HttpResponse};
 use crate::establish_connection;
 
-use crate::models::exercises::{NewExercise};
+use crate::models::exercises::{NewExercise, Exercise};
 
 /// Create a new exercise entry in the database.
 ///
@@ -22,3 +22,16 @@ pub async fn create_exercise (
         })
 }
 
+
+/// Delete an exercise from the database based on the primary key.
+///
+/// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/endpoint-exercises-delete)
+pub async fn delete(id: web::Path<i32>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    Exercise::delete(*id, &conn)
+        .map(|_| HttpResponse::Ok())
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}

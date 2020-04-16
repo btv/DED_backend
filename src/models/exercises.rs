@@ -45,6 +45,10 @@ impl Exercise {
     pub fn get_exercise_by_id(id: i32, conn: &PgConnection) -> Result<Exercise, diesel::result::Error> {
         exercises::table.find(id).get_result(conn)
     }
+
+    pub fn delete(in_id: i32, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
+        diesel::delete(exercises::table.find(in_id)).execute(connection)
+    }
 }
 
 impl PartialEq<NewExercise> for Exercise {

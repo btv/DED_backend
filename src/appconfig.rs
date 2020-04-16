@@ -35,6 +35,11 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                         .route(web::post().to(exercise::create_exercise)
                     )
                 )
+                .service(
+                    web::resource("/{id}/")
+                        .route(web::delete().to(exercise::delete)
+                    )
+                )
         )
         .service(
             web::scope("/workouts")
