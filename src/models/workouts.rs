@@ -27,10 +27,6 @@ pub struct NewWorkout {
     pub fname: String,
     pub description: String,
     pub notes: String,
-    pub created_time: SystemTime,
-    pub completed_time: SystemTime,
-    pub create_id: i32,
-    pub completed_id: i32,
 }
 
 impl NewWorkout{
@@ -50,6 +46,15 @@ impl Workout{
 
 }
 
+impl PartialEq<NewWorkout> for Workout {
+    fn eq(&self, other:& NewWorkout) -> bool {
+        self.origin_id == other.origin_id &&
+        self.exercise == other.exercise &&
+        self.fname == other.fname &&
+        self.description == other.description &&
+        self.notes == other.notes
+    }
+}
 #[cfg(test)]
 mod tests {
     use std::time::{SystemTime, Duration};
@@ -94,10 +99,3 @@ mod tests {
         assert_eq!(t_completed_id, t_workout.completed_id);
     }
 }
-
-
-
-
-
-
-

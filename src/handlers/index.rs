@@ -65,12 +65,12 @@ pub async fn login(
         .with_secret_key(hash_secret_key().as_str())
         .verify()
     {
-        Ok(_) => {
+        Ok(true) => {
             let slim_user = SlimUser::from(user_to_auth);
             id.remember(serde_json::to_string(&slim_user).unwrap());
             HttpResponse::Ok().json(slim_user)
         }
-        Err(_) => HttpResponse::Unauthorized().json("Unauthorized"),
+        _ => HttpResponse::Unauthorized().json("Unauthorized"),
     }
 }
 
