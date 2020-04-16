@@ -5,7 +5,7 @@
 use actix_web::{web, Responder, HttpResponse};
 use crate::establish_connection;
 
-use crate::models::sets::{NewSet,Set, SetList};
+use crate::models::sets::{NewSet,Set, SetList, CompleteSet};
 
 /// Create a new set entry in the database.
 ///
@@ -65,6 +65,16 @@ pub async fn update_by_set_id(id: web::Path<i32>, new_set: web::Json<NewSet>) ->
     let conn = establish_connection().get().unwrap();
 
     Set::update(*id,&new_set, &conn)
+        .map(|set| HttpResponse::Ok().json(set))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
+
+pub async fn complete_by_set_id(id: web::Path<i32>, new_set: web::Json<CompleteSet>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    Set::complete(*id,&new_set, &conn)
         .map(|set| HttpResponse::Ok().json(set))
         .map_err(|e| {
             HttpResponse::InternalServerError().json(e.to_string())
