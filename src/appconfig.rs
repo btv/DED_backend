@@ -15,17 +15,13 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                     )
                 )
                 .service(
-                    web::resource("/delete/{id}/")
-                        .route(web::post().to(set::delete))
+                    web::resource("/{id}/")
                         .route(web::delete().to(set::delete))
+                        .route(web::get().to(set::find_by_set_id))
                 )
                 .service(
                     web::resource("/find_by_exercise_id/{ex_id}/")
                         .route(web::get().to(set::find_by_exercise_id))
-                )
-                .service(
-                    web::resource("/find_by_set_id/{id}/")
-                        .route(web::get().to(set::find_by_set_id))
                 )
         )
         .service(
