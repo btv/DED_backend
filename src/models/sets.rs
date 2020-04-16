@@ -23,7 +23,7 @@ pub struct Set {
     pub completed_value: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Insertable)]
+#[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
 #[table_name = "sets"]
 pub struct NewSet {
     pub exercise_id:i32,
@@ -58,6 +58,18 @@ impl Set {
         use diesel::RunQueryDsl;
 
         diesel::delete(sets::table.find(in_id)).execute(connection)
+    }
+
+    pub fn update(
+        in_id: i32,
+        new_set: &NewSet,
+        connection: &PgConnection
+    ) -> Result<usize, diesel::result::Error> {
+        use diesel::RunQueryDsl;
+
+        diesel::update(sets::table.find(in_id))
+            .set(new_set)
+            .execute(connection)
     }
 }
 

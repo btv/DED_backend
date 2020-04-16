@@ -145,5 +145,57 @@ mod tests {
             }
         }
     }
-}
 
+    #[actix_rt::test]
+    async fn test_update_by_set_id() {
+        use DED_backend::establish_connection;
+
+        let conn = establish_connection().get().unwrap();
+        let mut app = test::init_service(
+            App::new()
+                .route("/sets/{id}/", web::patch().to(set::update_by_set_id))
+                .route("/sets/{id}/", web::get().to(set::find_by_set_id))
+        )
+        .await;
+
+        let test1 = NewSet {
+            exercise_id: -1,
+            style: "gangam".to_string(),
+            unit: "none".to_string(),
+            goal_reps: 10,
+            goal_value: "none".to_string(),
+            description: "something".to_string(),
+        };
+
+        let test2 = NewSet {
+            exercise_id: -1,
+            style: "gangam or something".to_string(),
+            unit: "parsecs".to_string(),
+            goal_reps: 12,
+            goal_value: "none".to_string(),
+            description: "something".to_string(),
+        };
+
+        let test_find_results = test1.create(&conn).unwrap();
+
+        let req = test::TestRequest::patch()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri(format!("/sets/{}/", test_find_results.id).as_str())
+            .set_payload(serde_json::to_string(&test2).unwrap())
+            .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        match resp.status().is_success() {
+            false => (),
+            true => {
+                let n_req = test::TestRequest::get()
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .uri(format!("/sets/{}/", test_find_results.id).as_str())
+                    .to_request();
+                dbg!(&n_req);
+                let new_resp: Set = test::read_response_json(&mut app, n_req).await;
+                assert!(new_resp == test2);
+            }
+        }
+    }
+}
