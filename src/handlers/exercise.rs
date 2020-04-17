@@ -48,3 +48,13 @@ pub async fn find_by_id(ex_id: web::Path<i32>) -> impl Responder {
             HttpResponse::InternalServerError().json(e.to_string())
         })
 }
+
+pub async fn update_by_id(id: web::Path<i32>, new_set: web::Json<NewExercise>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    Exercise::update(*id,&new_set, &conn)
+        .map(|set| HttpResponse::Ok().json(set))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
