@@ -50,6 +50,11 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                         .route(web::post().to(workout::create_workout)
                     )
                 )
+                .service(
+                    web::resource("/{id}/")
+                        .route(web::get().to(workout::find_by_id)
+                    )
+                )
         )
         .route("/", web::get().to(index::index))
         .route("/login/", web::post().to(index::login))
