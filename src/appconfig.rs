@@ -39,16 +39,16 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                 )
                 .service(
                     web::resource("/{id}/")
-                        .route(web::delete().to(exercise::delete)
-                    )
+                        .route(web::delete().to(exercise::delete))
+                        .route(web::get().to(exercise::find_by_id))
+                        .route(web::patch().to(exercise::update_by_id))
                 )
         )
         .service(
             web::scope("/workouts")
                 .service(
                     web::resource("/create/")
-                        .route(web::post().to(workout::create_workout)
-                    )
+                        .route(web::post().to(workout::create_workout))
                 )
         )
         .route("/", web::get().to(index::index))
