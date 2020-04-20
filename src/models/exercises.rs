@@ -10,7 +10,7 @@ use diesel::query_dsl::filter_dsl::FindDsl;
 pub struct Exercise {
     pub id: i32,
     pub origin_id: i32,
-    pub set_id: i32,
+    pub workout_id: i32,
     pub name: String,
     pub exercise_type: i32,
     pub description: String,
@@ -25,7 +25,7 @@ pub struct Exercise {
 #[table_name = "exercises"]
 pub struct NewExercise {
     pub origin_id: i32,
-    pub set_id: i32,
+    pub workout_id: i32,
     pub name: String,
     pub exercise_type: i32,
     pub description: String,
@@ -65,7 +65,7 @@ impl Exercise {
 impl PartialEq<NewExercise> for Exercise {
     fn eq(&self, other:& NewExercise) -> bool {
         self.origin_id == other.origin_id &&
-        self.set_id == other.set_id &&
+        self.workout_id == other.workout_id &&
         self.name == other.name &&
         self.exercise_type == other.exercise_type &&
         self.description == other.description &&
@@ -76,7 +76,7 @@ impl PartialEq<NewExercise> for Exercise {
 impl PartialEq<Exercise> for NewExercise {
     fn eq(&self, other:& Exercise) -> bool {
         self.origin_id == other.origin_id &&
-        self.set_id == other.set_id &&
+        self.workout_id == other.workout_id &&
         self.name == other.name &&
         self.exercise_type == other.exercise_type &&
         self.description == other.description &&
@@ -93,7 +93,7 @@ mod tests {
     fn test_new_exercise_structure() {
         let t_id = -1;
         let t_origin_id = 10;
-        let t_set_id = 1000;
+        let t_workout_id = 1000;
         let t_name = "Test exercise";
         let t_exercise_type = 1;
         let t_description = "Quad burner";
@@ -107,7 +107,7 @@ mod tests {
         let t_exercise = Exercise {
             id: t_id,
             origin_id: t_origin_id,
-            set_id: t_set_id,
+            workout_id: t_workout_id,
             name: t_name.to_string(),
             exercise_type: t_exercise_type,
             description: t_description.to_string(),
@@ -121,7 +121,7 @@ mod tests {
 
         assert_eq!(t_id, t_exercise.id);
         assert_eq!(t_origin_id, t_exercise.origin_id);
-        assert_eq!(t_set_id, t_exercise.set_id);
+        assert_eq!(t_workout_id, t_exercise.workout_id);
         assert_eq!(t_exercise_type, t_exercise.exercise_type);
         assert_eq!(t_description, t_exercise.description);
         assert_eq!(t_notes, t_exercise.notes);

@@ -2,7 +2,7 @@ table! {
     exercises (id) {
         id -> Int4,
         origin_id -> Int4,
-        set_id -> Int4,
+        workout_id -> Int4,
         name -> Varchar,
         exercise_type -> Int4,
         description -> Varchar,

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS sets (
 CREATE TABLE IF NOT EXISTS exercises(
     id SERIAL PRIMARY KEY ,
     origin_id INTEGER not null,
-    set_id INTEGER  not NULL,
+    workout_id INTEGER  not NULL,
     name varchar not null,
     exercise_type INTEGER not null,
     description varchar not null,

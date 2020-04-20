@@ -197,7 +197,7 @@ mod tests {
             let items: Vec<&str> = token.split(",").collect();
             let newExercise = NewExercise {
                 origin_id: 1010,
-                set_id: 0,
+                workout_id: 0,
                 name: "auto generated".to_string(),
                 exercise_type: items[0].to_string().parse::<i32>().unwrap(),
                 description: items[1].to_string(),
