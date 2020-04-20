@@ -14,13 +14,13 @@ mod tests {
         let conn = establish_connection().get().unwrap();
 
         let t_uname = "TestUser";
-        let t_fname = "Usable_User";
+        let t_name = "Usable_User";
         let t_email = "testuser@testdomain.com";
         let t_passwd = "some_like_MSG";
 
         let t_user = NewUser {
             username: t_uname.to_string(),
-            fname: t_fname.to_string(),
+            name: t_name.to_string(),
             email: t_email.to_string(),
             passwd: t_passwd.to_string()
         };
@@ -28,7 +28,7 @@ mod tests {
         let new_user_id = match t_user.create(&conn) {
             Ok(r_user) => {
                 assert_eq!(t_uname, r_user.username);
-                assert_eq!(t_fname, r_user.fname);
+                assert_eq!(t_name, r_user.name);
                 assert_eq!(t_email, r_user.email);
                 assert_eq!(t_passwd, r_user.passwd);
                 r_user.id
@@ -76,7 +76,7 @@ mod tests {
         for x in 1..101 {
             let newUser = NewUser{
                 username: format!("username{}", x).to_string(),
-                fname: format!("fname_number{}",x).to_string(),
+                name: format!("name_number{}",x).to_string(),
                 email: format!("user{}@colorado.edu",x).to_string(),
                 passwd: format!("slatyas#{}",x).to_string()
             };

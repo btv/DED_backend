@@ -10,7 +10,7 @@ use diesel::PgConnection;
 pub struct User {
     pub id: i32,
     pub username: String,
-    pub fname: String,
+    pub name: String,
     pub email: String,
     pub passwd: String,
 }
@@ -19,7 +19,7 @@ pub struct User {
 #[table_name="users"]
 pub struct NewUser {
     pub username: String,
-    pub fname: String,
+    pub name: String,
     pub email: String,
     pub passwd: String,
 }
@@ -31,7 +31,7 @@ pub struct UserList( pub Vec<User> );
 pub struct SlimUser {
     pub id: i32,
     pub email: String,
-    pub fname: String,
+    pub name: String,
     pub username: String
 }
 
@@ -46,7 +46,7 @@ impl From<User> for SlimUser {
         SlimUser {
             id: user.id,
             email: user.email,
-            fname: user.fname,
+            name: user.name,
             username: user.username
         }
     }
@@ -89,7 +89,7 @@ impl UserList {
 impl PartialEq<NewUser> for User {
     fn eq(&self, other:& NewUser) -> bool {
         self.username == other.username &&
-        self.fname == other.fname &&
+        self.name == other.name &&
         self.email == other.email
     }
 }
@@ -97,7 +97,7 @@ impl PartialEq<NewUser> for User {
 impl PartialEq<NewUser> for SlimUser {
     fn eq(&self, other:& NewUser) -> bool {
         self.username == other.username &&
-        self.fname == other.fname &&
+        self.name == other.name &&
         self.email == other.email
     }
 }
@@ -111,7 +111,7 @@ impl PartialEq<AuthData> for SlimUser {
 impl PartialEq<User> for NewUser {
     fn eq(&self, other:& User) -> bool {
         self.username == other.username &&
-        self.fname == other.fname &&
+        self.name == other.name &&
         self.email == other.email
     }
 }
@@ -120,7 +120,7 @@ impl PartialEq<User> for SlimUser {
     fn eq(&self, other: &User) -> bool {
         self.id == other.id &&
         self.username == other.username &&
-        self.fname == other.fname &&
+        self.name == other.name &&
         self.email == other.email
     }
 }
@@ -129,7 +129,7 @@ impl PartialEq<SlimUser> for User {
     fn eq(&self, other: &SlimUser) -> bool {
         self.id == other.id &&
         self.username == other.username &&
-        self.fname == other.fname &&
+        self.name == other.name &&
         self.email == other.email
     }
 }
@@ -137,7 +137,7 @@ impl PartialEq<SlimUser> for User {
 impl PartialEq<SlimUser> for NewUser {
     fn eq(&self, other:& SlimUser) -> bool {
         self.username == other.username &&
-        self.fname == other.fname &&
+        self.name == other.name &&
         self.email == other.email
     }
 }
@@ -151,21 +151,21 @@ mod tests {
 
         let t_id = 1999;
         let t_uname = "TestUser";
-        let t_fname = "Usable User";
+        let t_name = "Usable User";
         let t_email = "testuser@testdomain.com";
         let t_passwd = "some_like_MSG";
 
         let t_user = User {
             id: t_id,
             username: t_uname.to_string(),
-            fname: t_fname.to_string(),
+            name: t_name.to_string(),
             email: t_email.to_string(),
             passwd: t_passwd.to_string()
         };
 
         assert_eq!(t_id, t_user.id);
         assert_eq!(t_uname, t_user.username);
-        assert_eq!(t_fname, t_user.fname);
+        assert_eq!(t_name, t_user.name);
         assert_eq!(t_email, t_user.email);
         assert_eq!(t_passwd, t_user.passwd);
 

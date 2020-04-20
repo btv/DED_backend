@@ -19,8 +19,8 @@ mod tests {
 
         let new_ex = NewExercise {
             origin_id: 100,
-            set_id: 69,
-            fname: "Something special".to_string(),
+            workout_id: 69,
+            name: "Something special".to_string(),
             exercise_type: 5,
             description: "I have no idea what to put here.".to_string(),
             notes: "C#".to_string()
@@ -68,8 +68,8 @@ mod tests {
 
         let test_find = NewExercise {
             origin_id: 55,
-            set_id: 56,
-            fname: "Working hard".to_string(),
+            workout_id: 56,
+            name: "Working hard".to_string(),
             exercise_type: 3,
             description: "describe what it is you do here.".to_string(),
             notes: "B#".to_string(),
@@ -111,8 +111,8 @@ mod tests {
 
         let test1 = NewExercise {
             origin_id: 55,
-            set_id: 56,
-            fname: "Working hard".to_string(),
+            workout_id: 56,
+            name: "Working hard".to_string(),
             exercise_type: 3,
             description: "describe what it is you do here.".to_string(),
             notes: "B#".to_string(),
@@ -120,8 +120,8 @@ mod tests {
 
         let test2 = NewExercise {
             origin_id: 555,
-            set_id: 566,
-            fname: "Working harder".to_string(),
+            workout_id: 566,
+            name: "Working harder".to_string(),
             exercise_type: 3,
             description: "still describing what I do here.".to_string(),
             notes: "B##".to_string(),

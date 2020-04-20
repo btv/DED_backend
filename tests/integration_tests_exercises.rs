@@ -14,16 +14,16 @@ mod tests {
         let conn = establish_connection().get().unwrap();
 
         let t_origin_id= 200;
-        let t_set_id= 300;
-        let t_fname= "SuperJock";
+        let t_workout_id= 300;
+        let t_name= "SuperJock";
         let t_exercise_type= 22;
         let t_description= "Pecs! Pecs! and more Pecs!";
         let t_notes= "never enough reps";
 
         let new_ex = NewExercise{
             origin_id: t_origin_id,
-            set_id: t_set_id,
-            fname: t_fname.to_string(),
+            workout_id: t_workout_id,
+            name: t_name.to_string(),
             exercise_type: t_exercise_type,
             description: t_description.to_string(),
             notes: t_notes.to_string(),
@@ -33,8 +33,8 @@ mod tests {
         let new_ex_id = match new_ex.create(&conn) {
             Ok(r_ex) =>{
                 assert_eq!(r_ex.origin_id, t_origin_id);
-                assert_eq!(r_ex.set_id, t_set_id);
-                assert_eq!(r_ex.fname, t_fname);
+                assert_eq!(r_ex.workout_id, t_workout_id);
+                assert_eq!(r_ex.name, t_name);
                 assert_eq!(r_ex.exercise_type, t_exercise_type);
                 assert_eq!(r_ex.description, t_description);
                 assert_eq!(r_ex.notes, t_notes);
