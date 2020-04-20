@@ -17,8 +17,6 @@ pub struct Exercise {
     pub notes: String,
     pub create_time: SystemTime,
     pub complete_time: SystemTime,
-    pub create_id: i32,
-    pub completed_id: i32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
@@ -100,8 +98,7 @@ mod tests {
         let t_notes = "Put your right foot in. Put your left foot out.";
         let t_create_time = SystemTime::now();
         let t_complete_time = t_create_time + Duration::new(600, 0);
-        let t_create_id = 10;
-        let t_completed_id = 200;
+
 
 
         let t_exercise = Exercise {
@@ -114,8 +111,6 @@ mod tests {
             notes: t_notes.to_string(),
             create_time: t_create_time,
             complete_time: t_complete_time,
-            create_id: t_create_id,
-            completed_id: t_completed_id,
         };
 
 
@@ -127,7 +122,5 @@ mod tests {
         assert_eq!(t_notes, t_exercise.notes);
         assert_eq!(t_create_time, t_exercise.create_time);
         assert_eq!(t_complete_time, t_exercise.complete_time);
-        assert_eq!(t_create_time, t_exercise.create_time);
-        assert_eq!(t_completed_id, t_exercise.completed_id);
     }
 }

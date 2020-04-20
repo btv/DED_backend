@@ -15,8 +15,6 @@ pub struct Workout {
     pub notes: String,
     pub created_time: SystemTime,
     pub completed_time: SystemTime,
-    pub create_id: i32,
-    pub completed_id: i32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
@@ -82,8 +80,7 @@ mod tests {
         let t_notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
         let t_created_time = SystemTime::now();
         let t_completed_time = t_created_time + Duration::new(300,0);
-        let t_create_id = 100;
-        let t_completed_id = 10;
+
 
 
         let t_workout = Workout{
@@ -95,8 +92,6 @@ mod tests {
             notes: t_notes.to_string(),
             created_time: t_created_time,
             completed_time: t_completed_time,
-            create_id: t_create_id,
-            completed_id: t_completed_id
         };
 
         assert_eq!(t_id, t_workout.id);
@@ -106,7 +101,5 @@ mod tests {
         assert_eq!(t_description, t_workout.description);
         assert_eq!(t_notes, t_workout.notes);
         assert_eq!(t_created_time, t_workout.created_time);
-        assert_eq!(t_create_id, t_workout.create_id);
-        assert_eq!(t_completed_id, t_workout.completed_id);
     }
 }

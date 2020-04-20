@@ -9,8 +9,6 @@ table! {
         notes -> Varchar,
         create_time -> Timestamp,
         complete_time -> Timestamp,
-        create_id -> Int4,
-        completed_id -> Int4,
     }
 }
 
@@ -49,8 +47,6 @@ table! {
         notes -> Varchar,
         created_time -> Timestamp,
         completed_time -> Timestamp,
-        create_id -> Int4,
-        completed_id -> Int4,
     }
 }
 

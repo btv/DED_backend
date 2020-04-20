@@ -24,8 +24,6 @@ mod tests {
         let t_notes = "put your left foot out";
         let t_created_time = SystemTime::now();
         let t_completed_time = t_created_time + Duration::new(7500, 0);
-        let t_create_id = 777;
-        let t_completed_id = 666;
 
         let t_workout = NewWorkout {
             origin_id: t_origin_id,
@@ -66,8 +64,6 @@ mod tests {
                 assert_eq!(sec_original, sec_saves);
 
 
-                assert_eq!(r.create_id, t_create_id);
-                assert_eq!(r.completed_id, t_completed_id);
             }
             Err(E) => {
                 assert_eq!(E, diesel::NotFound);
