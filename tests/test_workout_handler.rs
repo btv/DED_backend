@@ -16,7 +16,7 @@ mod tests {
         let payload = NewWorkout {
             origin_id: 55,
             exercise: 23,
-            fname: "Friday morning workout".to_string(),
+            name: "Friday morning workout".to_string(),
             description: "The workout I do friday morning when I wake up".to_string(),
             notes: "none".to_string(),
         };
@@ -46,7 +46,7 @@ mod tests {
         let test_find = NewWorkout {
             origin_id: 66,
             exercise: 4,
-            fname: "working hard".to_string(),
+            name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
         };
@@ -85,7 +85,7 @@ mod tests {
         let test_find = NewWorkout {
             origin_id: 66,
             exercise: 4,
-            fname: "working hard".to_string(),
+            name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
         };
@@ -116,7 +116,7 @@ mod tests {
         let test1 = NewWorkout {
             origin_id: 66,
             exercise: 4,
-            fname: "working hard".to_string(),
+            name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
         };
@@ -124,7 +124,7 @@ mod tests {
         let test2 = NewWorkout {
             origin_id: 666,
             exercise: 44,
-            fname: "working harder".to_string(),
+            name: "working harder".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "FF".to_string(),
         };

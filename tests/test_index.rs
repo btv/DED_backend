@@ -31,7 +31,7 @@ mod tests {
 
         let new_user1 = NewUser {
             username: "bob1984".to_string(),
-            fname: "Bob Scratchit".to_string(),
+            name: "Bob Scratchit".to_string(),
             email: "bobscratchit1984@gmail.com".to_string(),
             passwd: "Sup3rS3cr3tP@ssw@ord".to_string()
         };

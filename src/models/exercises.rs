@@ -11,7 +11,7 @@ pub struct Exercise {
     pub id: i32,
     pub origin_id: i32,
     pub set_id: i32,
-    pub fname: String,
+    pub name: String,
     pub exercise_type: i32,
     pub description: String,
     pub notes: String,
@@ -26,7 +26,7 @@ pub struct Exercise {
 pub struct NewExercise {
     pub origin_id: i32,
     pub set_id: i32,
-    pub fname: String,
+    pub name: String,
     pub exercise_type: i32,
     pub description: String,
     pub notes: String,
@@ -66,7 +66,7 @@ impl PartialEq<NewExercise> for Exercise {
     fn eq(&self, other:& NewExercise) -> bool {
         self.origin_id == other.origin_id &&
         self.set_id == other.set_id &&
-        self.fname == other.fname &&
+        self.name == other.name &&
         self.exercise_type == other.exercise_type &&
         self.description == other.description &&
         self.notes == other.notes
@@ -77,7 +77,7 @@ impl PartialEq<Exercise> for NewExercise {
     fn eq(&self, other:& Exercise) -> bool {
         self.origin_id == other.origin_id &&
         self.set_id == other.set_id &&
-        self.fname == other.fname &&
+        self.name == other.name &&
         self.exercise_type == other.exercise_type &&
         self.description == other.description &&
         self.notes == other.notes
@@ -94,7 +94,7 @@ mod tests {
         let t_id = -1;
         let t_origin_id = 10;
         let t_set_id = 1000;
-        let t_fname = "Test exercise";
+        let t_name = "Test exercise";
         let t_exercise_type = 1;
         let t_description = "Quad burner";
         let t_notes = "Put your right foot in. Put your left foot out.";
@@ -108,7 +108,7 @@ mod tests {
             id: t_id,
             origin_id: t_origin_id,
             set_id: t_set_id,
-            fname: t_fname.to_string(),
+            name: t_name.to_string(),
             exercise_type: t_exercise_type,
             description: t_description.to_string(),
             notes: t_notes.to_string(),

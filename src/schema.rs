@@ -3,7 +3,7 @@ table! {
         id -> Int4,
         origin_id -> Int4,
         set_id -> Int4,
-        fname -> Varchar,
+        name -> Varchar,
         exercise_type -> Int4,
         description -> Varchar,
         notes -> Varchar,
@@ -33,7 +33,7 @@ table! {
     users (id) {
         id -> Int4,
         username -> Varchar,
-        fname -> Varchar,
+        name -> Varchar,
         email -> Varchar,
         passwd -> Varchar,
     }
@@ -44,7 +44,7 @@ table! {
         id -> Int4,
         origin_id -> Int4,
         exercise -> Int4,
-        fname -> Varchar,
+        name -> Varchar,
         description -> Varchar,
         notes -> Varchar,
         created_time -> Timestamp,
