@@ -52,8 +52,9 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                 )
                 .service(
                     web::resource("/{id}/")
-                        .route(web::get().to(workout::find_by_id)
-                    )
+                        .route(web::get().to(workout::find_by_id))
+                        .route(web::delete().to(workout::delete))
+                        .route(web::patch().to(workout::update_by_id))
                 )
         )
         .route("/", web::get().to(index::index))

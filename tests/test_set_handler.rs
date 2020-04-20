@@ -75,7 +75,7 @@ mod tests {
             description: "something".to_string(),
         };
 
-        test_find.create(&conn);
+        let _result = test_find.create(&conn);
 
         let req = test::TestRequest::get()
             .header(header::CONTENT_TYPE, "application/json")

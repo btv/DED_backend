@@ -84,11 +84,7 @@ impl Set {
         diesel::delete(sets::table.find(in_id)).execute(connection)
     }
 
-    pub fn update(
-        in_id: i32,
-        new_set: &NewSet,
-        connection: &PgConnection
-    ) -> Result<usize, diesel::result::Error> {
+    pub fn update(in_id: i32, new_set: &NewSet, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
         use diesel::RunQueryDsl;
 
         diesel::update(sets::table.find(in_id))
@@ -96,11 +92,7 @@ impl Set {
             .execute(connection)
     }
 
-    pub fn complete(
-        in_id: i32,
-        comp_set: &CompleteSet,
-        connection: &PgConnection
-    ) -> Result<usize, diesel::result::Error> {
+    pub fn complete(in_id: i32, comp_set: &CompleteSet, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
         use diesel::RunQueryDsl;
 
         diesel::update(sets::table.find(in_id))
@@ -121,10 +113,7 @@ impl PartialEq<NewSet> for Set {
 }
 
 impl SetList {
-    pub fn get_sets_by_exercise_id(
-        ex_id: i32,
-        conn: &PgConnection
-    ) -> Result<Vec<Set>, diesel::result::Error> {
+    pub fn get_sets_by_exercise_id(ex_id: i32, conn: &PgConnection) -> Result<Vec<Set>, diesel::result::Error> {
         use diesel::prelude::*;
         use crate::schema::sets::dsl::exercise_id;
 

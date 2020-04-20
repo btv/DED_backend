@@ -19,7 +19,7 @@ pub struct Workout {
     pub completed_id: i32,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, Queryable, Insertable)]
+#[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
 #[table_name="workouts"]
 pub struct NewWorkout {
     pub origin_id: i32,
@@ -42,6 +42,17 @@ impl NewWorkout{
 impl Workout{
     pub fn get_workout_by_id(id:i32, conn: &PgConnection) ->Result<Workout, diesel::result::Error>{
        workouts::table.find(id).get_result(conn)
+    }
+
+    pub fn delete(in_id: i32, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
+        diesel::delete(workouts::table.find(in_id)).execute(connection)
+    }
+
+    pub fn update(in_id: i32, new_set: &NewWorkout, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
+
+        diesel::update(workouts::table.find(in_id))
+            .set(new_set)
+            .execute(connection)
     }
 
 }
