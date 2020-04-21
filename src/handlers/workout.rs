@@ -4,7 +4,7 @@
 
 use actix_web::{web, Responder, HttpResponse};
 use crate::establish_connection;
-use crate::models::workouts::{NewWorkout, Workout};
+use crate::models::workouts::{NewWorkout, Workout, CompleteWorkout, WorkoutList};
 
 /// Create a new workout entry in the database.
 ///
@@ -51,6 +51,31 @@ pub async fn update_by_id(id: web::Path<i32>, new_set: web::Json<NewWorkout>) ->
 
     Workout::update(*id,&new_set, &conn)
         .map(|set| HttpResponse::Ok().json(set))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
+
+pub async fn complete(id: web::Path<i32>, new_set: Option<web::Json<CompleteWorkout>>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    let local_set = match new_set {
+        Some(i) => i,
+        None => web::Json(CompleteWorkout{ notes: None})
+    };
+
+    Workout::complete(*id,&local_set, &conn)
+        .map(|set| HttpResponse::Ok().json(set))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
+
+pub async fn find_by_origin_id(id: web::Path<i32>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    WorkoutList::get_workouts_by_origin_id(*id, &conn)
+        .map(|setlist| HttpResponse::Ok().json(setlist))
         .map_err(|e| {
             HttpResponse::InternalServerError().json(e.to_string())
         })

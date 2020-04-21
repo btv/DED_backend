@@ -33,7 +33,7 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
         .service(
             web::scope("/exercises")
                 .service(
-                    web::resource("/create/")
+                    web::resource("/new/")
                         .route(web::post().to(exercise::create_exercise)
                     )
                 )
@@ -47,7 +47,7 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
         .service(
             web::scope("/workouts")
                 .service(
-                    web::resource("/create/")
+                    web::resource("/new/")
                         .route(web::post().to(workout::create_workout))
                 )
                 .service(
@@ -55,6 +55,15 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                         .route(web::get().to(workout::find_by_id))
                         .route(web::delete().to(workout::delete))
                         .route(web::patch().to(workout::update_by_id))
+                )
+                .service(
+                    web::resource("/complete/{id}/")
+                        .route(web::post().to(workout::complete)
+                    )
+                )
+                .service(
+                    web::resource("/find_by_origin_id/{id}/")
+                        .route(web::get().to(workout::find_by_origin_id))
                 )
         )
         .route("/", web::get().to(index::index))
