@@ -9,18 +9,16 @@
             <column ascending="true" name="version"/>
          </index>
       </table>
-      <table name="exercises" numRows="31" remarks="" schema="public" type="TABLE">
+      <table name="exercises" numRows="898" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('exercises_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="origin_id" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="2" name="set_id" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="3" name="fname" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="workout_id" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="3" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="4" name="exercise_type" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="5" name="description" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="6" name="notes" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="create_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="8" name="complete_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
-         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="create_id" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" defaultValue="0" digits="0" id="10" name="completed_id" nullable="false" remarks="" size="10" type="int4"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="exercises_pkey" unique="true">
             <column ascending="true" name="id"/>
@@ -45,7 +43,7 @@
       <table name="users" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="username" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="2" name="fname" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="3" name="email" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="4" name="passwd" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -63,13 +61,11 @@
          <column autoUpdated="true" defaultValue="nextval('workouts_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="origin_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="2" name="exercise" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="3" name="fname" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="4" name="description" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="5" name="notes" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="created_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="completed_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
-         <column autoUpdated="false" digits="0" id="8" name="create_id" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="9" name="completed_id" nullable="false" remarks="" size="10" type="int4"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="workouts_pkey" unique="true">
             <column ascending="true" name="id"/>

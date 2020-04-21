@@ -23,16 +23,14 @@ digraph "exercises" {
       <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">exercises</TD></TR>
       <TR><TD PORT="id" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">id</TD></TR>
       <TR><TD PORT="origin_id" COLSPAN="3" ALIGN="LEFT">origin_id</TD></TR>
-      <TR><TD PORT="set_id" COLSPAN="3" ALIGN="LEFT">set_id</TD></TR>
-      <TR><TD PORT="fname" COLSPAN="3" ALIGN="LEFT">fname</TD></TR>
+      <TR><TD PORT="workout_id" COLSPAN="3" ALIGN="LEFT">workout_id</TD></TR>
+      <TR><TD PORT="name" COLSPAN="3" ALIGN="LEFT">name</TD></TR>
       <TR><TD PORT="exercise_type" COLSPAN="3" ALIGN="LEFT">exercise_type</TD></TR>
       <TR><TD PORT="description" COLSPAN="3" ALIGN="LEFT">description</TD></TR>
       <TR><TD PORT="notes" COLSPAN="3" ALIGN="LEFT">notes</TD></TR>
       <TR><TD PORT="create_time" COLSPAN="3" ALIGN="LEFT">create_time</TD></TR>
       <TR><TD PORT="complete_time" COLSPAN="3" ALIGN="LEFT">complete_time</TD></TR>
-      <TR><TD PORT="create_id" COLSPAN="3" ALIGN="LEFT">create_id</TD></TR>
-      <TR><TD PORT="completed_id" COLSPAN="3" ALIGN="LEFT">completed_id</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">31 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">898 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
     </TABLE>>
     URL="tables/exercises.html"
     tooltip="exercises"
