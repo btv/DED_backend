@@ -4,6 +4,7 @@ mod tests {
     use DED_backend::handlers::workout;
     use DED_backend::models::workouts::{Workout, NewWorkout, CompleteWorkout, WorkoutList};
     use actix_web::{web, test, App, http::StatusCode, http::header};
+    use std::time::SystemTime;
 
     #[actix_rt::test]
     async fn test_workout_new() {
@@ -33,29 +34,27 @@ mod tests {
 
     #[actix_rt::test]
     async fn test_find_by_workout_id() {
-        use DED_backend::establish_connection;
-
-        let conn = establish_connection().get().unwrap();
-
-        let mut app = test::init_service(
-            App::new()
-                .route("/workouts/{id}/", web::get().to(workout::find_by_id))
-        )
-        .await;
-
-        let test_find = NewWorkout {
+        let test_find = Workout {
+            id: 10,
             origin_id: 66,
             exercise: 4,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
+            created_time: SystemTime::now(),
+            completed_time: SystemTime::now(),
         };
 
-        let test_find_results = test_find.create(&conn).unwrap();
+        let mut app = test::init_service(
+            App::new()
+                .data(test_find.clone())
+                .route("/workouts/{id}/", web::get().to(workout::find_by_id))
+        )
+        .await;
 
         let req = test::TestRequest::get()
             .header(header::CONTENT_TYPE, "application/json")
-            .uri(format!("/workouts/{}/", test_find_results.id).as_str())
+            .uri(format!("/workouts/{}/", test_find.id).as_str())
             .to_request();
 
         let resp = test::call_service(&mut app, req).await;
@@ -64,38 +63,37 @@ mod tests {
             true => {
                 let n_req = test::TestRequest::get()
                     .header(header::CONTENT_TYPE, "application/json")
-                    .uri(format!("/workouts/{}/", test_find_results.id).as_str())
+                    .uri(format!("/workouts/{}/", test_find.id).as_str())
                     .to_request();
                 let new_resp: Workout = test::read_response_json(&mut app, n_req).await;
-                assert!(new_resp == test_find);
+                assert_eq!(new_resp, test_find);
             }
         }
     }
 
     #[actix_rt::test]
     async fn test_workout_delete() {
-        use DED_backend::establish_connection;
-
-        let conn = establish_connection().get().unwrap();
-        let mut app = test::init_service(
-            App::new()
-                .route("/workouts/{id}/", web::delete().to(workout::delete))
-        )
-        .await;
-
-        let test_find = NewWorkout {
+        let test_find = Workout {
+            id: 10,
             origin_id: 66,
             exercise: 4,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
+            created_time: SystemTime::now(),
+            completed_time: SystemTime::now(),
         };
 
-        let test_find_results = test_find.create(&conn).unwrap();
+        let mut app = test::init_service(
+            App::new()
+                .data(test_find.clone())
+                .route("/workouts/{id}/", web::delete().to(workout::delete))
+        )
+        .await;
 
         let req = test::TestRequest::delete()
                   .header(header::CONTENT_TYPE, "application/json")
-                  .uri(format!("/workouts/{}/", test_find_results.id).as_str())
+                  .uri(format!("/workouts/{}/", test_find.id).as_str())
                   .to_request();
 
         let resp = test::call_service(&mut app, req).await;
@@ -104,23 +102,24 @@ mod tests {
 
     #[actix_rt::test]
     async fn test_workout_update() {
-        use DED_backend::establish_connection;
-
-        let conn = establish_connection().get().unwrap();
-        let mut app = test::init_service(
-            App::new()
-                .route("/workouts/{id}/", web::get().to(workout::find_by_id))
-                .route("/workouts/{id}/", web::delete().to(workout::delete))
-        )
-        .await;
-
-        let test1 = NewWorkout {
+        let test_find = Workout {
+            id: 10,
             origin_id: 66,
             exercise: 4,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
+            created_time: SystemTime::now(),
+            completed_time: SystemTime::now(),
         };
+
+        let mut app = test::init_service(
+            App::new()
+                .data(test_find.clone())
+                .route("/workouts/{id}/", web::get().to(workout::find_by_id))
+                .route("/workouts/{id}/", web::delete().to(workout::delete))
+        )
+        .await;
 
         let test2 = NewWorkout {
             origin_id: 666,
@@ -130,11 +129,9 @@ mod tests {
             notes: "FF".to_string(),
         };
 
-        let test_find_results = test1.create(&conn).unwrap();
-
         let req = test::TestRequest::patch()
             .header(header::CONTENT_TYPE, "application/json")
-            .uri(format!("/workouts/{}/", test_find_results.id).as_str())
+            .uri(format!("/workouts/{}/", test_find.id).as_str())
             .set_payload(serde_json::to_string(&test2).unwrap())
             .to_request();
 
@@ -144,7 +141,7 @@ mod tests {
             true => {
                 let n_req = test::TestRequest::get()
                     .header(header::CONTENT_TYPE, "application/json")
-                    .uri(format!("/workouts/{}/", test_find_results.id).as_str())
+                    .uri(format!("/workouts/{}/", test_find.id).as_str())
                     .to_request();
                 let new_resp: Workout = test::read_response_json(&mut app, n_req).await;
                 assert!(new_resp == test2);
