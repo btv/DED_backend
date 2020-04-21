@@ -2,7 +2,7 @@
 
 mod tests {
     use DED_backend::handlers::workout;
-    use DED_backend::models::workouts::{Workout, NewWorkout};
+    use DED_backend::models::workouts::{Workout, NewWorkout, CompleteWorkout, WorkoutList};
     use actix_web::{web, test, App, http::StatusCode, http::header};
 
     #[actix_rt::test]
@@ -72,6 +72,7 @@ mod tests {
         }
     }
 
+    #[actix_rt::test]
     async fn test_workout_delete() {
         use DED_backend::establish_connection;
 
@@ -147,6 +148,145 @@ mod tests {
                     .to_request();
                 let new_resp: Workout = test::read_response_json(&mut app, n_req).await;
                 assert!(new_resp == test2);
+            }
+        }
+    }
+
+    #[actix_rt::test]
+    async fn test_workout_complete_without_notes() {
+        use DED_backend::establish_connection;
+
+        let conn = establish_connection().get().unwrap();
+
+        let mut app = test::init_service(
+            App::new()
+                .route("/workouts/complete/{id}/", web::post().to(workout::complete))
+                .route("/worksets/{id}/", web::get().to(workout::find_by_id))
+        )
+        .await;
+
+        let test1 = NewWorkout {
+            origin_id: 101,
+            exercise: 55,
+            name: "working out harder".to_string(),
+            description: "sweaty mcsweatface".to_string(),
+            notes: "B#".to_string(),
+        };
+
+        let test_create_results = test1.create(&conn).unwrap();
+
+        let req = test::TestRequest::post()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri(format!("/workouts/complete/{}/", test_create_results.id).as_str())
+            .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        match resp.status().is_success() {
+            false => (),
+            true => {
+                let n_req = test::TestRequest::get()
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .uri(format!("/worksets/{}/", test_create_results.id).as_str())
+                    .to_request();
+                let new_resp: Workout = test::read_response_json(&mut app, n_req).await;
+                assert!(new_resp == test1);
+            }
+        }
+    }
+
+    #[actix_rt::test]
+    async fn test_workout_complete_with_notes() {
+        use DED_backend::establish_connection;
+
+        let conn = establish_connection().get().unwrap();
+
+        let mut app = test::init_service(
+            App::new()
+                .route("/workouts/complete/{id}/", web::post().to(workout::complete))
+                .route("/worksets/{id}/", web::get().to(workout::find_by_id))
+        )
+        .await;
+
+        let test1 = NewWorkout {
+            origin_id: 101,
+            exercise: 55,
+            name: "working out harder".to_string(),
+            description: "sweaty mcsweatface".to_string(),
+            notes: "B#".to_string(),
+        };
+
+        let test2 = CompleteWorkout {
+            notes: Some("C#".to_string())
+        };
+
+        let test_create_results = test1.create(&conn).unwrap();
+
+        let req = test::TestRequest::post()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri(format!("/workouts/complete/{}/", test_create_results.id).as_str())
+            .set_payload(serde_json::to_string(&test2).unwrap())
+            .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        match resp.status().is_success() {
+            false => (),
+            true => {
+                let n_req = test::TestRequest::get()
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .uri(format!("/worksets/{}/", test_create_results.id).as_str())
+                    .to_request();
+                let new_resp: Workout = test::read_response_json(&mut app, n_req).await;
+                assert_eq!(new_resp.notes, test2.notes.unwrap());
+            }
+        }
+    }
+
+    #[actix_rt::test]
+    async fn test_workout_get_by_origin_id() {
+        use DED_backend::establish_connection;
+
+        let conn = establish_connection().get().unwrap();
+
+        let mut app = test::init_service(
+            App::new()
+                .route("/workouts/find_by_origin/{id}/", web::get().to(workout::find_by_origin_id))
+        )
+        .await;
+
+        let test1 = NewWorkout {
+            origin_id: 555,
+            exercise: 55,
+            name: "working out harder".to_string(),
+            description: "sweaty mcsweatface".to_string(),
+            notes: "B#".to_string(),
+        };
+
+        let test2 = NewWorkout {
+            origin_id: 555,
+            exercise: 65,
+            name: "working out harder".to_string(),
+            description: "sweaty mcsweatface".to_string(),
+            notes: "B#".to_string(),
+        };
+
+        let _test1_create = test1.create(&conn).unwrap();
+        let _test2_create = test2.create(&conn).unwrap();
+
+        let req = test::TestRequest::get()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri("/workouts/find_by_origin_id/555/")
+            .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        match resp.status().is_success() {
+            false => (),
+            true => {
+                let n_req = test::TestRequest::get()
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .uri("/workouts/find_by_origin_id/555/")
+                    .to_request();
+                let new_resp: WorkoutList = test::read_response_json(&mut app, n_req).await;
+                assert!(new_resp.0.len() >= 2);
             }
         }
     }
