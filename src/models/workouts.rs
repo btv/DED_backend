@@ -5,7 +5,7 @@ use crate::schema::workouts;
 use diesel::{PgConnection,RunQueryDsl};
 use diesel::query_dsl::filter_dsl::FindDsl;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Queryable)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Queryable)]
 pub struct Workout {
     pub id: i32,
     pub origin_id: i32,
