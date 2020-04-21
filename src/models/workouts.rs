@@ -27,6 +27,36 @@ pub struct NewWorkout {
     pub notes: String,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CompleteWorkout {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub notes: Option<String>
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
+#[table_name = "workouts"]
+struct CompleteWorkoutFull {
+    pub completed_time: SystemTime,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub notes: Option<String>
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct WorkoutList( pub Vec<Workout> );
+
+impl From<&CompleteWorkout> for CompleteWorkoutFull {
+    fn from(cs: &CompleteWorkout) -> Self {
+        CompleteWorkoutFull {
+            completed_time: SystemTime::now(),
+            notes: match &cs.notes {
+                Some(i) => Some(i.clone()),
+                None => None
+            }
+        }
+    }
+}
+
+
 impl NewWorkout{
     pub fn create(&self, conn: &PgConnection)->Result<Workout, diesel::result::Error>
     {
@@ -47,14 +77,27 @@ impl Workout{
     }
 
     pub fn update(in_id: i32, new_set: &NewWorkout, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
-
         diesel::update(workouts::table.find(in_id))
             .set(new_set)
             .execute(connection)
     }
 
+    pub fn complete(in_id: i32, comp_wk: &CompleteWorkout, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
+        diesel::update(workouts::table.find(in_id))
+            .set(CompleteWorkoutFull::from(comp_wk))
+            .execute(connection)
+    }
 }
 
+impl WorkoutList {
+    pub fn get_workouts_by_origin_id(org_id: i32, conn: &PgConnection) -> Result<Vec<Workout>, diesel::result::Error> {
+        use diesel::prelude::*;
+        use crate::schema::workouts::dsl::origin_id;
+
+        workouts::table.filter(origin_id.eq(org_id))
+            .get_results::<Workout>(conn)
+    }
+}
 impl PartialEq<NewWorkout> for Workout {
     fn eq(&self, other:& NewWorkout) -> bool {
         self.origin_id == other.origin_id &&
