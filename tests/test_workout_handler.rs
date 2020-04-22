@@ -24,17 +24,18 @@ mod tests {
     async fn test_workout_new() {
         let mut app = test::init_service(
             App::new()
-                .data(TEST_FIND.clone())
-                .route("/workouts/new/", web::post().to(workout::create_workout))
+                .route("/workouts/new/", web::post().to(|| async {
+                    serde_json::to_string(&TEST_FIND.clone()).unwrap()
+                }))
         )
         .await;
 
         let payload = NewWorkout {
-            origin_id: 55,
-            exercise: 23,
-            name: "Friday morning workout".to_string(),
-            description: "The workout I do friday morning when I wake up".to_string(),
-            notes: "none".to_string(),
+            origin_id: 66,
+            exercise: 4,
+            name: "working hard".to_string(),
+            description: "it has a nice flaky crust and good flavor.".to_string(),
+            notes: "F".to_string(),
         };
 
         let req = test::TestRequest::post()
