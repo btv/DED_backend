@@ -43,6 +43,14 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                         .route(web::get().to(exercise::find_by_id))
                         .route(web::patch().to(exercise::update_by_id))
                 )
+                .service(
+                    web::resource("/find_by_origin_id/{id}/")
+                        .route(web::get().to(exercise::find_by_origin_id))
+                )
+                .service(
+                    web::resource("/find_by_workout_id/{id}/")
+                        .route(web::get().to(exercise::find_by_workout_id))
+                )
         )
         .service(
             web::scope("/workouts")
