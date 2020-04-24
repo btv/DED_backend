@@ -1,9 +1,25 @@
 #![allow(non_snake_case)]
+#[macro_use]
+extern crate lazy_static;
 
 mod tests {
     use DED_backend::handlers::exercise;
-    use DED_backend::models::exercises::{Exercise,NewExercise};
+    use DED_backend::models::exercises::{Exercise,NewExercise, ExerciseList};
     use actix_web::{web, test, App, http::StatusCode, http::header};
+    use std::time::SystemTime;
+    lazy_static! {
+        static ref EX1:DED_backend::models::exercises::Exercise = Exercise  {
+            id: 101,
+            origin_id: 55,
+            workout_id: 56,
+            name: "Working hard".to_string(),
+            exercise_type: 3,
+            description: "describe what it is you do here.".to_string(),
+            notes: "B#".to_string(),
+            create_time: SystemTime::now(),
+            complete_time: SystemTime::now()
+        };
+    }
 
     #[actix_rt::test]
     async fn test_exercise_create() {
@@ -145,6 +161,85 @@ mod tests {
                     .to_request();
                 let new_resp: Exercise = test::read_response_json(&mut app, n_req).await;
                 assert!(new_resp == test2);
+            }
+        }
+    }
+
+
+    #[actix_rt::test]
+    async fn test_find_by_workout_id() {
+        let ex2 = Exercise {
+            id:102,
+            origin_id: 55,
+            workout_id: 56,
+            name: "Working harder".to_string(),
+            exercise_type: 3,
+            description: "still describing what I do here.".to_string(),
+            notes: "B##".to_string(),
+            create_time: SystemTime::now(),
+            complete_time: SystemTime::now()
+        };
+        let mut app = test::init_service(
+            App::new()
+                .data(vec![EX1.clone(), ex2])
+                .route("/exercises/find_by_workout_id/{id}/", web::patch().to(exercise::find_by_origin_id))
+        )
+        .await;
+
+        let req = test::TestRequest::get()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri("/exercises/find_by_workout_id/56/")
+            .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        match resp.status().is_success() {
+            false => (),
+            true => {
+                let n_req = test::TestRequest::get()
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .uri("/exercises/find_by_workout_id/56/")
+                    .to_request();
+                let new_resp: ExerciseList = test::read_response_json(&mut app, n_req).await;
+                assert_eq!(new_resp.0.len(), 2);
+            }
+        }
+    }
+
+    #[actix_rt::test]
+    async fn test_find_by_origin_id() {
+        let ex2 = Exercise {
+            id:102,
+            origin_id: 55,
+            workout_id: 56,
+            name: "Working harder".to_string(),
+            exercise_type: 3,
+            description: "still describing what I do here.".to_string(),
+            notes: "B##".to_string(),
+            create_time: SystemTime::now(),
+            complete_time: SystemTime::now()
+        };
+        let mut app = test::init_service(
+            App::new()
+                .data(vec![EX1.clone(), ex2])
+                .route("/exercises/find_by_origin_id/{id}/", web::patch().to(exercise::find_by_origin_id))
+        )
+        .await;
+
+        let req = test::TestRequest::get()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri("/exercises/find_by_origin_id/55/")
+            .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        match resp.status().is_success() {
+            false => (),
+            true => {
+                let n_req = test::TestRequest::get()
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .uri("/exercises/find_by_origin_id/55/")
+                    .to_request();
+                let new_resp: ExerciseList = test::read_response_json(&mut app, n_req).await;
+                assert_eq!(new_resp.0.len(), 2);
             }
         }
     }

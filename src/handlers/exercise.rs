@@ -4,7 +4,7 @@
 use actix_web::{web, Responder, HttpResponse};
 use crate::establish_connection;
 
-use crate::models::exercises::{NewExercise, Exercise};
+use crate::models::exercises::{NewExercise, Exercise, ExerciseList};
 
 /// Create a new exercise entry in the database.
 ///
@@ -54,6 +54,32 @@ pub async fn update_by_id(id: web::Path<i32>, new_set: web::Json<NewExercise>) -
 
     Exercise::update(*id,&new_set, &conn)
         .map(|set| HttpResponse::Ok().json(set))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
+
+/// Get an array of json objects that include all Exercise sets based on a workout ID.
+///
+/// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/api-exercises-find_by_workout_id)
+pub async fn find_by_workout_id(ex_id: web::Path<i32>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    ExerciseList::get_by_workout_id(*ex_id, &conn)
+        .map(|exlist| HttpResponse::Ok().json(exlist))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
+
+/// Get an array of json objects that include all Exercise sets based on an origin ID.
+///
+/// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/api-exercises-find_by_origin_id)
+pub async fn find_by_origin_id(ex_id: web::Path<i32>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    ExerciseList::get_by_origin_id(*ex_id, &conn)
+        .map(|exlist| HttpResponse::Ok().json(exlist))
         .map_err(|e| {
             HttpResponse::InternalServerError().json(e.to_string())
         })

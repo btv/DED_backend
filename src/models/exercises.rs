@@ -30,6 +30,8 @@ pub struct NewExercise {
     pub notes: String,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ExerciseList( pub Vec<Exercise> );
 
 impl NewExercise {
     pub fn create(&self, connection: &PgConnection) -> Result<Exercise, diesel::result::Error> {
@@ -40,7 +42,7 @@ impl NewExercise {
 }
 
 impl Exercise {
-    pub fn get_exercise_by_id(id: i32, conn: &PgConnection) -> Result<Exercise, diesel::result::Error> {
+    pub fn get_exercise_by_id(id: i32, conn: &PgConnection) -> Result<Self, diesel::result::Error> {
         exercises::table.find(id).get_result(conn)
     }
 
@@ -58,6 +60,27 @@ impl Exercise {
             .set(new_ex)
             .execute(connection)
     }
+}
+
+impl ExerciseList {
+
+    pub fn get_by_origin_id(id: i32, conn: &PgConnection) -> Result<Vec<Exercise>, diesel::result::Error> {
+        use diesel::prelude::*;
+        use crate::schema::exercises::dsl::origin_id;
+
+        exercises::table.filter(origin_id.eq(id))
+            .get_results::<Exercise>(conn)
+    }
+
+    pub fn get_by_workout_id(id: i32, conn: &PgConnection) -> Result<Vec<Exercise>, diesel::result::Error> {
+        use diesel::prelude::*;
+        use crate::schema::exercises::dsl::workout_id;
+
+        exercises::table.filter(workout_id.eq(id))
+            .get_results::<Exercise>(conn)
+    }
+
+
 }
 
 impl PartialEq<NewExercise> for Exercise {
