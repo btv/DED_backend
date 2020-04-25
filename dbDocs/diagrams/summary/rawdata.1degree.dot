@@ -1,0 +1,33 @@
+// dot 2.42.3 on Mac OS X 10.15.4
+// SchemaSpy rev 590
+digraph "rawdata" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "rawdata" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">rawdata</TD></TR>
+      <TR><TD PORT="id" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">id</TD></TR>
+      <TR><TD PORT="create_time" COLSPAN="3" ALIGN="LEFT">create_time</TD></TR>
+      <TR><TD PORT="blob" COLSPAN="3" ALIGN="LEFT">blob</TD></TR>
+      <TR><TD PORT="file_size" COLSPAN="3" ALIGN="LEFT">file_size</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/rawdata.html"
+    tooltip="rawdata"
+  ];
+}

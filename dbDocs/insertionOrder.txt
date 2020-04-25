@@ -1,5 +1,7 @@
 __diesel_schema_migrations
 exercises
+processlog
+rawdata
 sets
 users
 workouts
