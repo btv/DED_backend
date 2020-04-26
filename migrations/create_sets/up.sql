@@ -59,6 +59,5 @@ CREATE TABLE IF NOT EXISTS processlog (
     id SERIAL PRIMARY KEY,
     create_time timestamp  not null DEFAULT NOW(),
     process_time timestamp  not null DEFAULT NOW(),
-    blob bytea,
-    file_size bigint
+    log varchar not null
 );

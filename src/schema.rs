@@ -17,8 +17,7 @@ table! {
         id -> Int4,
         create_time -> Timestamp,
         process_time -> Timestamp,
-        blob -> Nullable<Bytea>,
-        file_size -> Nullable<Int8>,
+        log -> Varchar,
     }
 }
 
