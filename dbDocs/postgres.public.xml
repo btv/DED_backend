@@ -24,6 +24,26 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
+      <table name="processlog" numRows="2" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('processlog_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="1" name="create_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="2" name="process_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
+         <column autoUpdated="false" digits="0" id="3" name="log" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="processlog_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="rawdata" numRows="1" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('rawdata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="1" name="create_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
+         <column autoUpdated="false" digits="0" id="2" name="blob" nullable="true" remarks="" size="2147483647" type="bytea"/>
+         <column autoUpdated="false" digits="0" id="3" name="file_size" nullable="true" remarks="" size="19" type="int8"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="rawdata_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
       <table name="sets" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('sets_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="exercise_id" nullable="false" remarks="" size="10" type="int4"/>

@@ -46,3 +46,18 @@ CREATE TABLE IF NOT EXISTS workouts (
     created_time timestamp not null DEFAULT NOW(),
     completed_time timestamp not null DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS rawdata (
+    id SERIAL PRIMARY KEY,
+    create_time timestamp  not null DEFAULT NOW(),
+    blob bytea,
+    file_size bigint
+);
+
+
+CREATE TABLE IF NOT EXISTS processlog (
+    id SERIAL PRIMARY KEY,
+    create_time timestamp  not null DEFAULT NOW(),
+    process_time timestamp  not null DEFAULT NOW(),
+    log varchar not null
+);

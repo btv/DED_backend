@@ -13,6 +13,24 @@ table! {
 }
 
 table! {
+    processlog (id) {
+        id -> Int4,
+        create_time -> Timestamp,
+        process_time -> Timestamp,
+        log -> Varchar,
+    }
+}
+
+table! {
+    rawdata (id) {
+        id -> Int4,
+        create_time -> Timestamp,
+        blob -> Nullable<Bytea>,
+        file_size -> Nullable<Int8>,
+    }
+}
+
+table! {
     sets (id) {
         id -> Int4,
         exercise_id -> Int4,
@@ -52,6 +70,8 @@ table! {
 
 allow_tables_to_appear_in_same_query!(
     exercises,
+    processlog,
+    rawdata,
     sets,
     users,
     workouts,
