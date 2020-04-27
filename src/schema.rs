@@ -24,6 +24,7 @@ table! {
         created_or_completed -> Timestamp,
         completed_reps -> Int2,
         completed_value -> Varchar,
+        origin_id -> Int4,
     }
 }
 

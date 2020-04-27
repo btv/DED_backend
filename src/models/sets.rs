@@ -6,7 +6,7 @@ use diesel::query_dsl::filter_dsl::FindDsl;
 use diesel::PgConnection;
 
 #[derive(
-    PartialEq, Eq, Debug, Clone, Queryable, Identifiable, Insertable,
+    PartialEq, Debug, Clone, Queryable, Identifiable, Insertable,
     AsChangeset, QueryableByName, Serialize, Deserialize
 )]
 #[table_name = "sets"]
@@ -21,6 +21,7 @@ pub struct Set {
     pub created_or_completed: SystemTime,
     pub completed_reps: i16,
     pub completed_value: String,
+    pub origin_id: i32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
@@ -32,6 +33,7 @@ pub struct NewSet {
     pub goal_reps: i16,
     pub goal_value: String,
     pub description: String,
+    pub origin_id: i32,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -108,12 +110,21 @@ impl PartialEq<NewSet> for Set {
         self.unit == other.unit &&
         self.goal_reps == other.goal_reps &&
         self.goal_value == other.goal_value &&
-        self.description == other.description
+        self.description == other.description &&
+        self.origin_id == other.origin_id
     }
 }
 
 impl SetList {
     pub fn get_sets_by_exercise_id(ex_id: i32, conn: &PgConnection) -> Result<Vec<Set>, diesel::result::Error> {
+        use diesel::prelude::*;
+        use crate::schema::sets::dsl::exercise_id;
+
+        sets::table.filter(exercise_id.eq(ex_id))
+            .get_results::<Set>(conn)
+    }
+
+    pub fn find_by_origin_id(ex_id: i32, conn: &PgConnection) -> Result<Vec<Set>, diesel::result::Error> {
         use diesel::prelude::*;
         use crate::schema::sets::dsl::exercise_id;
 
@@ -140,6 +151,7 @@ mod tests {
         let t_created_or_completed = SystemTime::now();
         let t_completed_reps = 10;
         let t_completed_value = "Should this be a string";
+        let t_origin_id = 10;
 
         let t_set = Set{
             id: t_id,
@@ -151,7 +163,8 @@ mod tests {
             description:t_description.to_string(),
             created_or_completed: t_created_or_completed,
             completed_reps: t_completed_reps,
-            completed_value: t_completed_value.to_string()
+            completed_value: t_completed_value.to_string(),
+            origin_id: t_origin_id
         };
 
         assert_eq!(t_id, t_set.id);
@@ -162,6 +175,7 @@ mod tests {
         assert_eq!(t_description, t_set.description);
         assert_eq!(t_created_or_completed, t_set.created_or_completed);
         assert_eq!(t_completed_reps, t_set.completed_reps);
-        assert_eq!(t_completed_value, t_set.completed_value)
+        assert_eq!(t_completed_value, t_set.completed_value);
+        assert_eq!(t_origin_id, t_set.origin_id)
     }
 }
