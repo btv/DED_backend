@@ -1,9 +1,27 @@
 #![allow(non_snake_case)]
+#[macro_use]
+extern crate lazy_static;
 
 mod tests {
     use DED_backend::handlers::set;
     use DED_backend::models::sets::{Set, NewSet, CompleteSet};
     use actix_web::{web, test, App, http::StatusCode, http::header};
+    use std::time::SystemTime;
+    lazy_static! {
+        static ref TEST_SET: DED_backend::models::sets::Set = Set {
+            id: 10,
+            exercise_id: 100,
+            style: "Fancy".to_string(),
+            unit: "steps".to_string(),
+            goal_reps: 45,
+            goal_value: "To survive".to_string(),
+            description: "Twist and shout".to_string(),
+            created_or_completed: SystemTime::now(),
+            completed_reps: 10,
+            completed_value: "Should this be a string".to_string(),
+            origin_id: 10,
+        };
+    }
 
     #[actix_rt::test]
     async fn test_set_new() {
@@ -19,7 +37,8 @@ mod tests {
             \"unit\": \"none\",
             \"goal_reps\": 10,
             \"goal_value\": \"none\",
-            \"description\": \"none\"
+            \"description\": \"none\",
+            \"origin_id\": 10
         }";
 
         let req = test::TestRequest::post()
@@ -56,30 +75,17 @@ mod tests {
 
     #[actix_rt::test]
     async fn test_find_by_exercise_id() {
-        use DED_backend::establish_connection;
-
-        let conn = establish_connection().get().unwrap();
-
+        let this_test_set = TEST_SET.clone();
         let mut app = test::init_service(
             App::new()
+                .data(this_test_set)
                 .route("/sets/find_by_exercise_id/{ex_id}/", web::get().to(set::find_by_exercise_id))
         )
         .await;
 
-        let test_find = NewSet {
-            exercise_id: -1,
-            style: "gangam".to_string(),
-            unit: "none".to_string(),
-            goal_reps: 10,
-            goal_value: "none".to_string(),
-            description: "something".to_string(),
-        };
-
-        let _result = test_find.create(&conn);
-
         let req = test::TestRequest::get()
             .header(header::CONTENT_TYPE, "application/json")
-            .uri("/sets/find_by_exercise_id/-1/")
+            .uri("/sets/find_by_exercise_id/100/")
             .to_request();
 
         let resp = test::call_service(&mut app, req).await;
@@ -88,30 +94,16 @@ mod tests {
 
     #[actix_rt::test]
     async fn test_find_by_set_id() {
-        use DED_backend::establish_connection;
-
-        let conn = establish_connection().get().unwrap();
-
         let mut app = test::init_service(
             App::new()
+                .data(TEST_SET.clone())
                 .route("/sets/find_by_set_id/{id}/", web::get().to(set::find_by_set_id))
         )
         .await;
 
-        let test_find = NewSet {
-            exercise_id: -1,
-            style: "gangam".to_string(),
-            unit: "none".to_string(),
-            goal_reps: 10,
-            goal_value: "none".to_string(),
-            description: "something".to_string(),
-        };
-
-        let test_find_results = test_find.create(&conn).unwrap();
-
         let req = test::TestRequest::get()
             .header(header::CONTENT_TYPE, "application/json")
-            .uri(format!("/sets/find_by_set_id/{}/", test_find_results.id).as_str())
+            .uri("/sets/find_by_set_id/10/")
             .to_request();
 
         let resp = test::call_service(&mut app, req).await;
@@ -120,10 +112,10 @@ mod tests {
             true => {
                 let n_req = test::TestRequest::get()
                     .header(header::CONTENT_TYPE, "application/json")
-                    .uri(format!("/sets/find_by_set_id/{}/", test_find_results.id).as_str())
+                    .uri("/sets/find_by_set_id/10/")
                     .to_request();
                 let new_resp: Set = test::read_response_json(&mut app, n_req).await;
-                assert!(new_resp == test_find);
+                assert_eq!(new_resp, TEST_SET.clone());
             }
         }
     }
@@ -147,6 +139,7 @@ mod tests {
             goal_reps: 10,
             goal_value: "none".to_string(),
             description: "something".to_string(),
+            origin_id: 10,
         };
 
         let test2 = NewSet {
@@ -156,6 +149,7 @@ mod tests {
             goal_reps: 12,
             goal_value: "none".to_string(),
             description: "something".to_string(),
+            origin_id: 10,
         };
 
         let test_find_results = test1.create(&conn).unwrap();
@@ -200,6 +194,7 @@ mod tests {
             goal_reps: 10,
             goal_value: "none".to_string(),
             description: "something".to_string(),
+            origin_id: 10,
         };
 
         let payload = CompleteSet {
@@ -229,5 +224,24 @@ mod tests {
                 assert_eq!(new_resp.completed_value,payload.completed_value);
             }
         }
+    }
+
+    #[actix_rt::test]
+    async fn test_find_by_origin_id() {
+        let this_test_set = TEST_SET.clone();
+        let mut app = test::init_service(
+            App::new()
+                .data(this_test_set)
+                .route("/sets/find_by_origin_id/{ex_id}/", web::get().to(set::find_by_exercise_id))
+        )
+        .await;
+
+        let req = test::TestRequest::get()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri("/sets/find_by_origin_id/10/")
+            .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        assert_eq!(resp.status(), StatusCode::OK);
     }
 }
