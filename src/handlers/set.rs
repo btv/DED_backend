@@ -80,3 +80,16 @@ pub async fn complete_by_set_id(id: web::Path<i32>, new_set: web::Json<CompleteS
             HttpResponse::InternalServerError().json(e.to_string())
         })
 }
+
+/// Get an array of json objects that include all workouts sets based on an origin ID.
+///
+/// More information [here](https://github.com/coloradocollective/DED_Backend/wiki/endpoint-sets-find_by_origin_id)
+pub async fn find_by_origin_id(ex_id: web::Path<i32>) -> impl Responder {
+    let conn = establish_connection().get().unwrap();
+
+    SetList::get_sets_by_origin_id(*ex_id, &conn)
+        .map(|setlist| HttpResponse::Ok().json(setlist))
+        .map_err(|e| {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}

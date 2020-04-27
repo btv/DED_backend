@@ -124,7 +124,7 @@ impl SetList {
             .get_results::<Set>(conn)
     }
 
-    pub fn find_by_origin_id(ex_id: i32, conn: &PgConnection) -> Result<Vec<Set>, diesel::result::Error> {
+    pub fn get_sets_by_origin_id(ex_id: i32, conn: &PgConnection) -> Result<Vec<Set>, diesel::result::Error> {
         use diesel::prelude::*;
         use crate::schema::sets::dsl::exercise_id;
 
