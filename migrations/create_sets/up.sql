@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS sets (
     description varchar not null,
     created_or_completed timestamp not null DEFAULT NOW(),
     completed_reps smallint not null DEFAULT 0,
-    completed_value varchar not null DEFAULT ''
+    completed_value varchar not null DEFAULT '',
+    origin_id int not null
 );
 
 

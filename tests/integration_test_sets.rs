@@ -9,7 +9,6 @@ extern crate dotenv;
 mod tests {
     use DED_backend::establish_connection;
     use DED_backend::models::sets::{Set, NewSet};
-    use diesel::RunQueryDsl;
     use std::time::{SystemTime, UNIX_EPOCH};
 
     #[test]
@@ -26,6 +25,7 @@ mod tests {
         let t_created_or_completed = SystemTime::now();
         let t_completed_reps = 10;
         let t_completed_value = "Should this be a string";
+        let t_origin_id = 10;
 
         let ns = NewSet {
             exercise_id: t_exercise_id,
@@ -34,6 +34,7 @@ mod tests {
             goal_reps: t_goal_reps,
             goal_value: t_goal_value.to_string(),
             description: t_description.to_string(),
+            origin_id: t_origin_id,
         };
 
         match ns.create(&conn) {
@@ -64,6 +65,7 @@ mod tests {
                 assert_eq!(r_set.completed_reps, t_completed_reps);
                 assert_eq!(r_set.style, t_style);
                 assert_eq!(r_set.goal_value, t_goal_value);
+                assert_eq!(r_set.origin_id, t_origin_id);
             }
             Err(E) =>{
                 assert_eq!(E,diesel::NotFound);

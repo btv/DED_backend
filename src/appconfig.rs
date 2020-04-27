@@ -29,6 +29,10 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                     web::resource("/find_by_exercise_id/{ex_id}/")
                         .route(web::get().to(set::find_by_exercise_id))
                 )
+                .service(
+                    web::resource("/find_by_origin_id/{ex_id}/")
+                        .route(web::get().to(set::find_by_origin_id))
+                )
         )
         .service(
             web::scope("/exercises")
