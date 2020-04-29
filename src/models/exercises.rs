@@ -30,6 +30,16 @@ pub struct NewExercise {
     pub notes: String,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
+#[table_name = "exercises"]
+struct CompleteExerciseFull{
+    pub complete_time: SystemTime,
+    #[serde(skip_serializing_if = "Option::is_none") ]
+    pub notes: Option<String>
+}
+
+
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExerciseList( pub Vec<Exercise> );
 
@@ -38,6 +48,23 @@ impl NewExercise {
         diesel::insert_into(exercises::table)
             .values(self)
             .get_result(connection)
+    }
+}
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CompleteExercise {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub notes: Option<String>
+}
+
+impl From<&CompleteExercise> for CompleteExerciseFull{
+    fn from (cs: &CompleteExercise) -> Self {
+        CompleteExerciseFull{
+            complete_time: SystemTime::now(),
+            notes: match &cs.notes {
+                Some(i)=> Some(i.clone()),
+                None => None
+            }
+        }
     }
 }
 
@@ -59,6 +86,13 @@ impl Exercise {
         diesel::update(exercises::table.find(in_id))
             .set(new_ex)
             .execute(connection)
+    }
+
+    pub fn complete(in_id: i32, comp_wk: &CompleteExercise, connection: &PgConnection) ->  Result<usize, diesel::result::Error>  {
+        diesel::update(exercises::table.find(in_id))
+        .set(CompleteExerciseFull::from(comp_wk))
+        .execute(connection)
+
     }
 }
 
