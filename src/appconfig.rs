@@ -55,6 +55,10 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                     web::resource("/find_by_workout_id/{id}/")
                         .route(web::get().to(exercise::find_by_workout_id))
                 )
+                .service(
+                    web::resource("/complete/{id}/")
+                        .route(web::post().to(exercise::complete))
+                )
         )
         .service(
             web::scope("/workouts")

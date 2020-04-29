@@ -4,7 +4,8 @@
 use actix_web::{web, Responder, HttpResponse};
 use crate::establish_connection;
 
-use crate::models::exercises::{NewExercise, Exercise, ExerciseList};
+use crate::models::exercises::{NewExercise, Exercise, ExerciseList, CompleteExercise};
+use crate::models::workouts::CompleteWorkout;
 
 /// Create a new exercise entry in the database.
 ///
@@ -82,5 +83,18 @@ pub async fn find_by_origin_id(ex_id: web::Path<i32>) -> impl Responder {
         .map(|exlist| HttpResponse::Ok().json(exlist))
         .map_err(|e| {
             HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
+
+pub async fn complete(id: web::Path<i32>, new_exercise: Option<web::Json<CompleteExercise>>) ->impl Responder {
+    let conn = establish_connection().get().unwrap();
+    let local_exercise = match new_exercise{
+        Some(i) =>i,
+        None => web::Json(CompleteExercise{notes: None})
+    };
+
+    Exercise::complete(*id, &local_exercise, &conn)
+        .map(|set|HttpResponse::Ok().json(set))
+        .map_err(|e| {HttpResponse::InternalServerError().json(e.to_string())
         })
 }
