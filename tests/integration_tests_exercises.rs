@@ -16,7 +16,7 @@ mod tests {
         let t_origin_id= 200;
         let t_workout_id= 300;
         let t_name= "SuperJock";
-        let t_exercise_type= 22;
+        let t_exercise_type= "something";
         let t_description= "Pecs! Pecs! and more Pecs!";
         let t_notes= "never enough reps";
 
@@ -24,7 +24,7 @@ mod tests {
             origin_id: t_origin_id,
             workout_id: t_workout_id,
             name: t_name.to_string(),
-            exercise_type: t_exercise_type,
+            exercise_type: t_exercise_type.to_string(),
             description: t_description.to_string(),
             notes: t_notes.to_string(),
         };

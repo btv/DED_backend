@@ -13,7 +13,7 @@ mod tests {
             origin_id: 55,
             workout_id: 56,
             name: "Working hard".to_string(),
-            exercise_type: 3,
+            exercise_type: "hard".to_string(),
             description: "describe what it is you do here.".to_string(),
             notes: "B#".to_string(),
             create_time: SystemTime::now(),
@@ -37,7 +37,7 @@ mod tests {
             origin_id: 100,
             workout_id: 69,
             name: "Something special".to_string(),
-            exercise_type: 5,
+            exercise_type: "hard".to_string(),
             description: "I have no idea what to put here.".to_string(),
             notes: "C#".to_string()
         };
@@ -86,7 +86,7 @@ mod tests {
             origin_id: 55,
             workout_id: 56,
             name: "Working hard".to_string(),
-            exercise_type: 3,
+            exercise_type: "hard".to_string(),
             description: "describe what it is you do here.".to_string(),
             notes: "B#".to_string(),
         };
@@ -129,7 +129,7 @@ mod tests {
             origin_id: 55,
             workout_id: 56,
             name: "Working hard".to_string(),
-            exercise_type: 3,
+            exercise_type: "hard".to_string(),
             description: "describe what it is you do here.".to_string(),
             notes: "B#".to_string(),
         };
@@ -138,7 +138,7 @@ mod tests {
             origin_id: 555,
             workout_id: 566,
             name: "Working harder".to_string(),
-            exercise_type: 3,
+            exercise_type: "hard".to_string(),
             description: "still describing what I do here.".to_string(),
             notes: "B##".to_string(),
         };
@@ -173,7 +173,7 @@ mod tests {
             origin_id: 55,
             workout_id: 56,
             name: "Working harder".to_string(),
-            exercise_type: 3,
+            exercise_type: "hard".to_string(),
             description: "still describing what I do here.".to_string(),
             notes: "B##".to_string(),
             create_time: SystemTime::now(),
@@ -212,7 +212,7 @@ mod tests {
             origin_id: 55,
             workout_id: 56,
             name: "Working harder".to_string(),
-            exercise_type: 3,
+            exercise_type: "hard".to_string(),
             description: "still describing what I do here.".to_string(),
             notes: "B##".to_string(),
             create_time: SystemTime::now(),
