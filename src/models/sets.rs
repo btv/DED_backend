@@ -16,11 +16,11 @@ pub struct Set {
     pub style: String,
     pub unit: String,
     pub goal_reps: i16,
-    pub goal_value: String,
+    pub goal_value: i16,
     pub description: String,
     pub created_or_completed: SystemTime,
     pub completed_reps: i16,
-    pub completed_value: String,
+    pub completed_value: i16,
     pub origin_id: i32,
 }
 
@@ -31,7 +31,7 @@ pub struct NewSet {
     pub style: String,
     pub unit: String,
     pub goal_reps: i16,
-    pub goal_value: String,
+    pub goal_value: i16,
     pub description: String,
     pub origin_id: i32,
 }
@@ -42,14 +42,14 @@ pub struct SetList( pub Vec<Set> );
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CompleteSet {
     pub completed_reps: i16,
-    pub completed_value: String,
+    pub completed_value: i16,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Insertable, AsChangeset)]
 #[table_name = "sets"]
 struct CompleteSetFull {
     pub completed_reps: i16,
-    pub completed_value: String,
+    pub completed_value: i16,
     pub created_or_completed: SystemTime,
 }
 
@@ -146,11 +146,11 @@ mod tests {
         let t_style = "Fancy";
         let t_unit = "steps";
         let t_goal_reps = 45;
-        let t_goal_value = "To survive";
+        let t_goal_value = 10;
         let t_description = "Twist and shout";
         let t_created_or_completed = SystemTime::now();
         let t_completed_reps = 10;
-        let t_completed_value = "Should this be a string";
+        let t_completed_value = 10;
         let t_origin_id = 10;
 
         let t_set = Set{
@@ -159,11 +159,11 @@ mod tests {
             style: t_style.to_string(),
             unit: t_unit.to_string(),
             goal_reps: t_goal_reps,
-            goal_value: t_goal_value.to_string(),
+            goal_value: t_goal_value,
             description:t_description.to_string(),
             created_or_completed: t_created_or_completed,
             completed_reps: t_completed_reps,
-            completed_value: t_completed_value.to_string(),
+            completed_value: t_completed_value,
             origin_id: t_origin_id
         };
 

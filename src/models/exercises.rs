@@ -12,7 +12,7 @@ pub struct Exercise {
     pub origin_id: i32,
     pub workout_id: i32,
     pub name: String,
-    pub exercise_type: i32,
+    pub exercise_type: String,
     pub description: String,
     pub notes: String,
     pub create_time: SystemTime,
@@ -25,7 +25,7 @@ pub struct NewExercise {
     pub origin_id: i32,
     pub workout_id: i32,
     pub name: String,
-    pub exercise_type: i32,
+    pub exercise_type: String,
     pub description: String,
     pub notes: String,
 }
@@ -37,8 +37,6 @@ struct CompleteExerciseFull{
     #[serde(skip_serializing_if = "Option::is_none") ]
     pub notes: Option<String>
 }
-
-
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ExerciseList( pub Vec<Exercise> );
@@ -150,7 +148,7 @@ mod tests {
         let t_origin_id = 10;
         let t_workout_id = 1000;
         let t_name = "Test exercise";
-        let t_exercise_type = 1;
+        let t_exercise_type = "something";
         let t_description = "Quad burner";
         let t_notes = "Put your right foot in. Put your left foot out.";
         let t_create_time = SystemTime::now();
@@ -163,7 +161,7 @@ mod tests {
             origin_id: t_origin_id,
             workout_id: t_workout_id,
             name: t_name.to_string(),
-            exercise_type: t_exercise_type,
+            exercise_type: t_exercise_type.to_string(),
             description: t_description.to_string(),
             notes: t_notes.to_string(),
             create_time: t_create_time,
