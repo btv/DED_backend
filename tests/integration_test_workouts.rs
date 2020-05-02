@@ -18,7 +18,6 @@ mod tests {
 
         let t_id = 1000;
         let t_origin_id = 9999;
-        let t_exercise = 32;
         let t_name = "Foot Tap";
         let t_description = "put your right foot left";
         let t_notes = "put your left foot out";
@@ -27,7 +26,6 @@ mod tests {
 
         let t_workout = NewWorkout {
             origin_id: t_origin_id,
-            exercise: t_exercise,
             name: t_name.to_string(),
             description: t_description.to_string(),
             notes: t_notes.to_string(),
@@ -37,7 +35,6 @@ mod tests {
         match t_workout.create(&conn) {
             Ok(r) => {
                 assert_eq!(r.origin_id, t_origin_id);
-                assert_eq!(r.exercise, t_exercise);
                 assert_eq!(r.description, t_description);
                 assert_eq!(r.notes, t_notes);
                 assert_eq!(r.name, t_name);
@@ -52,7 +49,6 @@ mod tests {
             Ok(r) => {
                 assert_eq!(r.id, t_id);
                 assert_eq!(r.origin_id, t_origin_id);
-                assert_eq!(r.exercise, t_exercise);
                 assert_eq!(r.description, t_description);
                 assert_eq!(r.notes, t_notes);
                 let mut sec_original = t_created_time.duration_since(UNIX_EPOCH).unwrap().as_secs();
