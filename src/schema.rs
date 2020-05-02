@@ -60,7 +60,6 @@ table! {
     workouts (id) {
         id -> Int4,
         origin_id -> Int4,
-        exercise -> Int4,
         name -> Varchar,
         description -> Varchar,
         notes -> Varchar,

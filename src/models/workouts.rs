@@ -9,7 +9,6 @@ use diesel::query_dsl::filter_dsl::FindDsl;
 pub struct Workout {
     pub id: i32,
     pub origin_id: i32,
-    pub exercise: i32,
     pub name: String,
     pub description: String,
     pub notes: String,
@@ -21,7 +20,6 @@ pub struct Workout {
 #[table_name="workouts"]
 pub struct NewWorkout {
     pub origin_id: i32,
-    pub exercise: i32,
     pub name: String,
     pub description: String,
     pub notes: String,
@@ -101,7 +99,6 @@ impl WorkoutList {
 impl PartialEq<NewWorkout> for Workout {
     fn eq(&self, other:& NewWorkout) -> bool {
         self.origin_id == other.origin_id &&
-        self.exercise == other.exercise &&
         self.name == other.name &&
         self.description == other.description &&
         self.notes == other.notes
@@ -117,7 +114,6 @@ mod tests {
 
         let t_id = -1;
         let t_origin_id = 100;
-        let t_exercise = 10;
         let t_name = "Test Workout";
         let t_description = "Quads and calves";
         let t_notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -129,7 +125,6 @@ mod tests {
         let t_workout = Workout{
             id : t_id,
             origin_id: t_origin_id,
-            exercise: t_exercise,
             name: t_name.to_string(),
             description: t_description.to_string(),
             notes: t_notes.to_string(),
@@ -139,7 +134,6 @@ mod tests {
 
         assert_eq!(t_id, t_workout.id);
         assert_eq!(t_origin_id, t_workout.origin_id);
-        assert_eq!(t_exercise, t_workout.exercise);
         assert_eq!(t_name, t_workout.name);
         assert_eq!(t_description, t_workout.description);
         assert_eq!(t_notes, t_workout.notes);

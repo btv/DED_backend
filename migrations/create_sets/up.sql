@@ -40,7 +40,6 @@ CREATE  TABLE  IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS workouts (
     id SERIAL PRIMARY KEY,
     origin_id integer not null,
-    exercise INTEGER not null,
     name varchar not null,
     description varchar not null,
     notes varchar not null ,

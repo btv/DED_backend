@@ -11,7 +11,6 @@ mod tests {
         static ref TEST_FIND:DED_backend::models::workouts::Workout = Workout {
             id: 10,
             origin_id: 66,
-            exercise: 4,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
@@ -32,7 +31,6 @@ mod tests {
 
         let payload = NewWorkout {
             origin_id: 66,
-            exercise: 4,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
@@ -53,7 +51,6 @@ mod tests {
         let test_find = Workout {
             id: 10,
             origin_id: 66,
-            exercise: 4,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
@@ -117,7 +114,6 @@ mod tests {
 
         let test2 = NewWorkout {
             origin_id: 666,
-            exercise: 44,
             name: "working harder".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "FF".to_string(),
@@ -191,7 +187,6 @@ mod tests {
         let test2 = Workout {
             id: 11,
             origin_id: 555,
-            exercise: 55,
             name: "working out harder".to_string(),
             description: "sweaty mcsweatface".to_string(),
             notes: "B#".to_string(),
