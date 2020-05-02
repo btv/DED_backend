@@ -5,7 +5,6 @@ use actix_web::{web, Responder, HttpResponse};
 use crate::establish_connection;
 
 use crate::models::exercises::{NewExercise, Exercise, ExerciseList, CompleteExercise};
-use crate::models::workouts::CompleteWorkout;
 
 /// Create a new exercise entry in the database.
 ///
