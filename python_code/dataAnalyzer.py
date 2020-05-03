@@ -62,7 +62,7 @@ def update(conn, cursor, data, cntr):
         dta = ln.split(', ')
         if len(dta) > 1:
             ext = dta[1].rstrip()
-            exercise_type = 1
+            exercise_type = 'strength'
             origin_id = 99999
             id = workout_id = cntr
             name = dta[0]
