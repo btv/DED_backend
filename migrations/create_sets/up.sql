@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS workouts (
     id SERIAL PRIMARY KEY,
     origin_id integer not null,
     name varchar not null,
+    user_id integer not null,
     description varchar not null,
     notes varchar not null ,
     created_time timestamp not null DEFAULT NOW(),
