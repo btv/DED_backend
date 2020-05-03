@@ -9,8 +9,8 @@ use diesel::query_dsl::filter_dsl::FindDsl;
 pub struct Workout {
     pub id: i32,
     pub origin_id: i32,
-    pub user_id: i32,
     pub name: String,
+    pub user_id: i32,
     pub description: String,
     pub notes: String,
     pub created_time: SystemTime,

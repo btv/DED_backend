@@ -30,7 +30,7 @@ mod tests {
             name: t_name.to_string(),
             description: t_description.to_string(),
             notes: t_notes.to_string(),
-            user_id: t_user_id;
+            user_id: t_user_id
         };
 
 
@@ -74,7 +74,7 @@ mod tests {
 
         match Workout::get_workout_by_user_id(t_user_id,&conn) {
             Ok(r) => {
-                assert_eq!(r.t_user_id, t_user_id);
+                assert_eq!(r.user_id, t_user_id);
                 assert_eq!(r.origin_id, t_origin_id);
                 assert_eq!(r.description, t_description);
                 assert_eq!(r.notes, t_notes);

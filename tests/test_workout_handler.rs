@@ -11,6 +11,7 @@ mod tests {
         static ref TEST_FIND:DED_backend::models::workouts::Workout = Workout {
             id: 10,
             origin_id: 66,
+            user_id: 103,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
