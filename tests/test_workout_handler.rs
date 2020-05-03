@@ -86,6 +86,8 @@ mod tests {
             }
         }
     }
+
+    #[actix_rt::test]
     async fn test_find_by_workout_user_id() {
         let test_find = Workout {
             id: 10,
