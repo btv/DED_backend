@@ -61,6 +61,7 @@ table! {
         id -> Int4,
         origin_id -> Int4,
         name -> Varchar,
+        user_id -> Int4,
         description -> Varchar,
         notes -> Varchar,
         created_time -> Timestamp,

@@ -9,6 +9,7 @@ use diesel::query_dsl::filter_dsl::FindDsl;
 pub struct Workout {
     pub id: i32,
     pub origin_id: i32,
+    pub user_id: i32,
     pub name: String,
     pub description: String,
     pub notes: String,
@@ -21,6 +22,7 @@ pub struct Workout {
 pub struct NewWorkout {
     pub origin_id: i32,
     pub name: String,
+    pub user_id: i32,
     pub description: String,
     pub notes: String,
 }
@@ -70,6 +72,10 @@ impl Workout{
        workouts::table.find(id).get_result(conn)
     }
 
+    pub fn get_workout_by_user_id(user_id:i32, conn: &PgConnection) ->Result<Workout, diesel::result::Error>{
+        workouts::table.find(user_id).get_result(conn)
+    }
+
     pub fn delete(in_id: i32, connection: &PgConnection) -> Result<usize, diesel::result::Error> {
         diesel::delete(workouts::table.find(in_id)).execute(connection)
     }
@@ -96,10 +102,21 @@ impl WorkoutList {
             .get_results::<Workout>(conn)
     }
 }
+
+impl WorkoutList {
+    pub fn get_workouts_by_user_id(usr_id: i32, conn: &PgConnection)  -> Result<Vec<Workout>, diesel::result::Error>{
+        use diesel::prelude::*;
+        use crate::schema::workouts::dsl::user_id;
+        workouts::table.filter(user_id.eq(usr_id))
+            .get_results::<Workout>(conn)
+    }
+}
+
 impl PartialEq<NewWorkout> for Workout {
     fn eq(&self, other:& NewWorkout) -> bool {
         self.origin_id == other.origin_id &&
         self.name == other.name &&
+        self.user_id == other.user_id &&
         self.description == other.description &&
         self.notes == other.notes
     }
@@ -119,13 +136,14 @@ mod tests {
         let t_notes = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
         let t_created_time = SystemTime::now();
         let t_completed_time = t_created_time + Duration::new(300,0);
-
+        let t_user_id = 100;
 
 
         let t_workout = Workout{
             id : t_id,
             origin_id: t_origin_id,
             name: t_name.to_string(),
+            user_id: t_user_id,
             description: t_description.to_string(),
             notes: t_notes.to_string(),
             created_time: t_created_time,
@@ -138,5 +156,6 @@ mod tests {
         assert_eq!(t_description, t_workout.description);
         assert_eq!(t_notes, t_workout.notes);
         assert_eq!(t_created_time, t_workout.created_time);
+        assert_eq!(t_user_id, t_workout.user_id);
     }
 }

@@ -81,6 +81,10 @@ pub fn config_app(cfg: &mut web::ServiceConfig) {
                     web::resource("/find_by_origin_id/{id}/")
                         .route(web::get().to(workout::find_by_origin_id))
                 )
+                .service(
+                    web::resource("/find_by_user_id/{id}/")
+                        .route(web::get().to(workout::find_by_user_id))
+                )
         )
         .route("/", web::get().to(index::index))
         .route("/login/", web::post().to(index::login))

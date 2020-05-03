@@ -31,6 +31,7 @@ mod tests {
 
         let payload = NewWorkout {
             origin_id: 66,
+            user_id: 103,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
@@ -51,6 +52,7 @@ mod tests {
         let test_find = Workout {
             id: 10,
             origin_id: 66,
+            user_id: 103,
             name: "working hard".to_string(),
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "F".to_string(),
@@ -64,6 +66,43 @@ mod tests {
                 .route("/workouts/{id}/", web::get().to(workout::find_by_id))
         )
         .await;
+
+        let req = test::TestRequest::get()
+            .header(header::CONTENT_TYPE, "application/json")
+            .uri(format!("/workouts/{}/", test_find.id).as_str())
+            .to_request();
+
+        let resp = test::call_service(&mut app, req).await;
+        match resp.status().is_success() {
+            false => (),
+            true => {
+                let n_req = test::TestRequest::get()
+                    .header(header::CONTENT_TYPE, "application/json")
+                    .uri(format!("/workouts/{}/", test_find.id).as_str())
+                    .to_request();
+                let new_resp: Workout = test::read_response_json(&mut app, n_req).await;
+                assert_eq!(new_resp, test_find);
+            }
+        }
+    }
+    async fn test_find_by_workout_user_id() {
+        let test_find = Workout {
+            id: 10,
+            origin_id: 66,
+            user_id: 103,
+            name: "working hard".to_string(),
+            description: "it has a nice flaky crust and good flavor.".to_string(),
+            notes: "F".to_string(),
+            created_time: SystemTime::now(),
+            completed_time: SystemTime::now(),
+        };
+
+        let mut app = test::init_service(
+            App::new()
+                .data(test_find.clone())
+                .route("/workouts/completed/find_by_user_id{user_id}/", web::get().to(workout::find_by_user_id))
+        )
+            .await;
 
         let req = test::TestRequest::get()
             .header(header::CONTENT_TYPE, "application/json")
@@ -115,6 +154,7 @@ mod tests {
         let test2 = NewWorkout {
             origin_id: 666,
             name: "working harder".to_string(),
+            user_id: 103,
             description: "it has a nice flaky crust and good flavor.".to_string(),
             notes: "FF".to_string(),
         };
@@ -187,6 +227,7 @@ mod tests {
         let test2 = Workout {
             id: 11,
             origin_id: 555,
+            user_id: 103,
             name: "working out harder".to_string(),
             description: "sweaty mcsweatface".to_string(),
             notes: "B#".to_string(),

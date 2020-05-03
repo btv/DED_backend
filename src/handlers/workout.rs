@@ -80,3 +80,12 @@ pub async fn find_by_origin_id(id: web::Path<i32>) -> impl Responder {
             HttpResponse::InternalServerError().json(e.to_string())
         })
 }
+
+pub async fn find_by_user_id(id: web::Path<i32>) -> impl Responder{
+    let conn = establish_connection().get().unwrap();
+    WorkoutList::get_workouts_by_user_id(*id, &conn)
+        .map(|setlist| HttpResponse::Ok().json(setlist))
+        .map_err(|e | {
+            HttpResponse::InternalServerError().json(e.to_string())
+        })
+}
