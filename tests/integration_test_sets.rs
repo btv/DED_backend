@@ -20,11 +20,11 @@ mod tests {
         let t_style = "Fancy";
         let t_unit = "steps";
         let t_goal_reps = 45;
-        let t_goal_value = "To survive";
+        let t_goal_value = 45;
         let t_description = "Twist and shout";
         let t_created_or_completed = SystemTime::now();
         let t_completed_reps = 10;
-        let t_completed_value = "Should this be a string";
+        let t_completed_value = 45;
         let t_origin_id = 10;
 
         let ns = NewSet {
@@ -32,7 +32,7 @@ mod tests {
             style: t_style.to_string(),
             unit: t_unit.to_string(),
             goal_reps: t_goal_reps,
-            goal_value: t_goal_value.to_string(),
+            goal_value: t_goal_value,
             description: t_description.to_string(),
             origin_id: t_origin_id,
         };

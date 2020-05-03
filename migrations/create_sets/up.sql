@@ -4,11 +4,11 @@ CREATE TABLE IF NOT EXISTS sets (
     style varchar not null,
     unit varchar not null,
     goal_reps smallint not null ,
-    goal_value varchar not null ,
+    goal_value smallint not null ,
     description varchar not null,
     created_or_completed timestamp not null DEFAULT NOW(),
     completed_reps smallint not null DEFAULT 0,
-    completed_value varchar not null DEFAULT '',
+    completed_value smallint not null DEFAULT 0,
     origin_id int not null
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS exercises(
     origin_id INTEGER not null,
     workout_id INTEGER  not NULL,
     name varchar not null,
-    exercise_type INTEGER not null,
+    exercise_type varchar not null,
     description varchar not null,
     notes varchar  not null,
     create_time timestamp not null DEFAULT NOW(),

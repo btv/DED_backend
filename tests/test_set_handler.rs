@@ -14,11 +14,11 @@ mod tests {
             style: "Fancy".to_string(),
             unit: "steps".to_string(),
             goal_reps: 45,
-            goal_value: "To survive".to_string(),
+            goal_value: 45,
             description: "Twist and shout".to_string(),
             created_or_completed: SystemTime::now(),
             completed_reps: 10,
-            completed_value: "Should this be a string".to_string(),
+            completed_value: 45,
             origin_id: 10,
         };
     }
@@ -36,7 +36,7 @@ mod tests {
             \"style\": \"none\",
             \"unit\": \"none\",
             \"goal_reps\": 10,
-            \"goal_value\": \"none\",
+            \"goal_value\": 10,
             \"description\": \"none\",
             \"origin_id\": 10
         }";
@@ -49,7 +49,7 @@ mod tests {
 
         let resp_set: Set = test::read_response_json(&mut app, req).await;
         assert_eq!(resp_set.completed_reps, 0);
-        assert_eq!(resp_set.completed_value, "");
+        assert_eq!(resp_set.completed_value, 0);
         assert_eq!(resp_set.style, "none");
         assert_eq!(resp_set.unit, "none");
         assert_eq!(resp_set.goal_reps, 10);
@@ -137,7 +137,7 @@ mod tests {
             style: "gangam".to_string(),
             unit: "none".to_string(),
             goal_reps: 10,
-            goal_value: "none".to_string(),
+            goal_value: 12,
             description: "something".to_string(),
             origin_id: 10,
         };
@@ -147,7 +147,7 @@ mod tests {
             style: "gangam or something".to_string(),
             unit: "parsecs".to_string(),
             goal_reps: 12,
-            goal_value: "none".to_string(),
+            goal_value: 12,
             description: "something".to_string(),
             origin_id: 10,
         };
@@ -192,14 +192,14 @@ mod tests {
             style: "gangam".to_string(),
             unit: "none".to_string(),
             goal_reps: 10,
-            goal_value: "none".to_string(),
+            goal_value: 12,
             description: "something".to_string(),
             origin_id: 10,
         };
 
         let payload = CompleteSet {
             completed_reps: 12,
-            completed_value: "Put something funny here.".to_string()
+            completed_value: 12
         };
 
         let test_create_results = test1.create(&conn).unwrap();

@@ -4,7 +4,7 @@ table! {
         origin_id -> Int4,
         workout_id -> Int4,
         name -> Varchar,
-        exercise_type -> Int4,
+        exercise_type -> Varchar,
         description -> Varchar,
         notes -> Varchar,
         create_time -> Timestamp,
@@ -37,11 +37,11 @@ table! {
         style -> Varchar,
         unit -> Varchar,
         goal_reps -> Int2,
-        goal_value -> Varchar,
+        goal_value -> Int2,
         description -> Varchar,
         created_or_completed -> Timestamp,
         completed_reps -> Int2,
-        completed_value -> Varchar,
+        completed_value -> Int2,
         origin_id -> Int4,
     }
 }
