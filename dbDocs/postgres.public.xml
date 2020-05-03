@@ -9,12 +9,12 @@
             <column ascending="true" name="version"/>
          </index>
       </table>
-      <table name="exercises" numRows="898" remarks="" schema="public" type="TABLE">
+      <table name="exercises" numRows="3" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('exercises_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="origin_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="2" name="workout_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="3" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="4" name="exercise_type" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="4" name="exercise_type" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="5" name="description" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="6" name="notes" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="create_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
@@ -24,7 +24,7 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="processlog" numRows="2" remarks="" schema="public" type="TABLE">
+      <table name="processlog" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('processlog_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="1" name="create_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="2" name="process_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
@@ -34,7 +34,7 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="rawdata" numRows="1" remarks="" schema="public" type="TABLE">
+      <table name="rawdata" numRows="0" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('rawdata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="1" name="create_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
          <column autoUpdated="false" digits="0" id="2" name="blob" nullable="true" remarks="" size="2147483647" type="bytea"/>
@@ -44,23 +44,24 @@
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="sets" numRows="0" remarks="" schema="public" type="TABLE">
+      <table name="sets" numRows="3" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('sets_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="exercise_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="2" name="style" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="3" name="unit" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="4" name="goal_reps" nullable="false" remarks="" size="5" type="int2"/>
-         <column autoUpdated="false" digits="0" id="5" name="goal_value" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="5" name="goal_value" nullable="false" remarks="" size="5" type="int2"/>
          <column autoUpdated="false" digits="0" id="6" name="description" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="created_or_completed" nullable="false" remarks="" size="29" type="timestamp without time zone"/>
          <column autoUpdated="false" defaultValue="0" digits="0" id="8" name="completed_reps" nullable="false" remarks="" size="5" type="int2"/>
-         <column autoUpdated="false" defaultValue="''::character varying" digits="0" id="9" name="completed_value" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="9" name="completed_value" nullable="false" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="10" name="origin_id" nullable="false" remarks="" size="10" type="int4"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="sets_pkey" unique="true">
             <column ascending="true" name="id"/>
          </index>
       </table>
-      <table name="users" numRows="0" remarks="" schema="public" type="TABLE">
+      <table name="users" numRows="102" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('users_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="username" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="2" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
@@ -77,11 +78,11 @@
             <column ascending="true" name="username"/>
          </index>
       </table>
-      <table name="workouts" numRows="0" remarks="" schema="public" type="TABLE">
+      <table name="workouts" numRows="1" remarks="" schema="public" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('workouts_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="" size="10" type="serial"/>
          <column autoUpdated="false" digits="0" id="1" name="origin_id" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="2" name="exercise" nullable="false" remarks="" size="10" type="int4"/>
-         <column autoUpdated="false" digits="0" id="3" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="user_id" nullable="false" remarks="" size="10" type="int4"/>
          <column autoUpdated="false" digits="0" id="4" name="description" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" digits="0" id="5" name="notes" nullable="false" remarks="" size="2147483647" type="varchar"/>
          <column autoUpdated="false" defaultValue="now()" digits="6" id="6" name="created_time" nullable="false" remarks="" size="29" type="timestamp without time zone"/>

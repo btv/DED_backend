@@ -25,7 +25,7 @@ digraph "rawdata" {
       <TR><TD PORT="create_time" COLSPAN="3" ALIGN="LEFT">create_time</TD></TR>
       <TR><TD PORT="blob" COLSPAN="3" ALIGN="LEFT">blob</TD></TR>
       <TR><TD PORT="file_size" COLSPAN="3" ALIGN="LEFT">file_size</TD></TR>
-      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">1 row</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
     </TABLE>>
     URL="tables/rawdata.html"
     tooltip="rawdata"
